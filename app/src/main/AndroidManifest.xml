@@ -16,7 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".pet.PetDetailActivity"/>
+        <activity android:name=".pet.PetDetailActivity" />
+        <activity android:name=".medicalcare.HealthActivity" />
+        <activity android:name=".user.SignActivity"></activity>
     </application>
 
 </manifest>
