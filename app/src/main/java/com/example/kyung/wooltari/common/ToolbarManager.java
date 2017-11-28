@@ -5,4 +5,5 @@ package com.example.kyung.wooltari.common;
  */
 
 public class ToolbarManager {
+
 }

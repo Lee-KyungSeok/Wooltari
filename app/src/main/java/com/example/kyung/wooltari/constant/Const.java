@@ -5,4 +5,6 @@ package com.example.kyung.wooltari.constant;
  */
 
 public class Const {
+    // Pet Key
+    public static String PET_ID = "pet_id";
 }

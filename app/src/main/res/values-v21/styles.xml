@@ -1,8 +1,17 @@
 <resources>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:statusBarColor">@android:color/transparent</item>
+        <!--
+        android:windowDrawsSystemBarBackgrounds: 상태바 아래에 다른 뷰 표시. 단, 네비게이션 바 부분은 제외(일반적인 경우와 마찬가지로 네비게이션 바 위에 뷰 표시)
+        android:statusBarColor: 상태바 배경 색을 지정
+        -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">#33000000</item>
     </style>
 </resources>

@@ -5,11 +5,11 @@ import android.os.Bundle;
 
 import com.example.kyung.wooltari.R;
 
-public class HealthActivity extends AppCompatActivity {
+public class PetStateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_health);
+        setContentView(R.layout.activity_pet_state);
     }
 }
