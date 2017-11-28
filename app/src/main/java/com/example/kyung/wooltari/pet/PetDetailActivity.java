@@ -1,7 +1,6 @@
 package com.example.kyung.wooltari.pet;
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,13 +10,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.kyung.wooltari.R;
-import com.example.kyung.wooltari.common.PetNavigation;
+import com.example.kyung.wooltari.custom.PetNavigationView;
+import com.example.kyung.wooltari.util.ToolbarUtil;
 
 public class PetDetailActivity extends AppCompatActivity {
 
     DrawerLayout drawer;
-    Toolbar toolbar;
-    PetNavigation navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,20 +23,12 @@ public class PetDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_detail);
 
         initView();
-
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
     }
 
     private void initView(){
         drawer =findViewById(R.id.drawer_pet_layout);
-        toolbar = findViewById(R.id.petDetailToolbar);
-        navigation = new PetNavigation(this,drawer, (NavigationView)findViewById(R.id.navPetView));
-
-        setSupportActionBar(toolbar);
+        PetNavigationView navigation = new PetNavigationView(this,drawer, findViewById(R.id.navPetView));
+        ToolbarUtil.setMainToolBar(this, drawer, findViewById(R.id.petDetailToolbar), "Pet0");
     }
 
     @Override
@@ -50,6 +40,7 @@ public class PetDetailActivity extends AppCompatActivity {
         }
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.common_menu_etc, menu);
@@ -58,11 +49,6 @@ public class PetDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+        return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
     }
 }

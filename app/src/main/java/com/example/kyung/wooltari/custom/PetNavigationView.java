@@ -1,4 +1,4 @@
-package com.example.kyung.wooltari.common;
+package com.example.kyung.wooltari.custom;
 
 import android.content.Context;
 import android.content.Intent;
@@ -28,7 +28,7 @@ import java.util.List;
  * Created by Kyung on 2017-11-28.
  */
 
-public class PetNavigation implements NavigationView.OnNavigationItemSelectedListener  {
+public class PetNavigationView implements NavigationView.OnNavigationItemSelectedListener  {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -36,7 +36,7 @@ public class PetNavigation implements NavigationView.OnNavigationItemSelectedLis
     Spinner spinnerPetName;
     int pPk = 0;
 
-    public PetNavigation(Context context, DrawerLayout drawerLayout, NavigationView navigationView){
+    public PetNavigationView(Context context, DrawerLayout drawerLayout, NavigationView navigationView){
         this.context = context;
         this.drawerLayout = drawerLayout;
         this.navigationView = navigationView;
@@ -52,7 +52,7 @@ public class PetNavigation implements NavigationView.OnNavigationItemSelectedLis
      */
     private void setHeaderView(){
         View navHeaderView = navigationView.inflateHeaderView(R.layout.common_nav_header);
-        LoadUtil.circleImageLoad(context, UserDummy.data.profile, (ImageView)navHeaderView.findViewById(R.id.imageNavUserProfile));
+        LoadUtil.circleImageLoad(context, UserDummy.data.profile, navHeaderView.findViewById(R.id.imageNavUserProfile));
         ((TextView)navHeaderView.findViewById(R.id.textNavUserName)).setText(UserDummy.data.nickname);
     }
 
@@ -123,7 +123,7 @@ public class PetNavigation implements NavigationView.OnNavigationItemSelectedLis
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         switch (item.getItemId()){
-            case R.id.nav_pet_state : item.setChecked(false); goActivity(PetStateActivity.class); break;
+            case R.id.nav_pet_state : goActivity(PetStateActivity.class); break;
             case R.id.nav_vaccination : goActivity(PetStateActivity.class); break;
             case R.id.nav_medical_info: goActivity(PetStateActivity.class); break;
         }
