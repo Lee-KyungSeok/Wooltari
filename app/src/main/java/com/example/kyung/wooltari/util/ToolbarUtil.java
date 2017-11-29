@@ -20,21 +20,7 @@ import com.example.kyung.wooltari.medicalcare.PetStateActivity;
 
 public class ToolbarUtil {
 
-    public static void setMainToolBar(AppCompatActivity activity, DrawerLayout drawerLayout, Toolbar toolbar, String title){
-        // drawer 메뉴를 세팅
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                activity, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        // 툴바를 세팅
-        activity.setSupportActionBar(toolbar);
-        // 툴바의 타이틀 세팅
-        if(title!=null && !"".equals(title)) {
-            activity.getSupportActionBar().setTitle(title);
-        }
-    }
-
-    public static void setOtherToolBar(AppCompatActivity activity, Toolbar toolbar, String title){
+    public static void setCommonToolbar(AppCompatActivity activity, Toolbar toolbar, String title){
         // 툴바를 세팅
         activity.setSupportActionBar(toolbar);
         // 툴바에 뒤로가기 메뉴 추가

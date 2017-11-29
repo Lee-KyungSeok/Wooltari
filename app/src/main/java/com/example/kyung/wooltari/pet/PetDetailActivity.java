@@ -8,7 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,9 +37,17 @@ public class PetDetailActivity extends AppCompatActivity {
     }
 
     private void initView(){
-        drawer =findViewById(R.id.drawer_pet_layout);
+        // 네비게이션 바 및 툴바 세팅
+        drawer =findViewById(R.id.drawerPetLayout);
         PetNavigationView navigation = new PetNavigationView(this,drawer, findViewById(R.id.navPetView));
-        ToolbarUtil.setMainToolBar(this, drawer, findViewById(R.id.petDetailToolbar), "Pet0");
+        Toolbar toolbar = findViewById(R.id.petDetailToolbar);
+        ToolbarUtil.setCommonToolbar(this, toolbar, "Pet0");
+        // 네비게이션 토글 연결
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
     }
 
     @Override
