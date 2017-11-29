@@ -41,4 +41,5 @@ dependencies {
     implementation 'jp.wasabeef:glide-transformations:3.0.1' // 글라이드
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.2' // 그래프 라이브러리
 
+    implementation 'com.android.support:cardview-v7:26.1.0'
 }

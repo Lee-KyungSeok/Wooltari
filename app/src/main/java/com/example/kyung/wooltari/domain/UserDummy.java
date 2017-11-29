@@ -15,6 +15,8 @@ public class UserDummy {
     }
 
     public static class Dummy {
+        public String token = "3a2bba534203fe20fbf67d3e5d6ba1fdc95c72e6";
+
         public int pk = 0;
         public String user_type = "d";
         public String email = "dummy@d.gmail.com";

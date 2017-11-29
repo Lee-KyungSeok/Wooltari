@@ -8,6 +8,20 @@
     <string name="navigation_drawer_item_pet_state">Pet State</string>
     <string name="navigation_drawer_item_vaccination">Vaccination</string>
     <string name="navigation_drawer_item_medical_info">Medical_Info</string>
+
     <!-- toolbar-->
     <string name="action_settings">24 hour hospital</string>
+
+    <!-- camera&gallery popup -->
+    <string name="popup_camera_gallery_title_profile">Profile</string>
+    <string name="popup_camera_gallery_title_medical">Medical Info</string>
+    <string name="popup_btn_camera">Camera</string>
+    <string name="popup_btn_gallery">Select photo</string>
+    <string name="popup_btn_delete">Delete</string>
+
+    <!-- AlertDialog -->
+    <string name="alert_ok">OK</string>
+    <string name="alert_permission_title">Permission Required</string>
+    <string name="alert_permission_msg">Permissions needed to use this feature.\nPlease grant access in your devices\'s setting</string>
+
 </resources>
