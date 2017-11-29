@@ -73,7 +73,7 @@ public class PermissionUtil {
         }
     }
 
-    interface IPermissionGrant{
+    public interface IPermissionGrant{
         void success();
         void fail();
     }
