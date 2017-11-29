@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class PermissionUtil {
      */
     public void checkVersion(Activity activity, IPermissionGrant permissionGrant){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) request(activity,permissionGrant);
-        else permissionGrant.success();
+        else permissionGrant.success(REQ_CODE);
     }
 
     /**
@@ -46,10 +47,11 @@ public class PermissionUtil {
             }
         }
         if(requirePermissions.size()>0){
-            String[] requirePermissionsArrary = new String[requirePermissions.size()];
-            activity.requestPermissions(requirePermissionsArrary,REQ_CODE);
+            String[] requirePermissionArray = new String[requirePermissions.size()];
+            requirePermissionArray = requirePermissions.toArray(requirePermissionArray);
+            activity.requestPermissions(requirePermissionArray,REQ_CODE);
         } else {
-            permissionGrant.success();
+            permissionGrant.success(REQ_CODE);
         }
     }
 
@@ -68,13 +70,13 @@ public class PermissionUtil {
                     break;
                 }
             }
-            if(granted) permissionGrant.success();
+            if(granted) permissionGrant.success(REQ_CODE);
             else permissionGrant.fail();
         }
     }
 
     public interface IPermissionGrant{
-        void success();
+        void success(int requestCode);
         void fail();
     }
 }
