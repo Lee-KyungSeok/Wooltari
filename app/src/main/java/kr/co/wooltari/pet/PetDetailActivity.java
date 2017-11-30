@@ -1,5 +1,6 @@
 package kr.co.wooltari.pet;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -8,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.custom.PetNavigationView;
@@ -58,5 +60,10 @@ public class PetDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
+    }
+
+    //====================================임시 버튼
+    public void goProfile(View v){
+        startActivity(new Intent(this,PetProfileActivity.class));
     }
 }
