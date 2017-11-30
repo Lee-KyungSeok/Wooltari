@@ -1,22 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="kr.co.wooltari.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    android:orientation="vertical"
+    >
 
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="180sp"
+        android:src="@mipmap/ic_launcher"
+        android:background="@color/colorPrimaryDark"
+        />
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="250sp"
+        android:layout_marginBottom="3sp"
+        android:layout_marginTop="3sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        />
+    <EditText
+        android:layout_height="wrap_content"
+        android:layout_width="250sp"
+        android:layout_marginBottom="3sp"
+        android:layout_marginTop="3sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_height="30sp"
+        android:layout_width="250sp"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/colorPrimaryDark"
+        android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_width="250sp"
         android:onClick="goPet"
-        android:text="pet화면으로 넘기는 임시 버튼"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Login" />
 
-</android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="비밀번호를 잊으셨나요" />
+
+    <Button
+        android:id="@+id/button4"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="계정이 없으신가요? 새로운 계정 설정" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="10sp"
+        android:text="구글로 로그인" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="10sp"
+        android:text="페이스북으로 로그인" />
+
+    <!--<Button-->
+        <!--android:id="@+id/button"-->
+        <!--android:layout_width="250sp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginBottom="8dp"-->
+        <!--android:layout_marginEnd="8dp"-->
+        <!--android:onClick="goPet"-->
+        <!--android:text="pet화면으로 넘기는 임시 버튼"-->
+        <!--app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--app:layout_constraintEnd_toEndOf="parent" />-->
+</LinearLayout>
