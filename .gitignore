@@ -28,3 +28,10 @@ proguard/
 
 # Captures
 captures/
+
+# User Ignore
+.idea/modules.xml
+.idea/gradle.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/runConfigurations.xml
