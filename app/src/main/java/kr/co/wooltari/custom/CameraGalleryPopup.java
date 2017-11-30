@@ -2,6 +2,7 @@ package kr.co.wooltari.custom;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -11,8 +12,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -44,7 +48,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
     // 저장된 파일의 경로를 가지는 컨텐츠 uri
     private Uri fileUri = null;
 
-    public CameraGalleryPopup(@NonNull Context context, boolean isProfile, PopupType type, IDelete iDelete) {
+    public CameraGalleryPopup(@NonNull Context context, PopupType type, IDelete iDelete) {
         super(context);
         if(context instanceof Activity)
             activity = (Activity)context;
@@ -52,20 +56,39 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
         this.iDelete = iDelete;
         this.type = type;
 
-        initView(isProfile);
+        initView();
+        setLocation();
         setTextTitle();
         setBtnListener();
     }
 
-    public void initView(boolean isProfile) {
+    private void initView() {
         View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_camera_gallery, null);
         textCGPopupTitle = popupView.findViewById(R.id.textCGPopupTitle);
         btnCamera = popupView.findViewById(R.id.btnCamera);
         btnGallery = popupView.findViewById(R.id.btnGallery);
         btnDelete = popupView.findViewById(R.id.btnDelete);
 
-        if(!isProfile) btnDelete.setVisibility(GONE);
         addView(popupView);
+    }
+
+    /**
+     * 팝업 나타나는 위치 지정
+     */
+    private void setLocation(){
+        FrameLayout.LayoutParams layoutParams
+                = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+        setLayoutParams(layoutParams);
+    }
+
+    /**
+     * 프로필 유무에 따라 delete 버튼 생성 및 삭제
+     * @param isProfile
+     */
+    public void setbtnList(boolean isProfile){
+        if(isProfile) btnDelete.setVisibility(VISIBLE);
+        else btnDelete.setVisibility(GONE);
     }
 
     /**
@@ -73,12 +96,8 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      */
     private void setTextTitle(){
         switch (type){
-            case PET_MEDICAL:
-                textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_medical));
-                break;
-            default:
-                textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_profile));
-                break;
+            case PET_MEDICAL: textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_medical)); break;
+            default: textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_profile)); break;
         }
     }
 
@@ -106,16 +125,18 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      * 기본 이미지의 resourceId를 리턴
      */
     private void loadBasicImageResource(){
-//        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-//                "://" + getContext().getResources().getResourcePackageName(R.drawable.pet_profile)
-//                + '/' + getContext().getResources().getResourceTypeName(R.drawable.pet_profile)
-//                + '/' + getContext().getResources().getResourceEntryName(R.drawable.pet_profile)
-//        );
+        int resId = 0;
         switch (type){
-            case PET_MEDICAL: iDelete.setBasicImage(R.drawable.ic_menu_slideshow); break;
-            case PET_PROFILE: iDelete.setBasicImage(R.drawable.pet_profile); break;
-            case USER_PROFILE: iDelete.setBasicImage(R.drawable.user_profile); break;
+            case PET_MEDICAL: resId = R.drawable.ic_menu_slideshow; break;
+            case PET_PROFILE: resId = R.drawable.pet_profile; break;
+            case USER_PROFILE: resId = R.drawable.user_profile; break;
         }
+        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + getContext().getResources().getResourcePackageName(resId)
+                + '/' + getContext().getResources().getResourceTypeName(resId)
+                + '/' + getContext().getResources().getResourceEntryName(resId)
+        );
+        iDelete.setBasicImage(imageUri);
         iDelete.deletePopup();
     }
 
@@ -256,7 +277,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
     }
 
     public interface IDelete {
-        void setBasicImage(int ResourceId);
+        void setBasicImage(Uri basicProfileUri);
         void deletePopup();
     }
 }

@@ -1,6 +1,7 @@
 package kr.co.wooltari.util;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -29,11 +30,14 @@ public class ToolbarUtil {
         }
     }
 
-    public static boolean setMenuItemSelectedAction(Context context, MenuItem item){
+    public static boolean setMenuItemSelectedAction(Activity activity, MenuItem item){
         switch (item.getItemId()){
             case R.id.menu_24_hospital:
-                Intent intent = new Intent(context, EmergencyActivity.class);
-                context.startActivity(intent);
+                Intent intent = new Intent(activity, EmergencyActivity.class);
+                activity.startActivity(intent);
+                return true;
+            case android.R.id.home:
+                activity.finish();
                 return true;
         }
         return false;

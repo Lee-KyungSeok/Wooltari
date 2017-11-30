@@ -24,4 +24,25 @@
     <string name="alert_permission_title">Permission Required</string>
     <string name="alert_permission_msg">Permissions needed to use this feature.\nPlease grant access in your devices\'s setting</string>
 
+    <!-- Pet Profile -->
+    <string name="pet_profile">Pet Profile</string>
+    <string name="pet_profile_register">Pet Register</string>
+    <string name="pet_profile_edit">Pet Profile Edit</string>
+    <string name="pet_profile_name">Name</string>
+    <string name="pet_profile_name_hint">Write your pet\'s name</string>
+    <string name="pet_profile_species">Species</string>
+    <string name="pet_profile_breeds">Breeds</string>
+    <string name="pet_profile_birth">Birth</string>
+    <string name="pet_profile_age">Age</string>
+    <string name="pet_profile_human_age">HumanAge</string>
+    <string name="pet_profile_sex">Sex</string>
+    <string name="pet_profile_neutralization">Neuter /\nSpay</string>
+    <string name="pet_profile_number">Number</string>
+    <string name="pet_profile_number_hint">Write your pet\'s number</string>
+    <string name="pet_profile_btn_number_search">Search</string>
+    <string name="pet_profile_color">Color</string>
+    <string name="pet_profile_btn_add">Add</string>
+    <string name="pet_profile_btn_edit">Edit</string>
+    <string name="pet_profile_btn_cancel">Cancel</string>
+
 </resources>

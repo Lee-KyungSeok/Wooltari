@@ -3,4 +3,20 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    
+    <!-- Pet Color -->
+    <color name="colorRed">#ff0000</color>
+    <color name="colorBurgundy">#630404</color>
+    <color name="colorPink">#ff99cc</color>
+    <color name="colorBeige">#c9a76d</color>
+    <color name="colorDarkBlue">#003366</color>
+    <color name="colorGray">#808080</color>
+    <color name="colorDarkGreen">#065454</color>
+    <color name="colorGoldGreen">#a3b846</color>
+    <color name="colorBlueOfSea">#3366ff</color>
+    <color name="colorOrangeMuffler">#e06d1f</color>
+    
+    <!-- Camera&Gallery Popup -->
+    <color name="translucentGray">#88FFFFFF</color>
+
 </resources>
