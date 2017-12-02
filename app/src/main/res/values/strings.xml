@@ -44,5 +44,19 @@
     <string name="pet_profile_btn_add">Add</string>
     <string name="pet_profile_btn_edit">Edit</string>
     <string name="pet_profile_btn_cancel">Cancel</string>
+    <string name="pet_profile_species_hint">Select Species..</string>
+    <string name="pet_profile_breeds_hint">Select Breeds..</string>
+    <string name="pet_profile_birth_year">year</string>
+    <string name="pet_profile_birth_month">month</string>
+    <string name="pet_profile_birth_day">day</string>
+    <string-array name="pet_species_item">
+        <item>Dog</item> <item>Cat</item>
+    </string-array>
+    <string-array name="pet_breeds_dog_item">
+        <item>Maltese</item> <item>Golden Retriever</item> <item>Poodle</item>
+    </string-array>
+    <string-array name="pet_breeds_cat_item">
+        <item>British Shorthair</item> <item>Russian Blue</item> <item>Bengal</item>
+    </string-array>
 
 </resources>

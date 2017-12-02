@@ -1,26 +1,41 @@
 package kr.co.wooltari.pet;
 
 import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
+import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.ToolbarUtil;
 
@@ -37,25 +52,23 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private RadioButton radioButtonGray, radioButtonDarkGreen, radioButtonGoldGreen, radioButtonBlueOfSea, radioButtonOrangeMuffler;
     private Button btnNumberSearch, btnPetAddEdit, btnPetCancel, btnPetInfoEdit;
 
+    private RadioButton activeRadioColor;
+
     private int pPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
+
+    // 펫정보
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);
-
         pPk = getIntent().getIntExtra(Const.PET_ID,2);
         initView();
-        // 버튼 정의
-        setPetProfileButton();
-        // 카메라,갤러리 팝업 정의
-        setImagePopup();
-        if(pPk==-1){
-            setRegisterPetProfile();
-        } else {
-            setDefaultPetProfile();
-        }
+        init();
+
+        btnPetInfoEdit.setVisibility(View.GONE); // 버튼을 일단은 없앰(확장성 고려)
     }
 
     private void initView() {
@@ -76,17 +89,28 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         radioButtonDarkGreen = findViewById(R.id.radioButtonDarkGreen); radioButtonGoldGreen = findViewById(R.id.radioButtonGoldGreen);
         radioButtonBlueOfSea = findViewById(R.id.radioButtonBlueOfSea); radioButtonOrangeMuffler = findViewById(R.id.radioButtonOrangeMuffler);
 
-        // 툴바세팅
-        ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile_register));
-        getSupportActionBar().setHomeButtonEnabled(true);
+        stagePetProfilePopup = findViewById(R.id.stagePetProfilePopup);
+    }
 
+    private void init(){
+        setBtnListener(); // 버튼, 라디오 버튼 리스너 세팅
+        setImagePopup(); // 카메라, 갤러리 팝업 정의
+        setPetSpecies(); // 펫 종류, 종 선택 스피너 정의
+        setPetBirth(); // 펫 생년월일 스피너 정의
+        activeRadioColor = radioButtonRed;
+
+        if(pPk==-1){
+            setRegisterPetProfile();
+        } else {
+            setDefaultPetProfile();
+        }
+        changePetBackgroundColor(activeRadioColor);
     }
 
     /**
      * 팝업 세팅 (팝업 효과 및 이미지 클릭 세팅)
      */
     private void setImagePopup(){
-        stagePetProfilePopup = findViewById(R.id.stagePetProfilePopup);
         stagePetProfilePopup.setVisibility(View.GONE);
         cameraGalleryPopup = new CameraGalleryPopup(this, CameraGalleryPopup.PopupType.PET_PROFILE, new CameraGalleryPopup.IDelete() {
             @Override
@@ -104,19 +128,27 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         imagePetProfile.setOnClickListener(v -> stagePetProfilePopup.setVisibility(View.VISIBLE));
     }
 
-    private void setPetProfileButton(){
+    private void setBtnListener(){
         btnPetCancel.setOnClickListener(this);
         btnPetAddEdit.setOnClickListener(this);
         btnPetInfoEdit.setOnClickListener(this);
         btnNumberSearch.setOnClickListener(this);
+
+        for(int i=0 ; i<radioGroupColor.getChildCount() ; i++){
+            for(int j=0 ; j<5 ; j++){
+                View vRow = ((LinearLayout)radioGroupColor.getChildAt(i)).getChildAt(j);
+                vRow.setOnClickListener(this);
+            }
+        }
     }
 
     /**
      * 등록을 위한 페이지를 보여줌
      */
     private void setRegisterPetProfile(){
+        // 툴바를 register로 세팅
+        ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile_register));
         // 버튼 상태 정의
-        btnPetInfoEdit.setVisibility(View.GONE);
         btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_add));
     }
 
@@ -124,30 +156,210 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      * 기본 프로필 세팅 및 버튼 제거, 이름 변경
      */
     private void setDefaultPetProfile(){
-        btnPetAddEdit.setVisibility(View.GONE);
-        btnPetCancel.setVisibility(View.GONE);
-        btnNumberSearch.setVisibility(View.GONE);
+        // 툴바를 Porfile로 세팅
+        ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile));
+        // 이미지 세팅
+        LoadUtil.circleImageLoad(this,PetDummy.data.get(pPk).pProfile, imagePetProfile);
+        // 버튼 상태 정의
+        btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_edit));
+        // 이름 디폴트 값 정의
+        editPetName.setText(PetDummy.data.get(pPk).pName);
+        // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
+        checkSpinnerDefaultValue(spinnerPetSpecies, "Dog");
+        checkSpinnerDefaultValue(spinnerPetYear,"2000");
+        checkSpinnerDefaultValue(spinnerPetMonth,"09");
+        checkSpinnerDefaultValue(spinnerPetDay,"23");
+        // 라디오 버튼(sex, neuter/spay) 디폴트 값 정의
+        checkRadioSexNeuterValue(radioGroupNeutral);
+        checkRadioSexNeuterValue(radioGroupSex);
+        // pet Number 디폴트 값 정의
+        editTextPetNumber.setText(PetDummy.data.get(pPk).petNumber);
+        // pet 디폴트 색상 정의
+        checkRadioColorValue();
     }
 
+    /**
+     * 종 선택에 대한 스피너 정의
+     */
     private void setPetSpecies(){
+        List<String> data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_species_item)));
+        spinnerPetSpecies.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_species_hint)));
+        spinnerPetSpecies.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // position 0 은 hint값
+                setPetBreeds(position);
+            }
 
-    }
-    private void setPetBreeds(){
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
     }
+    private void setPetBreeds(int position){
+        List<String> data;
+        switch (position){
+            case 1: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_dog_item))); break;
+            case 2: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_cat_item))); break;
+            default: data = new ArrayList<>(); break;
+        }
+        spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
+        if(pPk!=1) { checkSpinnerDefaultValue(spinnerPetBreeds,"Poodle"); }
+    }
+
+    /**
+     * 펫 생년월일 정의
+     */
     private void setPetBirth(){
+        List<String> dataYear = new ArrayList<>();
+        for(int i= 2000 ; i<2021 ; i++){ dataYear.add(i+""); }
+        spinnerPetYear.setAdapter(createArrayAdapter(dataYear,getResources().getString(R.string.pet_profile_birth_year)));
 
+        List<String> dataMonth = new ArrayList<>();
+        for(int i=1 ; i<=12 ; i++){
+            if(i<10) dataMonth.add("0"+i+"");
+            else  dataMonth.add(i+"");
+        }
+        spinnerPetMonth.setAdapter(createArrayAdapter(dataMonth,getResources().getString(R.string.pet_profile_birth_month)));
+
+        List<String> dataDay = new ArrayList<>();
+        for(int i=1 ; i<=31 ; i++){
+            if(i<10) dataDay.add("0"+i+"");
+            else  dataDay.add(i+"");
+        }
+        spinnerPetDay.setAdapter(createArrayAdapter(dataDay,getResources().getString(R.string.pet_profile_birth_day)));
     }
-    private void setPetSexAndNeutral(){
 
+    /**
+     * 스피너의 아답터 생성
+     */
+    private ArrayAdapter createArrayAdapter(List<String> data, String hint){
+        data.add(0,hint);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1, data){
+            @Override
+            public boolean isEnabled(int position) {
+                return position!=0;
+            }
+            @Override
+            public View getDropDownView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+                View view = super.getDropDownView(position, convertView, parent);
+                TextView textView = (TextView) view;
+                if(position==0){
+                    textView.setTextColor(Color.GRAY);
+                } else {
+                    textView.setTextColor(Color.BLACK);
+                }
+                return view;
+            }
+        };
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        return adapter;
     }
-    private void setPetColor(){
 
+    /**
+     * Pet의 색상을 변경시킴
+     *  - 현재는 이미지 배경만
+     */
+    private void changePetBackgroundColor(RadioButton radioButton){
+        imagePetProfile.setBackgroundColor(radioButton.getCurrentTextColor());
+    }
+
+    /**
+     * 입력된 정보를 가져올 수 있도록 하는 메소드
+     *  - 성별, 중성화여부, 색깔
+     */
+    private String getPetSex(){
+        if(radioButtonMale.isChecked()) return "M";
+        else return "F";
+    }
+    private String getPetNeuterSpay(){
+        if(radioButtonNeuYes.isChecked()) return "Y";
+        else return "N";
+    }
+    private String getPetColor(int radioId){
+        switch (radioId){
+            case R.id.radioButtonBeige:
+                // 리턴값을 정의하면 됨
+                break;
+            case R.id.radioButtonBlueOfSea:
+                break;
+            case R.id.radioButtonBurgundy:
+                break;
+            case R.id.radioButtonDarkBlue:
+                break;
+            case R.id.radioButtonDarkGreen:
+                break;
+            case R.id.radioButtonGoldGreen:
+                break;
+            case R.id.radioButtonGray:
+                break;
+            case R.id.radioButtonOrangeMuffler:
+                break;
+            case R.id.radioButtonPink:
+                break;
+            default:
+                break;
+        }
+        return radioId+"";
+    }
+
+    /**
+     * 스피너의 디폴트 값 찾기
+     */
+    private void checkSpinnerDefaultValue(Spinner spinner, String value){
+        Adapter adapter = spinner.getAdapter();
+        for(int i=0 ; i<adapter.getCount() ; i++){
+            if(adapter.getItem(i).equals(value)){
+                spinner.setSelection(i);
+            }
+        }
+    }
+    /**
+     * radio 버튼 디폴트 값 찾기
+     */
+    private void checkRadioSexNeuterValue(RadioGroup radioGroup){
+        switch (radioGroup.getId()){
+            case R.id.radioGroupSex:
+                if ("M".equals(PetDummy.data.get(pPk).sex)) {
+                    radioButtonMale.setChecked(true);
+                    radioButtonFemale.setChecked(false);
+                } else {
+                    radioButtonMale.setChecked(false);
+                    radioButtonFemale.setChecked(true);
+                }
+                break;
+            case R.id.radioGroupNeutral:
+                if ("Y".equals(PetDummy.data.get(pPk).sex)) {
+                    radioButtonNeuYes.setChecked(true);
+                    radioButtonNeuNo.setChecked(false);
+                } else {
+                    radioButtonNeuYes.setChecked(false);
+                    radioButtonNeuNo.setChecked(true);
+                }
+                break;
+        }
+    }
+
+    private void checkRadioColorValue(){
+        // 로직 작성// 데이터가 나온 후 만들 수 있을듯....
     }
 
     @Override
     public void onClick(View v) {
-
+        //color에 관한 radioButton
+        if(v instanceof RadioButton) {
+            activeRadioColor.setChecked(false);
+            ((RadioButton) v).setChecked(true);
+            activeRadioColor = (RadioButton) v;
+            changePetBackgroundColor(activeRadioColor);
+        } else {
+            switch (v.getId()){
+                case R.id.btnPetAddEdit: save(); break;
+                case R.id.btnPetCancel: finish(); break;
+                case R.id.btnPetInfoEdit: break; // 임시용
+            }
+        }
     }
 
     /**
@@ -190,4 +402,24 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             super.onBackPressed();
         }
     }
+
+    /**
+     * 팻 정보를 저장
+     */
+    public void save(){
+        String name = editPetName.getText().toString();
+        String species = spinnerPetSpecies.getSelectedItem().toString();
+        String breeds = spinnerPetBreeds.getSelectedItem().toString();
+        String year = spinnerPetYear.getSelectedItem().toString();
+        String month = spinnerPetMonth.getSelectedItem().toString();
+        String day = spinnerPetDay.getSelectedItem().toString();
+        String sex = getPetSex();
+        String neuterSpay = getPetNeuterSpay();
+        String petNum = editTextPetNumber.getText().toString();
+        String color = getPetColor(activeRadioColor.getId());
+
+        Log.e("저장 확인"," name = "+name + " species = "+species + " breeds = "+breeds + " birth0 = "+year+month+day
+        + " sex = "+sex + " neuterSpay = "+neuterSpay + " petNum = "+petNum + " colorId = "+color );
+    }
+
 }
