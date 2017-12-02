@@ -39,7 +39,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
     private TextView textCGPopupTitle;
     private Button btnCamera;
     private Button btnGallery;
-    private Button btnDelete;
+    private Button btnCGDelete;
     private Activity activity;
     private IDelete iDelete;
 
@@ -67,7 +67,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
         textCGPopupTitle = popupView.findViewById(R.id.textCGPopupTitle);
         btnCamera = popupView.findViewById(R.id.btnCamera);
         btnGallery = popupView.findViewById(R.id.btnGallery);
-        btnDelete = popupView.findViewById(R.id.btnDelete);
+        btnCGDelete = popupView.findViewById(R.id.btnCGDelete);
 
         addView(popupView);
     }
@@ -87,8 +87,8 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      * @param isProfile
      */
     public void setbtnList(boolean isProfile){
-        if(isProfile) btnDelete.setVisibility(VISIBLE);
-        else btnDelete.setVisibility(GONE);
+        if(isProfile) btnCGDelete.setVisibility(VISIBLE);
+        else btnCGDelete.setVisibility(GONE);
     }
 
     /**
@@ -107,7 +107,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
     private void setBtnListener(){
         btnCamera.setOnClickListener(this);
         btnGallery.setOnClickListener(this);
-        btnDelete.setOnClickListener(this);
+        btnCGDelete.setOnClickListener(this);
     }
     /**
      * 버튼 클릭 메소드
@@ -118,7 +118,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
         switch (v.getId()){
             case R.id.btnCamera: checkCameraPermission(); break;
             case R.id.btnGallery: checkGalleryPermission(); break;
-            case R.id.btnDelete: loadBasicImageResource(); break;
+            case R.id.btnCGDelete: loadBasicImageResource(); break;
         }
     }
     /**
