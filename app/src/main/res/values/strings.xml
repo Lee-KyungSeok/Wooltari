@@ -23,6 +23,8 @@
     <string name="alert_ok">OK</string>
     <string name="alert_permission_title">Permission Required</string>
     <string name="alert_permission_msg">Permissions needed to use this feature.\nPlease grant access in your devices\'s setting</string>
+    <string name="alert_pet_delete_title">Pet Information delete</string>
+    <string name="alert_pet_delete_msg">Are you sure you want to delete your Pet?</string>
 
     <!-- Pet Profile -->
     <string name="pet_profile">Pet Profile</string>
@@ -41,8 +43,11 @@
     <string name="pet_profile_number_hint">Write your pet\'s number</string>
     <string name="pet_profile_btn_number_search">Search</string>
     <string name="pet_profile_color">Color</string>
+    <string name="pet_profile_btn_state_active">Active</string>
+    <string name="pet_profile_btn_state_inactive">InActive</string>
     <string name="pet_profile_btn_add">Add</string>
     <string name="pet_profile_btn_edit">Edit</string>
+    <string name="pet_profile_btn_delete">Delete</string>
     <string name="pet_profile_btn_cancel">Cancel</string>
     <string name="pet_profile_species_hint">Select Species..</string>
     <string name="pet_profile_breeds_hint">Select Breeds..</string>

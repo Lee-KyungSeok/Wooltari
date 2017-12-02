@@ -26,6 +26,7 @@ public class PetDummy {
         public String pName;
         public String pProfile;
         public String petNumber;
+        public boolean state;
 
         public Dummy(int pPK, String pName, int num, String petNumber){
             this.pPK = pPK;
@@ -35,9 +36,11 @@ public class PetDummy {
             if(pPK%2==0){
                 this.sex = "M";
                 this.neuter = "N";
+                this.state = true;
             } else {
                 this.sex = "F";
                 this.neuter = "Y";
+                this.state = false;
             }
         }
     }
