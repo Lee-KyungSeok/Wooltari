@@ -38,7 +38,7 @@
                 android:text="@string/popup_btn_gallery" />
 
             <Button
-                android:id="@+id/btnDelete"
+                android:id="@+id/btnCGDelete"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/popup_btn_delete" />
