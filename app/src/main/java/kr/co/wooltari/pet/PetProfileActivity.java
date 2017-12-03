@@ -1,6 +1,7 @@
 package kr.co.wooltari.pet;
 
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +67,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);
-        pPk = getIntent().getIntExtra(Const.PET_ID,3);
+        pPk = getIntent().getIntExtra(Const.PET_ID,-1);
         initView();
         init();
 
@@ -107,7 +109,8 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             setDefaultPetProfile();
         }
         changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
-        if(!PetDummy.data.get(pPk).state) changeState(true);
+        if(PetDummy.data.get(pPk).state) changeState(false);
+        else changeState(true);
         createDialog();
     }
 
@@ -282,20 +285,31 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void createDialog(){
         backDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_cancel_back_title)
                 ,getResources().getString(R.string.alert_pet_cancel_back_msg), true);
-        backDialog.dismiss();
+        backDialog.cancel();
+        backDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    finish();
+                    dialog.cancel();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         cancelDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_cancel_title)
                 ,getResources().getString(R.string.alert_pet_cancel_msg), true);
-        cancelDialog.dismiss();
+        cancelDialog.cancel();
 
 
         deleteDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_delete_title),
                 getResources().getString(R.string.alert_pet_delete_msg) , this::delete);
-        deleteDialog.dismiss();
+        deleteDialog.cancel();
 
         saveDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_save_title),
                 getResources().getString(R.string.alert_pet_save_msg), this::save);
-        saveDialog.dismiss();
+        saveDialog.cancel();
 
         Log.e("show"," deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
     }
@@ -516,13 +530,12 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         Log.e("show"," backDialog : "+backDialog.isShowing()+" deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
         if(stagePetProfilePopup.getVisibility() == View.VISIBLE){
             stagePetProfilePopup.setVisibility(View.GONE);
-        } else if (backDialog.isShowing()) {
+        } else if(!PetDummy.data.get(pPk).state){
             finish();
-        } else if(!deleteDialog.isShowing() && !cancelDialog.isShowing() && !saveDialog.isShowing()){
-            backDialog.show();
-        } else {
-            super.onBackPressed();
         }
+        else {
+            backDialog.show();
+        }
+        // super.onBackPressed();
     }
-
 }
