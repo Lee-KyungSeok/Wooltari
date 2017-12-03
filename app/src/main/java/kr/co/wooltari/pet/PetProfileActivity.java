@@ -108,9 +108,6 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         } else {
             setDefaultPetProfile();
         }
-        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
-        if(PetDummy.data.get(pPk).state) changeState(false);
-        else changeState(true);
         createDialog();
     }
 
@@ -164,6 +161,8 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // 버튼 상태 정의
         btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_add));
         btnPetDelete.setVisibility(View.GONE);
+        btnPetState.setVisibility(View.GONE);
+        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
     }
 
     /**
@@ -191,6 +190,10 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         editTextPetNumber.setText(PetDummy.data.get(pPk).petNumber);
         // pet 디폴트 색상 정의
         checkRadioColorValue();
+        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+        // pet State 체크
+        if(PetDummy.data.get(pPk).state) changeState(false);
+        else changeState(true);
     }
 
     /**
@@ -395,6 +398,16 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
+     * 인터넷과 연결하여 등록번호 확인
+     */
+    private void searchNumber(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse("http://www.animal.go.kr/mobile2/html/03_inquiry.jsp");
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
+    /**
      * 팻 정보를 저장
      */
     private void save(){
@@ -485,6 +498,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 case R.id.btnPetCancel: cancelDialog.show(); break;
                 case R.id.btnPetDelete: deleteDialog.show(); break;
                 case R.id.btnPetState: changeState(PetDummy.data.get(pPk).state); break;
+                case R.id.btnNumberSearch: searchNumber(); break;
                 case R.id.btnPetInfoEdit: break; // 임시용
             }
         }
@@ -530,10 +544,10 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         Log.e("show"," backDialog : "+backDialog.isShowing()+" deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
         if(stagePetProfilePopup.getVisibility() == View.VISIBLE){
             stagePetProfilePopup.setVisibility(View.GONE);
-        } else if(!PetDummy.data.get(pPk).state){
-            finish();
-        }
-        else {
+        } else if(btnPetState.getVisibility() == View.VISIBLE){
+            if(!PetDummy.data.get(pPk).state) finish();
+            else backDialog.show();
+        } else {
             backDialog.show();
         }
         // super.onBackPressed();
