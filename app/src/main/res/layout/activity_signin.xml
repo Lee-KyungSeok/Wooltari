@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kr.co.wooltari.LoginActivity"
+    tools:context="kr.co.wooltari.user.SignInActivity"
     android:orientation="vertical">
     <android.support.v7.widget.AppCompatImageView
         android:layout_width="match_parent"
@@ -31,17 +31,18 @@
     <Button
         android:id="@+id/button_login"
         android:layout_width="250sp"
-        android:onClick="onCLick_Login"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Login" />
+        android:text="Login"
+        android:onClick="onClick_Login" />
 
     <Button
         android:id="@+id/button_search_password"
         android:layout_width="250sp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="비밀번호를 잊으셨나요" />
+        android:text="비밀번호를 잊으셨나요"
+        android:onClick="onClick_MiggingPassword"/>
 
     <Button
         android:id="@+id/button_new_account"
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:text="계정이 없으신가요? 새로운 계정 설정"
-        android:onClick="onCLick_Signup"/>
+        android:onClick="onClick_Signup"/>
 
     <Button
         android:id="@+id/button_login_google"

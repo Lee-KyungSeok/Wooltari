@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".pet.PetDetailActivity" />
         <activity android:name=".medicalcare.PetStateActivity" />
-        <activity android:name=".user.SignActivity" />
+        <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".EmergencyActivity" />
 
         <!-- 사진을 저장하기 위해 파일에 대한 권한 획득 설정 -->
@@ -42,8 +42,8 @@
             android:value="@string/google_maps_key" />
 
         <activity android:name=".pet.PetProfileActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".user.SignUpActivity" />
+        <activity android:name=".user.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

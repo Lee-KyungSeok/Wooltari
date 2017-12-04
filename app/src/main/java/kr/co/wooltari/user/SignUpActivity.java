@@ -1,4 +1,4 @@
-package kr.co.wooltari;
+package kr.co.wooltari.user;
 
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import kr.co.wooltari.R;
 
 public class SignUpActivity extends AppCompatActivity {
     EditText _id_editText;
@@ -104,27 +106,27 @@ public class SignUpActivity extends AppCompatActivity {
                             URL httpbinEndpoint = new URL("https://wooltari.co.kr/auth/signup/");
                             HttpsURLConnection myConnection;
 
-                            myConnection = (HttpsURLConnection) httpbinEndpoint.openConnection();
-                            myConnection.setRequestMethod("POST");
-                            String queryStringData = "email="+id+"&"+
-                                    "nickname="+nickname+"&"+
-                                    "password1="+password1+"&"+
-                                    "password2="+password2;
-
-                            myConnection.setDoOutput(true);
-                            myConnection.getOutputStream().write(queryStringData.getBytes());
-
-                            Log.e("myConnection",queryStringData);
-                            if (myConnection.getResponseCode() == 201) {
-                                // Success
-                                Log.e("myConnection","connection sucess!!");
-                                _id_editText.setText(myConnection.getResponseMessage().substring(500));
-                            }else if (myConnection.getResponseCode()==400){
-                                // Error
-                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-                            }else {
-                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-                            }
+//                            myConnection = (HttpsURLConnection) httpbinEndpoint.openConnection();
+//                            myConnection.setRequestMethod("POST");
+//                            String queryStringData = "email="+id+"&"+
+//                                    "nickname="+nickname+"&"+
+//                                    "password1="+password1+"&"+
+//                                    "password2="+password2;
+//
+//                            myConnection.setDoOutput(true);
+//                            myConnection.getOutputStream().write(queryStringData.getBytes());
+//
+//                            Log.e("myConnection",queryStringData);
+//                            if (myConnection.getResponseCode() == 201) {
+//                                // Success
+//                                Log.e("myConnection","connection sucess!!");
+//                                _id_editText.setText(myConnection.getResponseMessage().substring(500));
+//                            }else if (myConnection.getResponseCode()==400){
+//                                // Error
+//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
+//                            }else {
+//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
+//                            }
 
                         } catch (IOException e) {
                             e.printStackTrace();
