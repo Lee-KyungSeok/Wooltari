@@ -1,4 +1,4 @@
-package kr.co.wooltari.medicalcare;
+package kr.co.wooltari.medicalcare.healthState;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

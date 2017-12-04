@@ -70,4 +70,17 @@
         <item>British Shorthair</item> <item>Russian Blue</item> <item>Bengal</item>
     </string-array>
 
+    <!-- Pet Health State -->
+    <string name="pet_state_weight">Weight</string>
+    <string name="pet_state_weight_goal">Goal Weight</string>
+    <string name="pet_state_height">Height</string>
+    <string name="pet_state_neck_size">Neck Size</string>
+    <string name="pet_state_chest_size">Chest Size</string>
+    <string name="pet_state_chart_title">Chart of Weight</string>
+    <string name="pet_state_detail_title">Detail of Weight</string>
+    <string name="pet_state_detail_weight_goal">Goal :  </string>
+    <string name="pet_state_detail_date">Date</string>
+    <string name="pet_state_detail_weight">Weight</string>
+    <string name="pet_state_detail_delete">Delete</string>
+
 </resources>

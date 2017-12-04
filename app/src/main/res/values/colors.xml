@@ -16,6 +16,9 @@
     <color name="colorGoldGreen">#a3b846</color>
     <color name="colorBlueOfSea">#3366ff</color>
     <color name="colorOrangeMuffler">#e06d1f</color>
+
+    <!-- Pet Health Info Color -->
+    <color name="colorHealthItemBackground">#dddddd</color>
     
     <!-- Camera&Gallery Popup -->
     <color name="translucentGray">#88FFFFFF</color>
