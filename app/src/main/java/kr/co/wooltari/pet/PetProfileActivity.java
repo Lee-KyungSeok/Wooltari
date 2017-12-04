@@ -189,7 +189,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // pet Number 디폴트 값 정의
         editTextPetNumber.setText(PetDummy.data.get(pPk).petNumber);
         // pet 디폴트 색상 정의
-        checkRadioColorValue();
+        checkRadioColorValue(PetDummy.data.get(pPk).color);
         changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
         // pet State 체크
         if(PetDummy.data.get(pPk).state) changeState(false);
@@ -332,28 +332,26 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private String getPetColor(int radioId){
         switch (radioId){
             case R.id.radioButtonBeige:
-                // 리턴값을 정의하면 됨
-                break;
+                return "colorBeige";
             case R.id.radioButtonBlueOfSea:
-                break;
+                return "colorBlueOfSea";
             case R.id.radioButtonBurgundy:
-                break;
+                return "colorBurgundy";
             case R.id.radioButtonDarkBlue:
-                break;
+                return "colorDarkBlue";
             case R.id.radioButtonDarkGreen:
-                break;
+                return "colorDarkGreen";
             case R.id.radioButtonGoldGreen:
-                break;
+                return "colorGoldGreen";
             case R.id.radioButtonGray:
-                break;
+                return "colorGray";
             case R.id.radioButtonOrangeMuffler:
-                break;
+                return "colorOrangeMuffler";
             case R.id.radioButtonPink:
-                break;
+                return "colorPink";
             default:
-                break;
+                return "colorRed";
         }
-        return radioId+"";
     }
 
     /**
@@ -382,7 +380,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.radioGroupNeutral:
-                if ("Y".equals(PetDummy.data.get(pPk).sex)) {
+                if ("Y".equals(PetDummy.data.get(pPk).neuter)) {
                     radioButtonNeuYes.setChecked(true);
                     radioButtonNeuNo.setChecked(false);
                 } else {
@@ -393,8 +391,22 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         }
     }
 
-    private void checkRadioColorValue(){
-        // 로직 작성// 데이터가 나온 후 만들 수 있을듯....
+    private void checkRadioColorValue(String colorName){
+        activeRadioColor.setChecked(false);
+        switch (colorName){
+            case "colorRed": activeRadioColor = radioButtonRed; break;
+            case "colorBurgundy": activeRadioColor = radioButtonBurgundy; break;
+            case "colorPink": activeRadioColor = radioButtonPink; break;
+            case "colorBeige": activeRadioColor = radioButtonBeige; break;
+            case "colorDarkBlue": activeRadioColor = radioButtonDarkBlue; break;
+            case "colorGray": activeRadioColor = radioButtonGray; break;
+            case "colorDarkGreen": activeRadioColor = radioButtonDarkGreen; break;
+            case "colorGoldGreen": activeRadioColor = radioButtonGoldGreen; break;
+            case "colorBlueOfSea": activeRadioColor = radioButtonBlueOfSea; break;
+            case "colorOrangeMuffler": activeRadioColor = radioButtonOrangeMuffler; break;
+        }
+        activeRadioColor.setChecked(true);
+        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
     }
 
     /**

@@ -27,6 +27,7 @@ public class PetDummy {
         public String pProfile;
         public String petNumber;
         public boolean state;
+        public String color;
 
         public Dummy(int pPK, String pName, int num, String petNumber){
             this.pPK = pPK;
@@ -41,6 +42,16 @@ public class PetDummy {
                 this.sex = "F";
                 this.neuter = "Y";
                 this.state = false;
+            }
+            switch (pPK){
+                case 0: this.color = "colorBurgundy"; break;
+                case 1: this.color = "colorPink"; break;
+                case 2: this.color = "colorBeige"; break;
+                case 3: this.color = "colorDarkBlue"; break;
+                case 4: this.color = "colorOrangeMuffler"; break;
+                case 5: this.color = "colorDarkGreen"; break;
+                case 6: this.color = "colorGoldGreen"; break;
+                case 7: this.color = "colorBlueOfSea"; break;
             }
         }
     }
