@@ -223,7 +223,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             default: data = new ArrayList<>(); break;
         }
         spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(pPk!=1) { checkSpinnerDefaultValue(spinnerPetBreeds,"Poodle"); }
+        if(pPk!=-1) { checkSpinnerDefaultValue(spinnerPetBreeds,"Poodle"); }
     }
 
     /**

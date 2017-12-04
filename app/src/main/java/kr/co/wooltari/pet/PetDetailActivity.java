@@ -12,7 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
+import kr.co.wooltari.domain.HealthStateDummy;
+import kr.co.wooltari.medicalcare.PetStateActivity;
 import kr.co.wooltari.util.ToolbarUtil;
 
 
@@ -25,6 +28,8 @@ public class PetDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_detail);
         initView();
+
+        HealthStateDummy.stateData.get(0);
     }
 
     private void initView(){
@@ -65,5 +70,15 @@ public class PetDetailActivity extends AppCompatActivity {
     //====================================임시 버튼
     public void goProfile(View v){
         startActivity(new Intent(this,PetProfileActivity.class));
+    }
+    public void goDefault(View v){
+        Intent intent = new Intent(this, PetProfileActivity.class);
+        intent.putExtra(Const.PET_ID,2);
+        startActivity(intent);
+    }
+    public void goState(View v){
+        Intent intent = new Intent(this, PetStateActivity.class);
+        intent.putExtra(Const.PET_ID,6);
+        startActivity(intent);
     }
 }
