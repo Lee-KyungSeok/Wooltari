@@ -61,13 +61,18 @@
     <string name="pet_profile_birth_month">month</string>
     <string name="pet_profile_birth_day">day</string>
     <string-array name="pet_species_item">
-        <item>Dog</item> <item>Cat</item>
+        <item>Dog</item>
+        <item>Cat</item>
     </string-array>
     <string-array name="pet_breeds_dog_item">
-        <item>Maltese</item> <item>Golden Retriever</item> <item>Poodle</item>
+        <item>Maltese</item>
+        <item>Golden Retriever</item>
+        <item>Poodle</item>
     </string-array>
     <string-array name="pet_breeds_cat_item">
-        <item>British Shorthair</item> <item>Russian Blue</item> <item>Bengal</item>
+        <item>British Shorthair</item>
+        <item>Russian Blue</item>
+        <item>Bengal</item>
     </string-array>
 
 </resources>

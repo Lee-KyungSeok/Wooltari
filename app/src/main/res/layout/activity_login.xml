@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.wooltari.LoginActivity"
+    android:orientation="vertical">
+    <android.support.v7.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="180sp"
+        android:src="@mipmap/ic_launcher"
+        android:background="@color/colorPrimaryDark"
+        />
+
+    <EditText
+        android:id="@+id/edit_login"
+        android:layout_height="wrap_content"
+        android:layout_width="250sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30sp"
+        android:inputType="textEmailAddress" />
+
+    <EditText
+        android:id="@+id/edit_password"
+        android:layout_height="wrap_content"
+        android:layout_width="250sp"
+        android:layout_gravity="center_horizontal"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_width="250sp"
+        android:onClick="onCLick_Login"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/button_search_password"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="비밀번호를 잊으셨나요" />
+
+    <Button
+        android:id="@+id/button_new_account"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="계정이 없으신가요? 새로운 계정 설정"
+        android:onClick="onCLick_Signup"/>
+
+    <Button
+        android:id="@+id/button_login_google"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="10sp"
+        android:text="구글로 로그인"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/button_login_facebook"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textSize="10sp"
+        android:text="페이스북으로 로그인"
+        android:textStyle="bold"/>
+</LinearLayout>
