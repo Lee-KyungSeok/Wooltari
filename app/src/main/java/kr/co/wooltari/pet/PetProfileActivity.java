@@ -1,5 +1,7 @@
 package kr.co.wooltari.pet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,6 +13,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,15 +60,14 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
 
     private int pPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
-
-    // 펫정보
-
+    private boolean isImage = false;
+    AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);
-        pPk = getIntent().getIntExtra(Const.PET_ID,3);
+        pPk = getIntent().getIntExtra(Const.PET_ID,-1);
         initView();
         init();
 
@@ -106,8 +108,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         } else {
             setDefaultPetProfile();
         }
-        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
-        if(!PetDummy.data.get(pPk).state) changeState(true);
+        createDialog();
     }
 
     /**
@@ -119,6 +120,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void setBasicImage(Uri basicProfileUri) {
                 LoadUtil.circleImageLoad(PetProfileActivity.this, basicProfileUri, imagePetProfile);
+                isImage = false;
             }
 
             @Override
@@ -128,7 +130,10 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         });
         stagePetProfilePopup.setOnClickListener(v -> stagePetProfilePopup.setVisibility(View.GONE));
         stagePetProfilePopup.addView(cameraGalleryPopup);
-        imagePetProfile.setOnClickListener(v -> stagePetProfilePopup.setVisibility(View.VISIBLE));
+        imagePetProfile.setOnClickListener(v -> {
+            stagePetProfilePopup.setVisibility(View.VISIBLE);
+            cameraGalleryPopup.setbtnList(isImage);
+        });
     }
 
     private void setBtnListener(){
@@ -156,6 +161,8 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // 버튼 상태 정의
         btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_add));
         btnPetDelete.setVisibility(View.GONE);
+        btnPetState.setVisibility(View.GONE);
+        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
     }
 
     /**
@@ -166,6 +173,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile));
         // 이미지 세팅
         LoadUtil.circleImageLoad(this,PetDummy.data.get(pPk).pProfile, imagePetProfile);
+        if(PetDummy.data.get(pPk).pProfile!=null) isImage = true;
         // 버튼 상태 정의
         btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_edit));
         // 이름 디폴트 값 정의
@@ -182,6 +190,10 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         editTextPetNumber.setText(PetDummy.data.get(pPk).petNumber);
         // pet 디폴트 색상 정의
         checkRadioColorValue();
+        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+        // pet State 체크
+        if(PetDummy.data.get(pPk).state) changeState(false);
+        else changeState(true);
     }
 
     /**
@@ -270,6 +282,40 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void changePetBackgroundColor(int colorId){
         imagePetProfile.setBackgroundColor(colorId);
     }
+    /**
+     * Dialog를 정의
+     */
+    private void createDialog(){
+        backDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_cancel_back_title)
+                ,getResources().getString(R.string.alert_pet_cancel_back_msg), true);
+        backDialog.cancel();
+        backDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK) {
+                    finish();
+                    dialog.cancel();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        cancelDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_cancel_title)
+                ,getResources().getString(R.string.alert_pet_cancel_msg), true);
+        cancelDialog.cancel();
+
+
+        deleteDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_delete_title),
+                getResources().getString(R.string.alert_pet_delete_msg) , this::delete);
+        deleteDialog.cancel();
+
+        saveDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_save_title),
+                getResources().getString(R.string.alert_pet_save_msg), this::save);
+        saveDialog.cancel();
+
+        Log.e("show"," deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
+    }
 
     /**
      * 입력된 정보를 가져올 수 있도록 하는 메소드
@@ -352,6 +398,16 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     }
 
     /**
+     * 인터넷과 연결하여 등록번호 확인
+     */
+    private void searchNumber(){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        Uri uri = Uri.parse("http://www.animal.go.kr/mobile2/html/03_inquiry.jsp");
+        intent.setData(uri);
+        startActivity(intent);
+    }
+
+    /**
      * 팻 정보를 저장
      */
     private void save(){
@@ -369,21 +425,15 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         Log.e("저장 확인"," name = "+name + " species = "+species + " breeds = "+breeds + " birth0 = "+year+month+day
         + " sex = "+sex + " neuterSpay = "+neuterSpay + " petNum = "+petNum + " colorId = "+color );
     }
-    /**
-     * cancel 버튼 클릭시 Dialog 로 물어봄
-     */
-    private void cancel(){
-
-    }
 
     /**
-     * 펫 정보를 삭제
+     * 펫 정보를 삭제 수행
      */
     private void delete(){
-        DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_delete_title),
-                getResources().getString(R.string.alert_permission_msg),true);
-
-        // OK 클릭시 삭제 Url을 보냄
+        // ========================
+        // 삭제 로직 실행
+        //=========================
+        PetProfileActivity.this.finish();
     }
 
     /**
@@ -393,12 +443,18 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // 비활성화로 바꿈
         if(isActive){
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_active));
+            // 펫 상태 변경
             PetDummy.data.get(pPk).state = false;
+            // 버튼 삭제
             btnPetAddEdit.setVisibility(View.GONE);
             btnPetCancel.setVisibility(View.GONE);
             btnNumberSearch.setVisibility(View.GONE);
+            // 이미지 클릭 막기
+            imagePetProfile.setOnClickListener(null);
+            // 배경색 제거
             changePetBackgroundColor(ContextCompat.getColor(this, R.color.colorPetDefault));
-            changeViewEnabled(!isActive);
+            // View 들에 대한 선택 효과 제거
+            changeViewEnabled(false);
         } else {
             // 활성화로 바꿈
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_inactive));
@@ -406,8 +462,12 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             btnPetAddEdit.setVisibility(View.VISIBLE);
             btnPetCancel.setVisibility(View.VISIBLE);
             btnNumberSearch.setVisibility(View.VISIBLE);
+            imagePetProfile.setOnClickListener(v -> {
+                stagePetProfilePopup.setVisibility(View.VISIBLE);
+                cameraGalleryPopup.setbtnList(isImage);
+            });
             changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
-            changeViewEnabled(!isActive);
+            changeViewEnabled(true);
         }
     }
     private void changeViewEnabled(boolean isEnabled){
@@ -434,10 +494,11 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
         } else {
             switch (v.getId()){
-                case R.id.btnPetAddEdit: save(); break;
-                case R.id.btnPetCancel: cancel(); break;
-                case R.id.btnDelete: delete(); break;
+                case R.id.btnPetAddEdit: saveDialog.show(); break;
+                case R.id.btnPetCancel: cancelDialog.show(); break;
+                case R.id.btnPetDelete: deleteDialog.show(); break;
                 case R.id.btnPetState: changeState(PetDummy.data.get(pPk).state); break;
+                case R.id.btnNumberSearch: searchNumber(); break;
                 case R.id.btnPetInfoEdit: break; // 임시용
             }
         }
@@ -469,7 +530,10 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Uri imageUri = cameraGalleryPopup.getImage(requestCode,resultCode,data);
-        if(imageUri!=null) LoadUtil.circleImageLoad(this,imageUri,imagePetProfile);
+        if(imageUri!=null) {
+            LoadUtil.circleImageLoad(this, imageUri, imagePetProfile);
+            isImage = true;
+        }
     }
 
     /**
@@ -477,11 +541,15 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      */
     @Override
     public void onBackPressed() {
+        Log.e("show"," backDialog : "+backDialog.isShowing()+" deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
         if(stagePetProfilePopup.getVisibility() == View.VISIBLE){
             stagePetProfilePopup.setVisibility(View.GONE);
+        } else if(btnPetState.getVisibility() == View.VISIBLE){
+            if(!PetDummy.data.get(pPk).state) finish();
+            else backDialog.show();
         } else {
-            super.onBackPressed();
+            backDialog.show();
         }
+        // super.onBackPressed();
     }
-
 }

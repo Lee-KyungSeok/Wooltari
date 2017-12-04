@@ -23,8 +23,14 @@
     <string name="alert_ok">OK</string>
     <string name="alert_permission_title">Permission Required</string>
     <string name="alert_permission_msg">Permissions needed to use this feature.\nPlease grant access in your devices\'s setting</string>
+    <string name="alert_pet_save_title">Pet information save</string>
+    <string name="alert_pet_save_msg">Are you sure you want to add your Pet?</string>
     <string name="alert_pet_delete_title">Pet Information delete</string>
     <string name="alert_pet_delete_msg">Are you sure you want to delete your Pet?</string>
+    <string name="alert_pet_cancel_title">Pet information cancel</string>
+    <string name="alert_pet_cancel_msg">Are you sure you want to cancel your work?</string>
+    <string name="alert_pet_cancel_back_title">Pet information cancel</string>
+    <string name="alert_pet_cancel_back_msg">Are you sure you want to cancel your work?\nIf you press the back button, the work will be canceled</string>
 
     <!-- Pet Profile -->
     <string name="pet_profile">Pet Profile</string>
