@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Collections;
 import java.util.List;
 
 import kr.co.wooltari.R;
@@ -32,6 +33,7 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
     public PetStateDetailPagerAdapter(Context context, List<HealthStateDummy.petWeight> petStateData){
         this.context = context;
         this.petStateData = petStateData;
+        Collections.reverse(this.petStateData);
         checkPageNum();
     }
 

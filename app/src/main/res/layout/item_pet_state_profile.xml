@@ -1,132 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="@color/colorHealthItemBackground"
-    android:padding="@dimen/pet_state_profile_layout_padding">
-
-    <FrameLayout
-        android:id="@+id/imagePSPStage"
-        android:layout_gravity="center"
-        android:layout_width="@dimen/pet_state_profile_size"
-        android:layout_height="@dimen/pet_state_profile_size"
-        android:background="@color/colorPetDefault">
-
-        <ImageView
-            android:id="@+id/imagePetStateProfile"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srcCompat="@drawable/pet_profile" />
-
-    </FrameLayout>
+    android:background="@color/colorHealthItemBackground">
 
     <LinearLayout
-        android:id="@+id/petStateValueLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="@dimen/pet_state_profile_info_interval"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/pet_state_profile_layout_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1.3"
-            android:orientation="horizontal">
+        <FrameLayout
+            android:id="@+id/imagePSPStage"
+            android:layout_width="@dimen/pet_state_profile_size"
+            android:layout_height="@dimen/pet_state_profile_size"
+            android:layout_gravity="center"
+            android:padding="@dimen/pet_state_profile_background_padding"
+            android:background="@color/colorPetDefault">
 
-            <TextView
-                android:id="@+id/textInputPSPName"
+            <ImageView
+                android:id="@+id/imagePetStateProfile"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/pet_profile_name" />
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/pet_profile" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textPSPWeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/pet_state_weight" />
-
-            <TextView
-                android:id="@+id/textInputPSPWeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/pet_state_weight" />
-        </LinearLayout>
+        </FrameLayout>
 
         <LinearLayout
+            android:id="@+id/petStateValueLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/pet_state_profile_info_interval"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/textPSPHeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.3"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textInputPSPName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_name" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/pet_state_height" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textInputPSPHeight"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textPSPWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pet_state_weight" />
+
+                <TextView
+                    android:id="@+id/textInputPSPWeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/pet_state_height" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textPSPHeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pet_state_height" />
 
-            <TextView
-                android:id="@+id/textPSPNeckSize"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textInputPSPHeight"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/pet_state_neck_size" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textInputPSPNeckSize"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                <TextView
+                    android:id="@+id/textPSPNeckSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pet_state_neck_size" />
+
+                <TextView
+                    android:id="@+id/textInputPSPNeckSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
                 android:layout_weight="1"
-                android:text="@string/pet_state_neck_size" />
-        </LinearLayout>
+                android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/textPSPChestSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/pet_state_chest_size" />
 
-            <TextView
-                android:id="@+id/textPSPChestSize"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/pet_state_chest_size" />
-
-            <TextView
-                android:id="@+id/textInputPSPChestSize"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/pet_state_chest_size" />
+                <TextView
+                    android:id="@+id/textInputPSPChestSize"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+
+    <Button
+        android:id="@+id/btnPetStateEdit"
+        android:layout_width="@dimen/pet_state_edit_button_size"
+        android:layout_height="@dimen/pet_state_edit_button_size"
+        android:background="@drawable/edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

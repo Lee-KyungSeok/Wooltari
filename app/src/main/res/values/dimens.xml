@@ -21,12 +21,17 @@
 
     <!-- Pet Health State -->
     <dimen name="pet_state_item_interval">30dp</dimen>
+    <dimen name="pet_state_edit_button_size">30dp</dimen>
+    <dimen name="pet_state_profile_background_padding">5dp</dimen>
     <dimen name="pet_state_profile_size">120dp</dimen>
     <dimen name="pet_state_profile_layout_padding">10dp</dimen>
-    <dimen name="pet_state_profile_info_interval">15dp</dimen>
+    <dimen name="pet_state_profile_info_interval">20dp</dimen>
     <dimen name="pet_state_chart_height">250dp</dimen>
     <dimen name="pet_state_detail_height">200dp</dimen>
     <dimen name="pet_state_detail_table_top_margin">10dp</dimen>
     <dimen name="pet_state_detail_stroke_size">1dp</dimen>
     <dimen name="pet_state_detail_table_padding">2dp</dimen>
+    <dimen name="pet_state_detail_dialog_button_top_margin">8dp</dimen>
+    <dimen name="pet_state_detail_dialog_margin">30dp</dimen>
+    <dimen name="pet_state_detail_dialog_padding">10dp</dimen>
 </resources>

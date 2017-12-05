@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.util.LoadUtil;
 
 
 /**
@@ -24,8 +25,9 @@ public class PetStateAdapter extends RecyclerView.Adapter {
     private final int  STATE_CHART = 21;
     private final int  STATE_DETAIL = 22;
 
-    public PetStateAdapter(Context context){
+    public PetStateAdapter(Context context, PetDummy.Dummy petInfo){
         this.context = context;
+        this.petInfo = petInfo;
     }
 
     public void setView(RecyclerView recyclerView){
@@ -41,10 +43,9 @@ public class PetStateAdapter extends RecyclerView.Adapter {
         }
     }
 
-    public void setDataAndRefresh(HealthStateDummy.StateDummy petState, PetDummy.Dummy petInfo){
+    public void setDataAndRefresh(HealthStateDummy.StateDummy petState){
         this.petState = petState;
-        this.petInfo = petInfo;
-        notifyDataSetChanged();
+        if(petState!=null) notifyDataSetChanged();
     }
 
     @Override
@@ -59,7 +60,7 @@ public class PetStateAdapter extends RecyclerView.Adapter {
                 return new PetStateDetailHolder(view);
             default:
                 view = LayoutInflater.from(context).inflate(R.layout.item_pet_state_profile,parent,false);
-                return new PetStateProfileHolder(view);
+                return new PetStateProfileHolder(context, view);
         }
     }
 
@@ -76,11 +77,17 @@ public class PetStateAdapter extends RecyclerView.Adapter {
             PetStateProfileHolder holderProfile = (PetStateProfileHolder)holder;
             holderProfile.setImagePetStateProfile(context, petInfo.pProfile);
             holderProfile.setTextInputPSPName(petInfo.pName);
+            holderProfile.setTextColor(context, petInfo.color);
+            if(petInfo.state) {
+                holderProfile.setBackground(context, petInfo.color);
+            } else {
+                holderProfile.setBackground(context, "colorPetDefault");
+                holderProfile.setGoneEditButton();
+            }
             holderProfile.setTextInputPSPWeight(petState.petNowWeight+" kg");
             holderProfile.setTextInputPSPHeight(petState.petHeight+" cm");
             holderProfile.setTextInputPSPNeckSize(petState.petNeckSize+" cm");
             holderProfile.setTextInputPSPChestSize(petState.petChestSize+" cm");
-            holderProfile.setTextColor(context, petInfo.color);
         }
     }
 

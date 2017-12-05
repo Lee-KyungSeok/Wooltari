@@ -4,9 +4,9 @@
         android:radius="0dp"
         />
     <gradient
-        android:centerColor="@color/colorTableBlack"
-        android:endColor="@color/colorTableBlack"
-        android:startColor="@color/colorTableBlack"
+        android:centerColor="@color/colorLittleBlack"
+        android:endColor="@color/colorLittleBlack"
+        android:startColor="@color/colorLittleBlack"
         android:type="linear"
         />
     <padding

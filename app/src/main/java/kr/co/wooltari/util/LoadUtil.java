@@ -42,6 +42,8 @@ public class LoadUtil {
             case "colorGoldGreen": return ContextCompat.getColor(context, R.color.colorGoldGreen);
             case "colorBlueOfSea": return ContextCompat.getColor(context, R.color.colorBlueOfSea);
             case "colorOrangeMuffler": return ContextCompat.getColor(context, R.color.colorOrangeMuffler);
+            case "colorLittleBlack": return ContextCompat.getColor(context, R.color.colorLittleBlack);
+            case "colorPetDefault": return ContextCompat.getColor(context, R.color.colorPetDefault);
             default: return ContextCompat.getColor(context,R.color.colorPetDefault);
         }
     }

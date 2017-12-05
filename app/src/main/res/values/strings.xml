@@ -87,5 +87,10 @@
     <string name="pet_state_detail_left">\u003c</string>
     <string name="pet_state_detail_right">\u003e</string>
     <string name="pet_state_detail_no_more">no more data existed</string>
+    <string name="pet_state_dialog_edit_title">Edit Pet State</string>
+    <string name="pet_state_dialog_edit_submit">Submit</string>
+    <string name="pet_state_dialog_edit_cancel">Cancel</string>
+    <string name="pet_state_save_valid">All format is valid</string>
+    <string name="pet_state_save_invalid">Some format is invalid</string>
 
 </resources>

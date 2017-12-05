@@ -21,7 +21,7 @@
 
     <!-- Pet Health Info Color -->
     <color name="colorHealthItemBackground">#dddddd</color>
-    <color name="colorTableBlack">#999999</color>
+    <color name="colorLittleBlack">#999999</color>
     
     <!-- Camera&Gallery Popup -->
     <color name="translucentGray">#88FFFFFF</color>
