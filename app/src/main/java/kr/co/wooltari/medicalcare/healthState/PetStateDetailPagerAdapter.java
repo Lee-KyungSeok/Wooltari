@@ -1,6 +1,7 @@
 package kr.co.wooltari.medicalcare.healthState;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +29,7 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
 
     Context context;
     List<HealthStateDummy.petWeight> petStateData;
+    FrameLayout progressStagePSD;
     public int pageNum=0;
     private int count =1;
 
@@ -49,8 +52,9 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
         }
     }
 
-    public void setView(ViewPager viewPager){
+    public void setView(ViewPager viewPager, FrameLayout progressStagePSD){
         viewPager.setAdapter(this);
+        this.progressStagePSD = progressStagePSD;
     }
 
     private void checkPageNum(){
@@ -74,15 +78,34 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
 
     private void setBtnListener(Button button){
         button.setOnClickListener(v -> {
-            boolean check = addPage();
-            if(!check) Toast.makeText(context, context.getResources().getString(R.string.pet_state_detail_no_more), Toast.LENGTH_SHORT).show();
-            else button.setVisibility(View.GONE);
+            new AsyncTask<Void, Void, Boolean>() {
+                @Override
+                protected void onPreExecute() {
+                    progressStagePSD.setVisibility(View.VISIBLE);
+                    super.onPreExecute();
+                }
+                @Override
+                protected Boolean doInBackground(Void... voids) {
+                    boolean check = addPage();
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    return check;
+                }
+                @Override
+                protected void onPostExecute(Boolean check) {
+                    progressStagePSD.setVisibility(View.GONE);
+                    if(!check) Toast.makeText(context, context.getResources().getString(R.string.pet_state_detail_no_more), Toast.LENGTH_SHORT).show();
+                    else button.setVisibility(View.GONE);
+                }
+            }.execute();
         });
     }
 
     @Override
     public int getCount() {
-        Log.e("size","pageNum : "+pageNum);
         return pageNum;
     }
 
@@ -110,7 +133,6 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
             } else {
                 btnWeightMore.setVisibility(View.GONE);
                 for(int i=0 ; i<5 ; i++) {
-                    Log.e("dddd","postion : "+position);
                     View valueView = getTableData(petStateData.get(position*5+i));
                     petStateDetailTable.addView(valueView);
                 }
