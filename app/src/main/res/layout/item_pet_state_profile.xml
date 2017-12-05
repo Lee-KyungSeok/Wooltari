@@ -1,38 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:orientation="horizontal"
     android:background="@color/colorHealthItemBackground"
     android:padding="@dimen/pet_state_profile_layout_padding">
 
-    <ImageView
-        android:id="@+id/imagePetStateProfile"
+    <FrameLayout
+        android:id="@+id/imagePSPStage"
+        android:layout_gravity="center"
         android:layout_width="@dimen/pet_state_profile_size"
         android:layout_height="@dimen/pet_state_profile_size"
-        android:background="@color/colorPetDefault"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/pet_profile" />
+        android:background="@color/colorPetDefault">
+
+        <ImageView
+            android:id="@+id/imagePetStateProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/pet_profile" />
+
+    </FrameLayout>
 
     <LinearLayout
         android:id="@+id/petStateValueLayout"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginStart="@dimen/pet_state_profile_info_interval"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imagePetStateProfile"
-        app:layout_constraintTop_toTopOf="parent">
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/textInputPSPName"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/pet_profile_name" />
+            android:layout_height="0dp"
+            android:layout_weight="1.3"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textInputPSPName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/pet_profile_name" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,4 +129,4 @@
                 android:text="@string/pet_state_chest_size" />
         </LinearLayout>
     </LinearLayout>
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

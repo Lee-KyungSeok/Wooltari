@@ -71,6 +71,7 @@
     </string-array>
 
     <!-- Pet Health State -->
+    <string name="pet_state_title">Pet State</string>
     <string name="pet_state_weight">Weight</string>
     <string name="pet_state_weight_goal">Goal Weight</string>
     <string name="pet_state_height">Height</string>
@@ -82,5 +83,9 @@
     <string name="pet_state_detail_date">Date</string>
     <string name="pet_state_detail_weight">Weight</string>
     <string name="pet_state_detail_delete">Delete</string>
+    <string name="pet_state_detail_more">More Data</string>
+    <string name="pet_state_detail_left">\u003c</string>
+    <string name="pet_state_detail_right">\u003e</string>
+    <string name="pet_state_detail_no_more">no more data existed</string>
 
 </resources>

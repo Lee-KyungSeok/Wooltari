@@ -15,4 +15,5 @@ public class Const {
 
     // Pet Key
     public static final String PET_ID = "pet_id";
+    public static final String PET_NAME = "pet_name";
 }

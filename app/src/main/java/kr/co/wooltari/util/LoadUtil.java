@@ -30,7 +30,7 @@ public class LoadUtil {
                 .into(imageView);
     }
 
-    public int loadColor(Context context, String color){
+    public static int loadColor(Context context, String color){
         switch (color){
             case "colorRed": return ContextCompat.getColor(context, R.color.colorRed);
             case "colorBurgundy": return ContextCompat.getColor(context, R.color.colorBurgundy);

@@ -25,6 +25,7 @@ public class HealthStateDummy {
     public static class StateDummy{
         public int pPk;
         public List<petWeight> petWeightList = new ArrayList<>();
+        public double petNowWeight;
         public double petTargetWeight;
         public double petHeight;
         public double petNeckSize;
@@ -32,10 +33,10 @@ public class HealthStateDummy {
 
         public StateDummy(int pPk){
             this.pPk = pPk;
-            petTargetWeight = (pPk+1) * 1.5;
-            petHeight = (pPk+1) * 1.5;
-            petNeckSize = (pPk+1) * 1.1;
-            petChestSize = (pPk+1) * 1.1;
+            petTargetWeight = Math.floor((pPk+1) * 150)/100;
+            petHeight = Math.floor((pPk+1) * 150)/100;
+            petNeckSize = Math.floor((pPk+1) * 110)/100;
+            petChestSize = Math.floor((pPk+1) * 110)/100;
 
             Random random = new Random();
             int max = (pPk+2) * 3;
@@ -44,17 +45,20 @@ public class HealthStateDummy {
                 calendar.add(Calendar.DATE,pPk*i);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String weightDateTime = sdf.format(calendar.getTime());
+
                 double weightResult = Math.floor(100*((double)(pPk+1) + random.nextDouble()*((double)(pPk+1)) - (((double)pPk+1)*random.nextDouble())*0.3))/100;
-                Log.e("weight check!!",pPk+" : weightDateTime = "+weightDateTime + " / weightResult = "+weightResult);
+//                Log.e("weight check!!",pPk+" : weightDateTime = "+weightDateTime + " / weightResult = "+weightResult);
+
                 petWeightList.add(new petWeight(weightDateTime,weightResult));
+                if(i==max) petNowWeight = weightResult;
             }
-            Log.e("size","====================="+petWeightList.size());
+//            Log.e("size","====================="+petWeightList.size());
         }
     }
 
     public static class petWeight{
-        String inputDate;
-        double petWeight;
+        public String inputDate;
+        public double petWeight;
 
         public petWeight(String inputDate, double petWeight){
             this.inputDate = inputDate;

@@ -29,7 +29,6 @@ public class PetDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_detail);
         initView();
 
-        HealthStateDummy.stateData.get(0);
     }
 
     private void initView(){
