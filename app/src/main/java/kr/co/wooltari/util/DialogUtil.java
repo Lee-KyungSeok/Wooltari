@@ -2,6 +2,7 @@ package kr.co.wooltari.util;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.view.View;
 
 import kr.co.wooltari.R;
 
@@ -42,6 +43,15 @@ public class DialogUtil {
                 });
         AlertDialog dialog = dialogBuilder.create();
         dialog.show();
+        return dialog;
+    }
+
+    public static AlertDialog getCustomDialog(final Activity activity, String title, View view){
+        AlertDialog.Builder dialogBuilser = new AlertDialog.Builder(activity);
+        dialogBuilser
+                .setTitle(title)
+                .setView(view);
+        AlertDialog dialog = dialogBuilser.create();
         return dialog;
     }
 

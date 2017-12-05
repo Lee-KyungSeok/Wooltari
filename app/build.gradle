@@ -35,6 +35,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1' // rx 안드로이드
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0' // RxBinding
     implementation 'com.squareup.retrofit2:retrofit:2.3.0' // 레트로핏
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0' // 레트로핏 json 컨버터
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0' // 레트로핏 rx 아답터

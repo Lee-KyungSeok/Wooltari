@@ -2,7 +2,6 @@ package kr.co.wooltari.util;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -10,7 +9,6 @@ import android.view.MenuItem;
 
 import kr.co.wooltari.EmergencyActivity;
 import kr.co.wooltari.R;
-import kr.co.wooltari.medicalcare.PetStateActivity;
 
 
 /**

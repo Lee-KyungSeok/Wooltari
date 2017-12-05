@@ -75,6 +75,29 @@
         <item>Bengal</item>
     </string-array>
 
+    <!-- Pet Health State -->
+    <string name="pet_state_title">Pet State</string>
+    <string name="pet_state_weight">Weight</string>
+    <string name="pet_state_weight_goal">Goal Weight</string>
+    <string name="pet_state_height">Height</string>
+    <string name="pet_state_neck_size">Neck Size</string>
+    <string name="pet_state_chest_size">Chest Size</string>
+    <string name="pet_state_chart_title">Chart of Weight</string>
+    <string name="pet_state_detail_title">Detail of Weight</string>
+    <string name="pet_state_detail_weight_goal">Goal :  </string>
+    <string name="pet_state_detail_date">Date</string>
+    <string name="pet_state_detail_weight">Weight</string>
+    <string name="pet_state_detail_delete">Delete</string>
+    <string name="pet_state_detail_more">More Data</string>
+    <string name="pet_state_detail_left">\u003c</string>
+    <string name="pet_state_detail_right">\u003e</string>
+    <string name="pet_state_detail_no_more">no more data existed</string>
+    <string name="pet_state_dialog_edit_title">Edit Pet State</string>
+    <string name="pet_state_dialog_edit_submit">Submit</string>
+    <string name="pet_state_dialog_edit_cancel">Cancel</string>
+    <string name="pet_state_save_valid">All format is valid</string>
+    <string name="pet_state_save_invalid">Some format is invalid</string>
+
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>
     <string name="signup_edittext_hint_id">id</string>

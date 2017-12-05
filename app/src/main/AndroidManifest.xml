@@ -20,7 +20,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".pet.PetDetailActivity" />
-        <activity android:name=".medicalcare.PetStateActivity" />
+        <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".EmergencyActivity" />
 

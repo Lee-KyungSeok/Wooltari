@@ -399,7 +399,7 @@
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:buttonTint="@color/colorDarkGreen"
-                                    android:textColor="@color/colorGoldGreen" />
+                                    android:textColor="@color/colorDarkGreen" />
 
                                 <RadioButton
                                     android:id="@+id/radioButtonGoldGreen"

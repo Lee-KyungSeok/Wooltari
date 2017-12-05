@@ -21,7 +21,7 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.UserDummy;
-import kr.co.wooltari.medicalcare.PetStateActivity;
+import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 /**

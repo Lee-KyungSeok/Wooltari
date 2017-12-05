@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle" >
+    <corners
+        android:radius="0dp"
+        />
+    <gradient
+        android:centerColor="@color/colorLittleBlack"
+        android:endColor="@color/colorLittleBlack"
+        android:startColor="@color/colorLittleBlack"
+        android:type="linear"
+        />
+    <padding
+        android:left="@dimen/pet_state_detail_table_padding"
+        android:top="@dimen/pet_state_detail_table_padding"
+        android:right="@dimen/pet_state_detail_table_padding"
+        android:bottom="@dimen/pet_state_detail_table_padding"
+        />
+    <stroke
+        android:width="@dimen/pet_state_detail_stroke_size"
+        android:color="@color/colorBlack"
+        />
+</shape>
