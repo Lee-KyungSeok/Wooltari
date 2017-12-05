@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kr.co.wooltari.user.SignUpActivity"
+    android:orientation="vertical">
+
+    <!-- 프로필 사진 -->
+    <ImageView
+        android:id="@+id/user_profile_imageview"
+        android:layout_width="@dimen/user_image_width"
+        android:layout_height="@dimen/user_image_height"
+        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        app:srcCompat="@drawable/user_profile"
+        android:onClick="onClick_set_image"
+        android:layout_gravity="center"
+        android:layout_marginTop="100sp"/>
+
+
+    <!-- 아이디 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100"
+        >
+        <EditText
+            android:id="@+id/id_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:layout_weight="80"
+            android:inputType="textEmailAddress"
+            android:hint="@string/signup_edittext_hint_id"/>
+        <Button
+            android:id="@+id/id_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="@string/signup_button_text_duplication_is_not_allowed" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/id_textView_errorMassage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "/>
+
+
+    <!-- 닉네임 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100">
+        <EditText
+            android:id="@+id/nickname_editText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="80"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:hint="@string/signup_edittext_hint_nickname" />
+
+        <Button
+            android:id="@+id/nickname_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="@string/signup_button_text_duplication_is_not_allowed" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/nickname_textView_errormassage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "/>
+
+
+    <!-- 패스워드1 -->
+    <EditText
+        android:id="@+id/password1_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/signup_edittext_hint_password1"
+        />
+    <TextView
+        android:id="@+id/password1_textView_errormassage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "/>
+
+
+    <!-- 패스워드2 -->
+    <EditText
+        android:id="@+id/password2_editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        android:hint="@string/signup_edittext_hint_password2" />
+    <TextView
+        android:id="@+id/password2_textView_errormassage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=" "/>
+
+    <!-- 확인 취소버튼 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="100">
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="20"
+            android:text="@string/signup_edittext_hint_cancel"/>
+        <Button
+            android:id="@+id/ok_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="80"
+            android:text="@string/signup_edittext_hint_join"/>
+    </LinearLayout>
+</LinearLayout>

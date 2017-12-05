@@ -34,4 +34,9 @@
     <dimen name="pet_state_detail_dialog_button_top_margin">8dp</dimen>
     <dimen name="pet_state_detail_dialog_margin">30dp</dimen>
     <dimen name="pet_state_detail_dialog_padding">10dp</dimen>
+
+    <!-- User Profile -->
+    <dimen name="user_image_height">120sp</dimen>
+    <dimen name="user_image_width">120sp</dimen>
+
 </resources>
