@@ -18,4 +18,8 @@
     <dimen name="pet_card_top_margin">50dp</dimen>
     <dimen name="pet_card_left_right_down_margin">10dp</dimen>
     <dimen name="pet_card_padding_right_left_bottom">5dp</dimen>
+
+    <!-- User Profile -->
+    <dimen name="user_image_height">120sp</dimen>
+    <dimen name="user_image_width">120sp</dimen>
 </resources>
