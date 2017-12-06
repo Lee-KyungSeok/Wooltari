@@ -61,7 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
 //        profile 필드
         // TODO 지금은 url 이지만 나중에는 기본 이미지따다가 그걸로 바꿀것
         UserProfileImageview=findViewById(R.id.user_profile_imageview);
-        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).pProfile, UserProfileImageview);
+//        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).pProfile, UserProfileImageview);
 
 //        id 필드
         _id_editText=findViewById(R.id.id_editText);
