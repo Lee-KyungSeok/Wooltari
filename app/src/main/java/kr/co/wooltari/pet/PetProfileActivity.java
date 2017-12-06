@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -41,6 +43,7 @@ import kr.co.wooltari.util.ToolbarUtil;
 
 public class PetProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private FrameLayout imagePetProfileStage;
     private ImageView imagePetProfile;
     private EditText editPetName, editTextPetNumber;
     private Spinner spinnerPetSpecies, spinnerPetBreeds, spinnerPetYear, spinnerPetMonth, spinnerPetDay;
@@ -55,6 +58,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
 
     private int pPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
+    GradientDrawable gdImage;
     private boolean isImage = false;
     AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog = null;
 
@@ -70,6 +74,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     }
 
     private void initView() {
+        imagePetProfileStage = findViewById(R.id.imagePetProfileStage);
         imagePetProfile = findViewById(R.id.imagePetProfile);
         spinnerPetSpecies = findViewById(R.id.spinnerPetSpecies); spinnerPetBreeds = findViewById(R.id.spinnerPetBreeds);
         spinnerPetYear = findViewById(R.id.spinnerPetYear); spinnerPetMonth = findViewById(R.id.spinnerPetMonth); spinnerPetDay = findViewById(R.id.spinnerPetDay);
@@ -87,6 +92,11 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         radioButtonDarkBlue = findViewById(R.id.radioButtonDarkBlue); radioButtonGray = findViewById(R.id.radioButtonGray);
         radioButtonDarkGreen = findViewById(R.id.radioButtonDarkGreen); radioButtonGoldGreen = findViewById(R.id.radioButtonGoldGreen);
         radioButtonBlueOfSea = findViewById(R.id.radioButtonBlueOfSea); radioButtonOrangeMuffler = findViewById(R.id.radioButtonOrangeMuffler);
+
+        // 배경 이미지 모양 변경
+        gdImage = new GradientDrawable();
+        gdImage.setShape(GradientDrawable.OVAL);
+        imagePetProfileStage.setBackground(gdImage);
     }
 
     private void init(){
@@ -147,7 +157,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_add));
         btnPetDelete.setVisibility(View.GONE);
         btnPetState.setVisibility(View.GONE);
-        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+        changePetBackground(activeRadioColor.getCurrentTextColor());
     }
 
     /**
@@ -175,7 +185,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         editTextPetNumber.setText(PetDummy.data.get(pPk).petNumber);
         // pet 디폴트 색상 정의
         checkRadioColorValue(PetDummy.data.get(pPk).color);
-        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+        changePetBackground(activeRadioColor.getCurrentTextColor());
         // pet State 체크
         if(PetDummy.data.get(pPk).state) changeState(false);
         else changeState(true);
@@ -264,8 +274,8 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      * Pet의 색상을 변경시킴
      *  - 현재는 이미지 배경만
      */
-    private void changePetBackgroundColor(int colorId){
-        imagePetProfile.setBackgroundColor(colorId);
+    private void changePetBackground(int colorId){
+        gdImage.setColor(colorId);
     }
     /**
      * Dialog를 정의
@@ -391,7 +401,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             case "colorOrangeMuffler": activeRadioColor = radioButtonOrangeMuffler; break;
         }
         activeRadioColor.setChecked(true);
-        changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+        changePetBackground(activeRadioColor.getCurrentTextColor());
     }
 
     /**
@@ -449,7 +459,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             // 이미지 클릭 막기
             imagePetProfile.setOnClickListener(null);
             // 배경색 제거
-            changePetBackgroundColor(ContextCompat.getColor(this, R.color.colorPetDefault));
+            changePetBackground(ContextCompat.getColor(this, R.color.colorPetDefault));
             // View 들에 대한 선택 효과 제거
             changeViewEnabled(false);
         } else {
@@ -463,7 +473,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 cameraGalleryPopup.show();
                 cameraGalleryPopup.setBtnList(isImage);
             });
-            changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+            changePetBackground(activeRadioColor.getCurrentTextColor());
             changeViewEnabled(true);
         }
     }
@@ -488,7 +498,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             activeRadioColor.setChecked(false);
             ((RadioButton) v).setChecked(true);
             activeRadioColor = (RadioButton) v;
-            changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
+            changePetBackground(activeRadioColor.getCurrentTextColor());
         } else {
             switch (v.getId()){
                 case R.id.btnPetAddEdit: saveDialog.show(); break;

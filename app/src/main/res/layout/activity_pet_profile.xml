@@ -32,17 +32,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/imagePetProfile"
+            <FrameLayout
+                android:id="@+id/imagePetProfileStage"
                 android:layout_width="@dimen/pet_profile_size"
                 android:layout_height="@dimen/pet_profile_size"
-                android:layout_marginTop="@dimen/pet_profile_top_margin"
+                android:padding="@dimen/pet_state_profile_background_padding"
                 android:background="@color/colorPetDefault"
                 android:elevation="3dp"
+                android:layout_marginTop="@dimen/pet_profile_top_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent"
-                app:srcCompat="@drawable/pet_profile" />
+                app:layout_constraintTop_toBottomOf="parent">
+
+                <ImageView
+                    android:id="@+id/imagePetProfile"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/pet_profile" />
+
+            </FrameLayout>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/cardView"
