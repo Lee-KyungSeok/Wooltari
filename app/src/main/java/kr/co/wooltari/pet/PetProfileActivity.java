@@ -45,7 +45,6 @@ import kr.co.wooltari.util.ToolbarUtil;
 
 public class PetProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private FrameLayout stagePetProfilePopup;
     private ImageView imagePetProfile;
     private EditText editPetName, editTextPetNumber;
     private Spinner spinnerPetSpecies, spinnerPetBreeds, spinnerPetYear, spinnerPetMonth, spinnerPetDay;
@@ -92,8 +91,6 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         radioButtonDarkBlue = findViewById(R.id.radioButtonDarkBlue); radioButtonGray = findViewById(R.id.radioButtonGray);
         radioButtonDarkGreen = findViewById(R.id.radioButtonDarkGreen); radioButtonGoldGreen = findViewById(R.id.radioButtonGoldGreen);
         radioButtonBlueOfSea = findViewById(R.id.radioButtonBlueOfSea); radioButtonOrangeMuffler = findViewById(R.id.radioButtonOrangeMuffler);
-
-        stagePetProfilePopup = findViewById(R.id.stagePetProfilePopup);
     }
 
     private void init(){
@@ -115,23 +112,15 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      * 팝업 세팅 (팝업 효과 및 이미지 클릭 세팅)
      */
     private void setImagePopup(){
-        stagePetProfilePopup.setVisibility(View.GONE);
         cameraGalleryPopup = new CameraGalleryPopup(this, CameraGalleryPopup.PopupType.PET_PROFILE, new CameraGalleryPopup.IDelete() {
             @Override
             public void setBasicImage(Uri basicProfileUri) {
                 LoadUtil.circleImageLoad(PetProfileActivity.this, basicProfileUri, imagePetProfile);
                 isImage = false;
             }
-
-            @Override
-            public void deletePopup() {
-                stagePetProfilePopup.setVisibility(View.GONE);
-            }
         });
-        stagePetProfilePopup.setOnClickListener(v -> stagePetProfilePopup.setVisibility(View.GONE));
-        stagePetProfilePopup.addView(cameraGalleryPopup);
         imagePetProfile.setOnClickListener(v -> {
-            stagePetProfilePopup.setVisibility(View.VISIBLE);
+            cameraGalleryPopup.show();
             cameraGalleryPopup.setbtnList(isImage);
         });
     }
@@ -475,7 +464,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             btnPetCancel.setVisibility(View.VISIBLE);
             btnNumberSearch.setVisibility(View.VISIBLE);
             imagePetProfile.setOnClickListener(v -> {
-                stagePetProfilePopup.setVisibility(View.VISIBLE);
+                cameraGalleryPopup.show();
                 cameraGalleryPopup.setbtnList(isImage);
             });
             changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
@@ -553,10 +542,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      */
     @Override
     public void onBackPressed() {
-        Log.e("show"," backDialog : "+backDialog.isShowing()+" deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
-        if(stagePetProfilePopup.getVisibility() == View.VISIBLE){
-            stagePetProfilePopup.setVisibility(View.GONE);
-        } else if(btnPetState.getVisibility() == View.VISIBLE){
+        if(btnPetState.getVisibility() == View.VISIBLE){
             if(!PetDummy.data.get(pPk).state) finish();
             else backDialog.show();
         } else {

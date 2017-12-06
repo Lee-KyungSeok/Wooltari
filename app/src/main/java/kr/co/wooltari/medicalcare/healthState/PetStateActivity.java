@@ -72,8 +72,7 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
 
     private void setCustomDialog() {
         View editDialog = LayoutInflater.from(this).inflate(R.layout.dialog_pet_state_edit, null);
-        petStateEditDialog = DialogUtil.getCustomDialog(this,
-                getResources().getString(R.string.pet_state_dialog_edit_title), editDialog);
+        petStateEditDialog = DialogUtil.getCustomDialog(this, editDialog);
         initDialogView(editDialog);
         setTextViewColor(petInfo.color);
         resetPetState();

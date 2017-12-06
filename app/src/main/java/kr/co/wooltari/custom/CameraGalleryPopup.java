@@ -2,6 +2,7 @@ package kr.co.wooltari.custom;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -34,13 +35,16 @@ import kr.co.wooltari.util.PermissionUtil;
  * Created by Kyung on 2017-11-28.
  */
 
-public class CameraGalleryPopup extends FrameLayout implements View.OnClickListener, PermissionUtil.IPermissionGrant {
+public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.IPermissionGrant {
 
+    private View popupView;
+    private AlertDialog dialog;
     private TextView textCGPopupTitle;
     private Button btnCamera;
     private Button btnGallery;
     private Button btnCGDelete;
     private Activity activity;
+    private Context context;
     private IDelete iDelete;
 
     PopupType type = null;
@@ -49,7 +53,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
     private Uri fileUri = null;
 
     public CameraGalleryPopup(@NonNull Context context, PopupType type, IDelete iDelete) {
-        super(context);
+        this.context = context;
         if(context instanceof Activity)
             activity = (Activity)context;
         else throw new RuntimeException(context.toString()  + " Context must instance of Activity");
@@ -57,29 +61,37 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
         this.type = type;
 
         initView();
-        setLocation();
         setTextTitle();
         setBtnListener();
     }
 
     private void initView() {
-        View popupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_camera_gallery, null);
+        popupView = LayoutInflater.from(context).inflate(R.layout.popup_camera_gallery, null);
+        dialog = DialogUtil.getCustomDialog(activity,popupView);
         textCGPopupTitle = popupView.findViewById(R.id.textCGPopupTitle);
         btnCamera = popupView.findViewById(R.id.btnCamera);
         btnGallery = popupView.findViewById(R.id.btnGallery);
         btnCGDelete = popupView.findViewById(R.id.btnCGDelete);
-
-        addView(popupView);
     }
 
-    /**
-     * 팝업 나타나는 위치 지정
-     */
-    private void setLocation(){
-        FrameLayout.LayoutParams layoutParams
-                = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
-        setLayoutParams(layoutParams);
+//    /**
+//     * 팝업 나타나는 위치 지정
+//     */
+//    private void setLocation(){
+//        FrameLayout.LayoutParams layoutParams
+//                = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//        layoutParams.gravity = Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL;
+//        setLayoutParams(layoutParams);
+//    }
+
+    public void show(){
+        dialog.show();
+    }
+    public void cancel(){
+        dialog.cancel();
+    }
+    public void dismiss(){
+        dialog.dismiss();
     }
 
     /**
@@ -87,8 +99,8 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      * @param isProfile
      */
     public void setbtnList(boolean isProfile){
-        if(isProfile) btnCGDelete.setVisibility(VISIBLE);
-        else btnCGDelete.setVisibility(GONE);
+        if(isProfile) btnCGDelete.setVisibility(popupView.VISIBLE);
+        else btnCGDelete.setVisibility(popupView.GONE);
     }
 
     /**
@@ -96,8 +108,8 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      */
     private void setTextTitle(){
         switch (type){
-            case PET_MEDICAL: textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_medical)); break;
-            default: textCGPopupTitle.setText(getResources().getString(R.string.popup_camera_gallery_title_profile)); break;
+            case PET_MEDICAL: textCGPopupTitle.setText(context.getResources().getString(R.string.popup_camera_gallery_title_medical)); break;
+            default: textCGPopupTitle.setText(context.getResources().getString(R.string.popup_camera_gallery_title_profile)); break;
         }
     }
 
@@ -132,12 +144,12 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
             case USER_PROFILE: resId = R.drawable.user_profile; break;
         }
         Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + getContext().getResources().getResourcePackageName(resId)
-                + '/' + getContext().getResources().getResourceTypeName(resId)
-                + '/' + getContext().getResources().getResourceEntryName(resId)
+                "://" + context.getResources().getResourcePackageName(resId)
+                + '/' + context.getResources().getResourceTypeName(resId)
+                + '/' + context.getResources().getResourceEntryName(resId)
         );
         iDelete.setBasicImage(imageUri);
-        iDelete.deletePopup();
+        dialog.cancel();
     }
 
     /**
@@ -169,7 +181,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            fileUri = FileProvider.getUriForFile(getContext(), BuildConfig.APPLICATION_ID + ".provider",photoFile);
+            fileUri = FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider",photoFile);
             intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
             activity.startActivityForResult(intent,Const.PERMISSION_REQ_CAMERA);
         } else {
@@ -196,7 +208,7 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
      * @param file
      */
     private void refreshMedia(File file){
-        MediaScannerConnection.scanFile(getContext(), new String[]{file.getAbsolutePath()}, null, (path, uri) -> {});
+        MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, (path, uri) -> {});
     }
 
     /**
@@ -258,15 +270,15 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
             case Const.PERMISSION_REQ_CAMERA: goCamera(); break;
             case Const.PERMISSION_REQ_GALLERY: goGallery(); break;
         }
-        iDelete.deletePopup();
+        dialog.cancel();
     }
     @Override
     public void fail() {
         DialogUtil.showDialog(activity,
-                getResources().getString(R.string.alert_permission_title),
-                getResources().getString(R.string.alert_permission_msg),
+                context.getResources().getString(R.string.alert_permission_title),
+                context.getResources().getString(R.string.alert_permission_msg),
                 false);
-        iDelete.deletePopup();
+        dialog.cancel();
     }
 
     /**
@@ -278,6 +290,5 @@ public class CameraGalleryPopup extends FrameLayout implements View.OnClickListe
 
     public interface IDelete {
         void setBasicImage(Uri basicProfileUri);
-        void deletePopup();
     }
 }
