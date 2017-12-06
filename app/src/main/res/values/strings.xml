@@ -80,7 +80,7 @@
     <!-- Pet Detail -->
     <string name="pet_detail_schedule_title">Closing Pet Schedules</string>
     <string name="pet_detail_vaccine_title">Closing Vaccination Schedule</string>
-    <string name="pet_detail_medical_title">Closing Medical Schedule</string>
+    <string name="pet_detail_medical_title">The last Medical Information</string>
     <string name="pet_detail_more">More</string>
     <string name="pet_detail_vaccine_name">Name</string>
     <string name="pet_detail_vaccine_past_date">Past date</string>

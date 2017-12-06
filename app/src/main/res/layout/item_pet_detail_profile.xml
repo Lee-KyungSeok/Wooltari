@@ -107,7 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:gravity="center"/>
+                    android:gravity="center_vertical"/>
 
             </LinearLayout>
 
@@ -158,7 +158,7 @@
                 android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
 
                 <TextView
-                    android:id="@+id/textPSPSex"
+                    android:id="@+id/textPDPSex"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -166,14 +166,14 @@
                     android:text="@string/pet_profile_sex" />
 
                 <TextView
-                    android:id="@+id/textPSPSexValue"
+                    android:id="@+id/textPDPSexValue"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center" />
 
                 <TextView
-                    android:id="@+id/textPSPNeuter"
+                    android:id="@+id/textPDPNeuter"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -181,7 +181,7 @@
                     android:text="@string/pet_profile_neuter"  />
 
                 <TextView
-                    android:id="@+id/textPSPNeuterValue"
+                    android:id="@+id/textPDPNeuterValue"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -210,7 +210,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
-                    android:gravity="center"/>
+                    android:gravity="center_vertical"/>
 
             </LinearLayout>
         </LinearLayout>

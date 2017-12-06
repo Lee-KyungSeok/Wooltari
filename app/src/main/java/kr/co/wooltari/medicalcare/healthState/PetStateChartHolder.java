@@ -38,8 +38,6 @@ public class PetStateChartHolder extends RecyclerView.ViewHolder {
         List<Entry> entryList = new ArrayList<>();
         List<Entry> goals = new ArrayList<>();
         for(HealthStateDummy.petWeight data : dataList){
-            Log.e("date","====================="+data.inputDate);
-            Log.e("weight","====================="+data.petWeight);
             entryList.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)data.petWeight));
             goals.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)goalWeight));
         }

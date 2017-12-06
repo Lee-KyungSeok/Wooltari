@@ -16,4 +16,7 @@ public class Const {
     // Pet Key
     public static final String PET_ID = "pet_id";
     public static final String PET_NAME = "pet_name";
+
+    // Pet Request Code
+    public static final int PET_PROFILE_EDIT = 700;
 }

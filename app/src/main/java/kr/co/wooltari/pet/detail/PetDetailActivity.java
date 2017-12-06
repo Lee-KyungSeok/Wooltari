@@ -2,6 +2,7 @@ package kr.co.wooltari.pet.detail;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.view.GravityCompat;
@@ -42,11 +43,15 @@ public class PetDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_detail);
 
+        getData();
+        initToolbar();
+        init();
+    }
+
+    private void getData(){
         int pFK = getIntent().getIntExtra(Const.PET_ID,-1);
         petInfo = PetDummy.data.get(pFK);
         stateInfo = HealthStateDummy.stateData.get(pFK);
-
-        initToolbar();
     }
 
     public void changeView(int pFK){
@@ -54,6 +59,9 @@ public class PetDetailActivity extends AppCompatActivity {
         stateInfo = HealthStateDummy.stateData.get(pFK);
         petDetailTitle.setTitle(petInfo.pName);
         getSupportActionBar().setTitle(petInfo.pName);
+
+        petDetailProfile.setValue(petInfo);
+        petDetailState.setValue(stateInfo);
     }
 
     private void initToolbar(){
@@ -71,7 +79,11 @@ public class PetDetailActivity extends AppCompatActivity {
     }
 
     private void init(){
-        petDetailProfile = new PetDetailProfile(this);
+        petDetailProfile = new PetDetailProfile(this, petInfo);
+        petDetailState = new PetDetailState(this, stateInfo);
+        petDetailSchedule = new PetDetailSchedule(this);
+        petDetailVaccination = new PetDetailVaccination(this);
+        petDetailMedical = new PetDetailMedical(this);
     }
 
     @Override
@@ -92,5 +104,18 @@ public class PetDetailActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Const.PET_PROFILE_EDIT:
+                if(resultCode == RESULT_OK) {
+                    getData();
+                    petDetailProfile.setValue(petInfo);
+                }
+                break;
+        }
     }
 }
