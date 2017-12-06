@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import kr.co.wooltari.MainActivity;
+import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.R;
 
 public class SignInActivity extends AppCompatActivity {

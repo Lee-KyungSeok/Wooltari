@@ -1,4 +1,4 @@
-package kr.co.wooltari;
+package kr.co.wooltari.main;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import kr.co.wooltari.R;
 import kr.co.wooltari.custom.PetNavigationView;
+import kr.co.wooltari.main.dataFragment;
 import kr.co.wooltari.pet.PetDetailActivity;
 import kr.co.wooltari.util.ToolbarUtil;
 

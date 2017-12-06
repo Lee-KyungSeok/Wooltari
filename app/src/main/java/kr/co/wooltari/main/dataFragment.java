@@ -1,4 +1,4 @@
-package kr.co.wooltari;
+package kr.co.wooltari.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,6 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import kr.co.wooltari.R;
+import kr.co.wooltari.main.contentFragment1;
+import kr.co.wooltari.main.contentFragment2;
 
 /**
  * Created by Mako on 1/13/2017.
@@ -47,7 +51,7 @@ public class dataFragment extends Fragment {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new contentFragment();
+                    return new contentFragment1();
                 case 1:
                 default:
                     return new contentFragment2();

@@ -1,4 +1,4 @@
-package kr.co.wooltari;
+package kr.co.wooltari.main;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,11 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class contentFragment extends Fragment {
+import kr.co.wooltari.R;
+
+public class contentFragment2 extends Fragment {
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.content,container,false);
+        return inflater.inflate(R.layout.content2,container,false);
     }
+
 }

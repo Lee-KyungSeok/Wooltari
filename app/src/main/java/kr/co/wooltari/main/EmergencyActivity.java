@@ -1,4 +1,4 @@
-package kr.co.wooltari;
+package kr.co.wooltari.main;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -9,6 +9,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import kr.co.wooltari.R;
 
 public class EmergencyActivity extends FragmentActivity implements OnMapReadyCallback {
 
