@@ -1,6 +1,7 @@
 package kr.co.wooltari.main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +12,9 @@ import android.widget.TextView;
 import java.util.List;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.pet.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 
@@ -36,6 +39,7 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
     public void onBindViewHolder(Holder holder, int position) {
         PetDummy.Dummy pet = data.get(position);
         //holder.imageView.setImageURI();
+        holder.pPK = pet.pPK;
         holder.petName.setText(pet.pName+"");
         LoadUtil.circleImageLoad(context,pet.pProfile,holder.petImage);
     }
@@ -46,12 +50,22 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
     }
 
     public class Holder extends RecyclerView.ViewHolder{
+        int pPK;
         ImageView petImage;
         TextView petName;
         public Holder(View itemView) {
             super(itemView);
             petImage = itemView.findViewById(R.id.Main_PetImage_imageview);
             petName = itemView.findViewById(R.id.Main_PetName_textview);
+
+            setListener(itemView);
+        }
+        private void setListener(View itemView){
+            itemView.setOnClickListener( v ->{
+                Intent intent = new Intent(context, PetDetailActivity.class);
+                intent.putExtra(Const.PET_ID, pPK);
+                context.startActivity(intent);
+            });
         }
     }
 }

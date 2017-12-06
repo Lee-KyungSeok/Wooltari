@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
+import java.util.Collections;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -141,7 +142,6 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
         String regex = "^[0-9]+(\\.[0-9]+)*$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(text);
-        Log.e("text",text+"================"+m.matches());
         return m.matches();
     }
 
@@ -166,5 +166,11 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Collections.reverse(stateInfo.petWeightList);
     }
 }

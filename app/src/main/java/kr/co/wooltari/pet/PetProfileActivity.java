@@ -3,7 +3,6 @@ package kr.co.wooltari.pet;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -30,7 +27,6 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -121,7 +117,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         });
         imagePetProfile.setOnClickListener(v -> {
             cameraGalleryPopup.show();
-            cameraGalleryPopup.setbtnList(isImage);
+            cameraGalleryPopup.setBtnList(isImage);
         });
     }
 
@@ -465,7 +461,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             btnNumberSearch.setVisibility(View.VISIBLE);
             imagePetProfile.setOnClickListener(v -> {
                 cameraGalleryPopup.show();
-                cameraGalleryPopup.setbtnList(isImage);
+                cameraGalleryPopup.setBtnList(isImage);
             });
             changePetBackgroundColor(activeRadioColor.getCurrentTextColor());
             changeViewEnabled(true);

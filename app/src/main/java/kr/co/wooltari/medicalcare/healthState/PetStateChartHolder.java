@@ -2,6 +2,7 @@ package kr.co.wooltari.medicalcare.healthState;
 
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -10,6 +11,7 @@ import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import kr.co.wooltari.R;
@@ -36,6 +38,8 @@ public class PetStateChartHolder extends RecyclerView.ViewHolder {
         List<Entry> entryList = new ArrayList<>();
         List<Entry> goals = new ArrayList<>();
         for(HealthStateDummy.petWeight data : dataList){
+            Log.e("date","====================="+data.inputDate);
+            Log.e("weight","====================="+data.petWeight);
             entryList.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)data.petWeight));
             goals.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)goalWeight));
         }

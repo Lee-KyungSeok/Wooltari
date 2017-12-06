@@ -26,14 +26,7 @@ public class contentFragment1 extends Fragment {
 
         List<PetDummy.Dummy> data=new ArrayList<>();
         data.clear();
-        data.add(new PetDummy.Dummy(1, "댕댕이" + 0, 0, "128989"));
-        data.add(new PetDummy.Dummy(2, "댕댕이" + 1, 1, "123390"));
-        data.add(new PetDummy.Dummy(3, "댕댕이" + 2, 2, "123390"));
-        data.add(new PetDummy.Dummy(4, "댕댕이" + 3, 3, "123390"));
-        data.add(new PetDummy.Dummy(5, "댕댕이" + 4, 4, "123390"));
-        data.add(new PetDummy.Dummy(6, "댕댕이" + 5, 5, "123390"));
-        data.add(new PetDummy.Dummy(7, "댕댕이" + 6, 6, "123390"));
-        data.add(new PetDummy.Dummy(8, "댕댕이" + 7, 7, "123390"));
+        data.addAll(PetDummy.data);
 
         PetListRecyclerAdapter petListAdapter=new PetListRecyclerAdapter(data, this.getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
