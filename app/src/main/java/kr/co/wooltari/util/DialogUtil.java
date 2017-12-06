@@ -46,10 +46,9 @@ public class DialogUtil {
         return dialog;
     }
 
-    public static AlertDialog getCustomDialog(final Activity activity, String title, View view){
+    public static AlertDialog getCustomDialog(final Activity activity, View view){
         AlertDialog.Builder dialogBuilser = new AlertDialog.Builder(activity);
         dialogBuilser
-                .setTitle(title)
                 .setView(view);
         AlertDialog dialog = dialogBuilser.create();
         return dialog;

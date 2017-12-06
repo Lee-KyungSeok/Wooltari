@@ -9,7 +9,8 @@
     <dimen name="nav_header_pet_height">100dp</dimen>
 
     <!-- camera&gallery popup -->
-    <dimen name="popup_cg_padding">4dp</dimen>
+    <dimen name="popup_cg_padding">10dp</dimen>
+    <dimen name="popup_cg_margin">20dp</dimen>
 
     <!-- Pet Profile -->
     <dimen name="pet_profile_size">80dp</dimen>
