@@ -7,7 +7,7 @@
     <color name="colorWhite">#FFFFFF</color>
     
     <!-- Pet Color -->
-    <color name="colorPetDefault">#EEEEEE</color>
+    <color name="colorBlackE">#EEEEEE</color>
     <color name="colorRed">#ff0000</color>
     <color name="colorBurgundy">#630404</color>
     <color name="colorPink">#ff99cc</color>
@@ -20,7 +20,7 @@
     <color name="colorOrangeMuffler">#e06d1f</color>
 
     <!-- Pet Health Info Color -->
-    <color name="colorHealthItemBackground">#dddddd</color>
+    <color name="colorBlackD">#dddddd</color>
     <color name="colorLittleBlack">#999999</color>
     
     <!-- Camera&Gallery Popup -->

@@ -22,6 +22,7 @@ import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
+import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 /**
@@ -92,6 +93,9 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LoadUtil.circleImageLoad(context, petData.get(position).pProfile, imageNavPetProfile);
                 pPk = petData.get(position).pPK;
+                if(context instanceof PetDetailActivity){
+                    ((PetDetailActivity)context).changeView(pPk);
+                }
             }
 
             @Override

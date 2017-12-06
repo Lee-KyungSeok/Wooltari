@@ -45,6 +45,8 @@
     <string name="pet_profile_human_age">HumanAge</string>
     <string name="pet_profile_sex">Sex</string>
     <string name="pet_profile_neutralization">Neuter /\nSpay</string>
+    <string name="pet_profile_neuter">Neuter</string>
+    <string name="pet_profile_spay">Spay</string>
     <string name="pet_profile_number">Number</string>
     <string name="pet_profile_number_hint">Write your pet\'s number</string>
     <string name="pet_profile_btn_number_search">Search</string>
@@ -75,6 +77,16 @@
         <item>Bengal</item>
     </string-array>
 
+    <!-- Pet Detail -->
+    <string name="pet_detail_schedule_title">Closing Pet Schedules</string>
+    <string name="pet_detail_vaccine_title">Closing Vaccination Schedule</string>
+    <string name="pet_detail_medical_title">Closing Medical Schedule</string>
+    <string name="pet_detail_more">More</string>
+    <string name="pet_detail_vaccine_name">Name</string>
+    <string name="pet_detail_vaccine_past_date">Past date</string>
+    <string name="pet_detail_vaccine_expected_date">Expected date</string>
+    <string name="pet_detail_vaccine_cycle">Cycle</string>
+
     <!-- Pet Health State -->
     <string name="pet_state_title">Pet State</string>
     <string name="pet_state_weight">Weight</string>
@@ -97,6 +109,12 @@
     <string name="pet_state_dialog_edit_cancel">Cancel</string>
     <string name="pet_state_save_valid">All format is valid</string>
     <string name="pet_state_save_invalid">Some format is invalid</string>
+
+    <!-- Medical Info -->
+    <string name="pet_medical_no_image">No Image</string>
+    <string name="pet_medical_date">Date</string>
+    <string name="pet_medical_description">description</string>
+    <string name="pet_medical_comment">comment</string>
 
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>

@@ -19,6 +19,21 @@
     <dimen name="pet_card_top_margin">50dp</dimen>
     <dimen name="pet_card_left_right_down_margin">10dp</dimen>
     <dimen name="pet_card_padding_right_left_bottom">5dp</dimen>
+    <dimen name="pet_card_margin_start_height">50dp</dimen>
+
+    <!-- Pet Detail -->
+    <dimen name="pet_detail_toolbar_image_size">200dp</dimen>
+    <dimen name="pet_detail_background_padding_left_right">15dp</dimen>
+    <dimen name="pet_detail_background_padding_top">10dp</dimen>
+    <dimen name="pet_detail_line_depth">2dp</dimen>
+    <dimen name="pet_detail_line_dash_width">10px</dimen>
+    <dimen name="pet_detail_line_dash_gap">5px</dimen>
+    <dimen name="pet_detail_profile_text_margin">5dp</dimen>
+    <dimen name="pet_detail_item_interval">30dp</dimen>
+    <dimen name="pet_detail_state_average_margin">8dp</dimen>
+    <dimen name="pet_detail_state_chart_height">200dp</dimen>
+    <dimen name="pet_detail_calendar_alarm_size">30dp</dimen>
+    <dimen name="pet_detail_vaccine_medical_height">120dp</dimen>
 
     <!-- Pet Health State -->
     <dimen name="pet_state_item_interval">30dp</dimen>

@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <FrameLayout
+        android:id="@+id/imagePetDetailProfileStage"
+        android:layout_width="@dimen/pet_profile_size"
+        android:layout_height="@dimen/pet_profile_size"
+        android:layout_marginTop="@dimen/pet_profile_top_margin"
+        android:background="@color/colorBlackE"
+        android:elevation="3dp"
+        android:padding="@dimen/pet_state_profile_background_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent">
+
+        <ImageView
+            android:id="@+id/imagePetDetailProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/pet_profile" />
+
+    </FrameLayout>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pet_card_left_right_down_margin"
+        android:layout_marginStart="@dimen/pet_card_left_right_down_margin"
+        android:layout_marginTop="@dimen/pet_card_top_margin"
+        app:cardBackgroundColor="@color/colorBlackD"
+        app:cardCornerRadius="@dimen/pet_card_radius_degree"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:overScrollMode="always"
+            android:paddingBottom="@dimen/pet_card_padding_right_left_bottom"
+            android:paddingLeft="@dimen/pet_card_padding_right_left_bottom"
+            android:paddingRight="@dimen/pet_card_padding_right_left_bottom">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pet_card_margin_start_height" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
+
+                <TextView
+                    android:id="@+id/textPDPSpecies"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_species" />
+
+                <TextView
+                    android:id="@+id/textPDPSpeciesValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+
+                <TextView
+                    android:id="@+id/textPDPBreeds"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_breeds"  />
+
+                <TextView
+                    android:id="@+id/textPDPBreedsValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/pet_detail_profile_text_margin"
+                android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
+
+                <TextView
+                    android:id="@+id/textPDPBirth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_birth" />
+
+                <TextView
+                    android:id="@+id/textPDPBirthValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/pet_detail_profile_text_margin"
+                android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
+
+                <TextView
+                    android:id="@+id/textPDPAge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_age" />
+
+                <TextView
+                    android:id="@+id/textPDPAgeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/textPDPHumanAge"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_human_age" />
+
+                <TextView
+                    android:id="@+id/textPDPHumanAgeValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/pet_detail_profile_text_margin"
+                android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
+
+                <TextView
+                    android:id="@+id/textPSPSex"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_sex" />
+
+                <TextView
+                    android:id="@+id/textPSPSexValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+                <TextView
+                    android:id="@+id/textPSPNeuter"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_neuter"  />
+
+                <TextView
+                    android:id="@+id/textPSPNeuterValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/pet_detail_profile_text_margin"
+                android:layout_marginBottom="@dimen/pet_detail_profile_text_margin">
+
+
+                <TextView
+                    android:id="@+id/textPDPNum"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="@string/pet_profile_number" />
+
+                <TextView
+                    android:id="@+id/textPDPNumValue"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3"
+                    android:gravity="center"/>
+
+            </LinearLayout>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <Button
+        android:id="@+id/btnPetStateEdit"
+        android:layout_width="@dimen/pet_state_edit_button_size"
+        android:layout_height="@dimen/pet_state_edit_button_size"
+        android:background="@drawable/edit_profile"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView" />
+
+</android.support.constraint.ConstraintLayout>
