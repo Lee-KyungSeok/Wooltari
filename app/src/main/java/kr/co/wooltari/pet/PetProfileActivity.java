@@ -459,7 +459,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             // 이미지 클릭 막기
             imagePetProfile.setOnClickListener(null);
             // 배경색 제거
-            changePetBackground(ContextCompat.getColor(this, R.color.colorPetDefault));
+            changePetBackground(ContextCompat.getColor(this, R.color.colorBlackE));
             // View 들에 대한 선택 효과 제거
             changeViewEnabled(false);
         } else {

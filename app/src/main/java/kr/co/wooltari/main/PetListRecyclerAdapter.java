@@ -14,7 +14,7 @@ import java.util.List;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.pet.PetDetailActivity;
+import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 

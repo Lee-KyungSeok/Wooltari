@@ -18,9 +18,9 @@ import kr.co.wooltari.util.LoadUtil;
 
 public class PetStateAdapter extends RecyclerView.Adapter {
 
-    HealthStateDummy.StateDummy petState = null;
-    PetDummy.Dummy petInfo = null;
-    Context context;
+    private HealthStateDummy.StateDummy petState = null;
+    private PetDummy.Dummy petInfo = null;
+    private Context context;
     private final int STATE_PROFILE = 20;
     private final int  STATE_CHART = 21;
     private final int  STATE_DETAIL = 22;

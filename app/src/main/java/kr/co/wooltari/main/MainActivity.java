@@ -15,8 +15,7 @@ import android.view.View;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.custom.PetNavigationView;
-import kr.co.wooltari.main.dataFragment;
-import kr.co.wooltari.pet.PetDetailActivity;
+import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.ToolbarUtil;
 
 

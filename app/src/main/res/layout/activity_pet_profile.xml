@@ -37,7 +37,7 @@
                 android:layout_width="@dimen/pet_profile_size"
                 android:layout_height="@dimen/pet_profile_size"
                 android:padding="@dimen/pet_state_profile_background_padding"
-                android:background="@color/colorPetDefault"
+                android:background="@color/colorBlackE"
                 android:elevation="3dp"
                 android:layout_marginTop="@dimen/pet_profile_top_margin"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -75,7 +75,7 @@
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp" />
+                        android:layout_height="@dimen/pet_card_margin_start_height" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
