@@ -98,7 +98,7 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
      * 프로필 유무에 따라 delete 버튼 생성 및 삭제
      * @param isProfile
      */
-    public void setbtnList(boolean isProfile){
+    public void setBtnList(boolean isProfile){
         if(isProfile) btnCGDelete.setVisibility(popupView.VISIBLE);
         else btnCGDelete.setVisibility(popupView.GONE);
     }
