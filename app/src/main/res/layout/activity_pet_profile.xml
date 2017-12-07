@@ -448,7 +448,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="@string/pet_profile_btn_add"
+                            android:text="@string/pet_btn_add"
                             android:textAllCaps="false" />
 
                         <Button
@@ -456,7 +456,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="@string/pet_profile_btn_cancel"
+                            android:text="@string/pet_btn_cancel"
                             android:textAllCaps="false" />
                     </LinearLayout>
                 </LinearLayout>
@@ -486,7 +486,7 @@
                 android:id="@+id/btnPetDelete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pet_profile_btn_delete"
+                android:text="@string/pet_btn_delete"
                 android:textAllCaps="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

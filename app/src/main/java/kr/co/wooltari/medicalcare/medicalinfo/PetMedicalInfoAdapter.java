@@ -30,8 +30,9 @@ public class PetMedicalInfoAdapter extends RecyclerView.Adapter<PetMedicalInfoHo
     }
 
     public void setDataAndRefresh(List<MedicalInfoDummy.petMediInfo> data){
-        this.data = data;
-        Collections.reverse(this.data);
+        for(MedicalInfoDummy.petMediInfo info : data){
+            this.data.add(0,info);
+        }
         notifyDataSetChanged();
     }
 

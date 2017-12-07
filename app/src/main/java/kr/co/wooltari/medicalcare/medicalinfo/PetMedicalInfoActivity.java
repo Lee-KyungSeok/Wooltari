@@ -11,8 +11,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.squareup.picasso.Picasso;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
@@ -25,6 +31,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
 
     private Toolbar toolbarPetMedical;
     private ImageView imagePMM;
+    private Button btnEditPMM;
     private TextView textPMMName, textPMMNameValue;
     private TextView textPMMDate, textPMMDateValue;
     private TextView textPMMAlarm, textPMMAlarmValue;
@@ -52,6 +59,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         medicalInfo = MedicalInfoDummy.data.get(petPK);
         int petColor = LoadUtil.loadColor(this,petInfo.color);
         initToolbar();
+        initButton();
         setColor(petColor);
 
         if(medicalInfo.petMediInfoList.size()!=0) setData(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
@@ -62,6 +70,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
     private void initView() {
         toolbarPetMedical = findViewById(R.id.toolbarPetMedical);
         imagePMM = findViewById(R.id.imagePMM);
+        btnEditPMM = findViewById(R.id.btnEditPMM);
         textPMMName = findViewById(R.id.textPMMName);
         textPMMNameValue =findViewById(R.id.textPMMNameValue);
         textPMMDate = findViewById(R.id.textPMMDate);
@@ -82,6 +91,15 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         ToolbarUtil.setCommonToolbar(this,toolbarPetMedical,getResources().getString(R.string.pet_medical_title));
     }
 
+    private void initButton(){
+        btnEditPMM.setOnClickListener(v -> {
+            Intent intent = new Intent(this,PetMedicalInputActivity.class);
+            intent.putExtra(Const.PET_ID,petPK);
+            intent.putExtra(Const.PET_MEDICAL_ID,mediPK);
+            startActivityForResult(intent,Const.PET_PROFILE_EDIT);
+        });
+    }
+
     private void setColor(int color){
         textPMMName.setTextColor(color);
         textPMMDate.setTextColor(color);
@@ -92,6 +110,13 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
 
     public void setData(MedicalInfoDummy.petMediInfo petMediInfo){
         mediPK = petMediInfo.medicalPk;
+        if(petMediInfo.imageUrl!=null) {
+            Glide.with(this).load(petMediInfo.imageUrl)
+                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMM);
+        } else {
+            Glide.with(this).load(LoadUtil.getResourceImageUri(R.drawable.pet_profile, this))
+                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMM);
+        }
         textPMMNameValue.setText(petInfo.pName);
         textPMMDateValue.setText(petMediInfo.medicalDate);
         textPMMAlarmValue.setText("임시임시");
@@ -121,6 +146,26 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
+        if(item.getItemId() == R.id.menu_add_medical) {
+            Intent intent = new Intent(this,PetMedicalInputActivity.class);
+            intent.putExtra(Const.PET_ID,petPK);
+            startActivityForResult(intent, Const.PET_MEDICAL_ADD);
+            return true;
+        } else {
+            return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Const.PET_MEDICAL_EDIT:
+                if(resultCode == RESULT_OK) {
+                    // 서버랑 연동 후 더 해야 할듯...
+                    adapter.setDataAndRefresh(medicalInfo.petMediInfoList);
+                }
+                break;
+        }
     }
 }

@@ -1,11 +1,13 @@
 package kr.co.wooltari.util;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 
@@ -28,6 +30,14 @@ public class LoadUtil {
                 .load(uri)
                 .apply(RequestOptions.bitmapTransform(new CircleCrop()))
                 .into(imageView);
+    }
+
+    public static Uri getResourceImageUri(int resId, Context context){
+        return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + context.getResources().getResourcePackageName(resId)
+                + '/' + context.getResources().getResourceTypeName(resId)
+                + '/' + context.getResources().getResourceEntryName(resId)
+        );
     }
 
     public static int loadColor(Context context, String color){

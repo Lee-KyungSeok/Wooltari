@@ -41,10 +41,6 @@ public class ToolbarUtil {
             case android.R.id.home:
                 activity.finish();
                 return true;
-            case R.id.menu_add_medical:
-                intent = new Intent(activity, PetMedicalInputActivity.class);
-                activity.startActivityForResult(intent, Const.PET_MEDICAL_ADD);
-                return true;
         }
         return false;
     }

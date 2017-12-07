@@ -154,7 +154,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // 툴바를 register로 세팅
         ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile_register));
         // 버튼 상태 정의
-        btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_add));
+        btnPetAddEdit.setText(getResources().getString(R.string.pet_btn_add));
         btnPetDelete.setVisibility(View.GONE);
         btnPetState.setVisibility(View.GONE);
         changePetBackground(activeRadioColor.getCurrentTextColor());
@@ -170,7 +170,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         LoadUtil.circleImageLoad(this,PetDummy.data.get(pPk).pProfile, imagePetProfile);
         if(PetDummy.data.get(pPk).pProfile!=null) isImage = true;
         // 버튼 상태 정의
-        btnPetAddEdit.setText(getResources().getString(R.string.pet_profile_btn_edit));
+        btnPetAddEdit.setText(getResources().getString(R.string.pet_btn_edit));
         // 이름 디폴트 값 정의
         editPetName.setText(PetDummy.data.get(pPk).pName);
         // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)

@@ -52,7 +52,7 @@ public class MedicalInfoDummy {
                     description = "Neutralization ~~";
                     comment = "Success!! Good!!\n My Pet is very Cute~~ \n i want to take walk with my pet!!";
                 }
-                petMediInfoList.add(new petMediInfo(pPK, imageUrl, medicalDate, description, comment));
+                petMediInfoList.add(new petMediInfo(i, imageUrl, medicalDate, description, comment));
             }
         }
     }
@@ -64,8 +64,8 @@ public class MedicalInfoDummy {
         public String description;
         public String comment;
 
-        public petMediInfo(int pPk, String imageUrl, String medicalDate, String description, String comment){
-            medicalPk = 10+pPk;
+        public petMediInfo(int medicalPk, String imageUrl, String medicalDate, String description, String comment){
+            this.medicalPk = medicalPk;
             this.imageUrl = imageUrl;
             this.medicalDate = medicalDate;
             this.description =description;
