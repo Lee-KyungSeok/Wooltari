@@ -111,11 +111,14 @@
     <string name="pet_state_save_invalid">Some format is invalid</string>
 
     <!-- Medical Info -->
+    <string name="pet_medical_title">Medical Information</string>
     <string name="pet_medical_no_image">No Image</string>
     <string name="pet_medical_date">Date</string>
     <string name="pet_medical_description">Description</string>
     <string name="pet_medical_comment">Comment</string>
     <string name="pet_medical_alarm">Alarm</string>
+    <string name="pet_medical_information_edit">Edit info</string>
+    <string name="pet_medical_information_add">Add info</string>
     <string name="pet_medical_past_info">Other Information</string>
 
     <!-- SignUpActivity Button  Message-->

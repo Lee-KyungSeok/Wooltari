@@ -19,4 +19,6 @@ public class Const {
 
     // Pet Request Code
     public static final int PET_PROFILE_EDIT = 700;
+    public static final int PET_MEDICAL_ADD = 701;
+    public static final int PET_MEDICAL_EDIT = 702;
 }

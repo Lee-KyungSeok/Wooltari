@@ -45,31 +45,31 @@ public class MedicalInfoDummy {
                 }
 
                 description = "ajnfnjandskjkvkahfenrjnjkvnv115648as";
-                comment = "akdjfkjjandfjbhasfdsdfjk156156164616516848948465165168484651bsdjnfief";
+                comment = i+" akdjfkjjandfjbhasfdsdfjk156156164616516848948465165168484651bsdjnfief";
 
                 if(i==pPK*2-1) {
                     imageUrl = "https://avatars0.githubusercontent.com/u/2" + pPK + "?v=4";
                     description = "Neutralization ~~";
                     comment = "Success!! Good!!\n My Pet is very Cute~~ \n i want to take walk with my pet!!";
                 }
-                petMediInfoList.add(new petMediInfo(imageUrl, medicalDate, description, comment));
+                petMediInfoList.add(new petMediInfo(pPK, imageUrl, medicalDate, description, comment));
             }
-            Log.e("PetMedicalSize",pPK+" : "+petMediInfoList.size());
         }
     }
 
     public static class petMediInfo{
+        public int medicalPk;
         public String imageUrl;
         public String medicalDate;
         public String description;
         public String comment;
 
-        public petMediInfo(String imageUrl, String medicalDate, String description, String comment){
+        public petMediInfo(int pPk, String imageUrl, String medicalDate, String description, String comment){
+            medicalPk = 10+pPk;
             this.imageUrl = imageUrl;
             this.medicalDate = medicalDate;
             this.description =description;
             this.comment = comment;
-            Log.e("information","image : "+imageUrl + " / " + "medicalDate : "+medicalDate + " / " + "description : "+description + " / " + "comment : "+comment);
         }
     }
 }

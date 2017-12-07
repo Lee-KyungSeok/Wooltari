@@ -23,32 +23,51 @@
 
     <include layout="@layout/content_pet_medical_info"/>
 
-    <LinearLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/LayoutPMBottom"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         app:behavior_hideable="false"
-        app:behavior_peekHeight="@dimen/pet_medical_bottom_height"
+        app:behavior_peekHeight="?attr/actionBarSize"
         app:layout_behavior="@string/bottom_sheet_behavior">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/pet_medical_bottom_height"
+        <View
+            android:id="@+id/bottomViewSpace"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pet_medical_bottom_view_space"
             android:background="@color/colorBlackE"
-            android:gravity="center_vertical"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerMedicalBottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <TextView
+            android:id="@+id/textBottomEX"
+            android:layout_width="wrap_content"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/colorBlackE"
+            android:layout_gravity="center"
+            android:gravity="center"
             android:padding="@dimen/pet_medical_bottom_text_padding"
             android:text="@string/pet_medical_past_info"
-            android:textSize="@dimen/pet_medical_bottom_text_size"/>
+            android:textSize="@dimen/pet_medical_bottom_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerMedicalBottom"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/colorBlackE">
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/colorBlackE"
+            android:padding="@dimen/pet_medical_bottom_recycler_padding"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textBottomEX">
 
         </android.support.v7.widget.RecyclerView>
 
-    </LinearLayout>
+    </android.support.constraint.ConstraintLayout>
 
 </android.support.design.widget.CoordinatorLayout>
