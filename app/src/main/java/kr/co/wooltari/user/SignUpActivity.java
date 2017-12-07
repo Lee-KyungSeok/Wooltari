@@ -12,19 +12,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
-import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.util.LoadUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 public class SignUpActivity extends AppCompatActivity {
+    private String TAG="SignUpActivity";
     // 위젯들
     private ImageView UserProfileImageview;
 
@@ -49,6 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
     CameraGalleryPopup cameraGalleryPopup = null;
     boolean isImage = false;
 
+    private String URL="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com:80/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,17 +137,37 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        join_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                가입한다
-            }
-        });
 
         _id_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String id=_id_editText.getText().toString();
+                AsyncTask.execute(new Runnable() {
 
+                    @Override
+                    public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
+                        Call<UserInfo> call = retrofitService.IDPost(id);
+                        call.enqueue(new Callback<UserInfo>() {
+                            @Override
+                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                Log.e(TAG+"1",call.toString());
+                                Log.e(TAG+"2",response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserInfo> call, Throwable t) {
+                                Log.e(TAG, "error "+call.toString());
+                            }
+                        });
+
+                    }
+                });
             }
         });
 
@@ -159,38 +187,34 @@ public class SignUpActivity extends AppCompatActivity {
                 String password2=password2_editText.getText().toString();
 
                 AsyncTask.execute(new Runnable() {
+
                     @Override
                     public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
+                        Call<UserInfo> call = retrofitService.Post(id, nickname, password1, password2);
+                        call.enqueue(new Callback<UserInfo>() {
+                            @Override
+                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                Log.e(TAG+"1",call.toString());
+                                Log.e(TAG+"2",response.toString());
+//                                Log.e(TAG+"3", response.body().toString());
+//                                UserInfo userInfo = response.body();
+//                                String joinMassage=userInfo.getUser().getNickname()+"님 환영합니다.\n"+
+//                                        userInfo.getUser().getEmail()+"로 가셔서 가입메일을 확인해주세요!!";
+//                                Toast.makeText(getApplicationContext(), joinMassage, Toast.LENGTH_SHORT);
 
-                        try {
-                            URL httpbinEndpoint = new URL("https://wooltari.co.kr/auth/signup/");
-                            HttpsURLConnection myConnection;
+                            }
 
-//                            myConnection = (HttpsURLConnection) httpbinEndpoint.openConnection();
-//                            myConnection.setRequestMethod("POST");
-//                            String queryStringData = "email="+id+"&"+
-//                                    "nickname="+nickname+"&"+
-//                                    "password1="+password1+"&"+
-//                                    "password2="+password2;
-//
-//                            myConnection.setDoOutput(true);
-//                            myConnection.getOutputStream().write(queryStringData.getBytes());
-//
-//                            Log.e("myConnection",queryStringData);
-//                            if (myConnection.getResponseCode() == 201) {
-//                                // Success
-//                                Log.e("myConnection","connection sucess!!");
-//                                _id_editText.setText(myConnection.getResponseMessage().substring(500));
-//                            }else if (myConnection.getResponseCode()==400){
-//                                // Error
-//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-//                            }else {
-//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-//                            }
+                            @Override
+                            public void onFailure(Call<UserInfo> call, Throwable t) {
+                                Log.e(TAG, "error "+call.toString());
+                            }
+                        });
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
                     }
                 });
             }
@@ -199,4 +223,38 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 }
+
+interface ISendUserInfo {
+    @Headers("Content-Type: application/json")
+    @POST("/auth/signup")
+    @FormUrlEncoded
+    public Call<UserInfo> Post(@Field("id")String _id, @Field("nickname")String nickname, @Field("password1")String password1, @Field("password2")String password2);
+
+    @Headers("Content-Type: application/json")
+    @POST("/auth/signup")
+    @FormUrlEncoded
+    public Call<UserInfo> IDPost(@Field("id")String _id);
+}
+
+class NotVaildEmail
+{
+    private String[] email;
+
+    public String[] getEmail ()
+    {
+        return email;
+    }
+
+    public void setEmail (String[] email)
+    {
+        this.email = email;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [email = "+email+"]";
+    }
+}
+
 
