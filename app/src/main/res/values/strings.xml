@@ -32,6 +32,12 @@
     <string name="alert_pet_cancel_back_title">Pet information cancel</string>
     <string name="alert_pet_cancel_back_msg">Are you sure you want to cancel your work?\nIf you press the back button, the work will be canceled</string>
 
+    <!-- Pet Common -->
+    <string name="pet_btn_add">Add</string>
+    <string name="pet_btn_edit">Edit</string>
+    <string name="pet_btn_delete">Delete</string>
+    <string name="pet_btn_cancel">Cancel</string>
+
     <!-- Pet Profile -->
     <string name="pet_profile">Pet Profile</string>
     <string name="pet_profile_register">Pet Register</string>
@@ -53,10 +59,6 @@
     <string name="pet_profile_color">Color</string>
     <string name="pet_profile_btn_state_active">Active</string>
     <string name="pet_profile_btn_state_inactive">InActive</string>
-    <string name="pet_profile_btn_add">Add</string>
-    <string name="pet_profile_btn_edit">Edit</string>
-    <string name="pet_profile_btn_delete">Delete</string>
-    <string name="pet_profile_btn_cancel">Cancel</string>
     <string name="pet_profile_species_hint">Select Species..</string>
     <string name="pet_profile_breeds_hint">Select Breeds..</string>
     <string name="pet_profile_birth_year">year</string>
@@ -111,10 +113,17 @@
     <string name="pet_state_save_invalid">Some format is invalid</string>
 
     <!-- Medical Info -->
+    <string name="pet_medical_title">Medical Information</string>
+    <string name="pet_medical_title_input">new Medical Info</string>
+    <string name="pet_medical_title_edit">edit Medical Info</string>
     <string name="pet_medical_no_image">No Image</string>
     <string name="pet_medical_date">Date</string>
-    <string name="pet_medical_description">description</string>
-    <string name="pet_medical_comment">comment</string>
+    <string name="pet_medical_description">Description</string>
+    <string name="pet_medical_comment">Comment</string>
+    <string name="pet_medical_alarm">Alarm</string>
+    <string name="pet_medical_information_edit">Edit info</string>
+    <string name="pet_medical_information_add">Add info</string>
+    <string name="pet_medical_past_info">Other Information</string>
 
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>

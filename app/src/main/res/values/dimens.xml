@@ -51,6 +51,19 @@
     <dimen name="pet_state_detail_dialog_margin">30dp</dimen>
     <dimen name="pet_state_detail_dialog_padding">10dp</dimen>
 
+    <!-- Pet Medical Information -->
+    <dimen name="pet_medical_image_height">250dp</dimen>
+    <dimen name="pet_medical_description_minHeight">30dp</dimen>
+    <dimen name="pet_medical_comment_minHeight">40dp</dimen>
+    <dimen name="pet_medical_average_padding">10dp</dimen>
+    <dimen name="pet_medical_bottom_view_space">10dp</dimen>
+    <dimen name="pet_medical_bottom_padding">5dp</dimen>
+    <dimen name="pet_medical_bottom_text_padding">5dp</dimen>
+    <dimen name="pet_medical_bottom_recycler_padding">10dp</dimen>
+    <dimen name="pet_medical_bottom_text_size">14sp</dimen>
+    <dimen name="pet_medical_bottom_item__height">80dp</dimen>
+    <dimen name="pet_medical_bottom_item_interval">10dp</dimen>
+
     <!-- User Profile -->
     <dimen name="user_image_height">120sp</dimen>
     <dimen name="user_image_width">120sp</dimen>

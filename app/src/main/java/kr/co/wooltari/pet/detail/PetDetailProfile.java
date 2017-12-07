@@ -1,7 +1,6 @@
 package kr.co.wooltari.pet.detail;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.Button;
@@ -105,7 +104,7 @@ public class PetDetailProfile {
         btnPetStateEdit.setOnClickListener(v -> {
             Intent intent = new Intent(activity, PetProfileActivity.class);
             intent.putExtra(Const.PET_ID, petInfo.pPK);
-            activity.startActivityForResult(intent,Const.PET_PROFILE_EDIT);
+            activity.startActivityForResult(intent,Const.PET_PROFILE);
         });
     }
 }

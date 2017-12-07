@@ -35,11 +35,14 @@ public class PetStateChartHolder extends RecyclerView.ViewHolder {
     }
 
     public void setChart(List<HealthStateDummy.petWeight> dataList, double goalWeight){
+        int start=0;
+        if(dataList.size()>10) start = dataList.size()-10;
+
         List<Entry> entryList = new ArrayList<>();
         List<Entry> goals = new ArrayList<>();
-        for(HealthStateDummy.petWeight data : dataList){
-            entryList.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)data.petWeight));
-            goals.add(new Entry(Float.parseFloat(data.inputDate.replace("-","")), (float)goalWeight));
+        for(int i=start ; i<dataList.size() ; i++){
+            entryList.add(new Entry(Float.parseFloat(dataList.get(i).inputDate.replace("-","")), (float)dataList.get(i).petWeight));
+            goals.add(new Entry(Float.parseFloat(dataList.get(i).inputDate.replace("-","")), (float)goalWeight));
         }
 
         LineDataSet weightDataSet = new LineDataSet(entryList, "Weight");

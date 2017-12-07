@@ -1,7 +1,5 @@
 package kr.co.wooltari.pet.detail;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,9 +7,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,15 +15,17 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
 import kr.co.wooltari.domain.HealthStateDummy;
+import kr.co.wooltari.domain.MedicalInfoDummy;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.ToolbarUtil;
 
 
 public class PetDetailActivity extends AppCompatActivity {
     // 툴바 세팅
-    DrawerLayout drawer;
-    Toolbar toolbar;
-    CollapsingToolbarLayout petDetailTitle;
+    private DrawerLayout drawer;
+    private Toolbar toolbar;
+    private CollapsingToolbarLayout petDetailTitle;
     // 각각의 item을 관리하는 class 세팅
     PetDetailProfile petDetailProfile;
     PetDetailState petDetailState;
@@ -37,6 +35,7 @@ public class PetDetailActivity extends AppCompatActivity {
 
     private PetDummy.Dummy petInfo;
     private HealthStateDummy.StateDummy stateInfo;
+    private MedicalInfoDummy.MedicalDummy medicalInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,16 +51,21 @@ public class PetDetailActivity extends AppCompatActivity {
         int pFK = getIntent().getIntExtra(Const.PET_ID,-1);
         petInfo = PetDummy.data.get(pFK);
         stateInfo = HealthStateDummy.stateData.get(pFK);
+        medicalInfo = MedicalInfoDummy.data.get(pFK);
     }
 
     public void changeView(int pFK){
         petInfo = PetDummy.data.get(pFK);
         stateInfo = HealthStateDummy.stateData.get(pFK);
+        medicalInfo = MedicalInfoDummy.data.get(pFK);
+
         petDetailTitle.setTitle(petInfo.pName);
         getSupportActionBar().setTitle(petInfo.pName);
-
+        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.color));
         petDetailProfile.setValue(petInfo);
         petDetailState.setValue(stateInfo);
+        if(medicalInfo.petMediInfoList.size()>0) petDetailMedical.setValue(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
+        else petDetailMedical.setValue(null);
     }
 
     private void initToolbar(){
@@ -76,6 +80,8 @@ public class PetDetailActivity extends AppCompatActivity {
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
+
+        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.color));
     }
 
     private void init(){
@@ -83,7 +89,7 @@ public class PetDetailActivity extends AppCompatActivity {
         petDetailState = new PetDetailState(this, stateInfo);
         petDetailSchedule = new PetDetailSchedule(this);
         petDetailVaccination = new PetDetailVaccination(this);
-        petDetailMedical = new PetDetailMedical(this);
+        petDetailMedical = new PetDetailMedical(this, medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1), petInfo.pPK);
     }
 
     @Override
@@ -110,12 +116,13 @@ public class PetDetailActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode){
-            case Const.PET_PROFILE_EDIT:
+            case Const.PET_PROFILE:
                 if(resultCode == RESULT_OK) {
                     getData();
                     petDetailProfile.setValue(petInfo);
                 }
                 break;
+
         }
     }
 }
