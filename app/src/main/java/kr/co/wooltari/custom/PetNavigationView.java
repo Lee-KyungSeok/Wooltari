@@ -22,6 +22,7 @@ import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
+import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInfoActivity;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
@@ -129,7 +130,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         switch (item.getItemId()){
             case R.id.nav_pet_state : goActivity(PetStateActivity.class); break;
             case R.id.nav_vaccination : goActivity(PetStateActivity.class); break;
-            case R.id.nav_medical_info: goActivity(PetStateActivity.class); break;
+            case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;

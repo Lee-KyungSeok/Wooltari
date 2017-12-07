@@ -113,8 +113,10 @@
     <!-- Medical Info -->
     <string name="pet_medical_no_image">No Image</string>
     <string name="pet_medical_date">Date</string>
-    <string name="pet_medical_description">description</string>
-    <string name="pet_medical_comment">comment</string>
+    <string name="pet_medical_description">Description</string>
+    <string name="pet_medical_comment">Comment</string>
+    <string name="pet_medical_alarm">Alarm</string>
+    <string name="pet_medical_past_info">Other Information</string>
 
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>
