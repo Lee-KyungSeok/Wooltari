@@ -1,5 +1,6 @@
 package kr.co.wooltari.custom;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -21,7 +22,9 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.UserDummy;
+import kr.co.wooltari.main.UserDetailActivity;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
+import kr.co.wooltari.pet.PetProfileActivity;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
@@ -54,7 +57,16 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     private void setHeaderView(){
         View navHeaderView = navigationView.inflateHeaderView(R.layout.common_nav_header);
         LoadUtil.circleImageLoad(context, UserDummy.data.profile, navHeaderView.findViewById(R.id.imageNavUserProfile));
-        ((TextView)navHeaderView.findViewById(R.id.textNavUserName)).setText(UserDummy.data.nickname);
+        TextView UserName=((TextView)navHeaderView.findViewById(R.id.textNavUserName));
+        UserName.setText(UserDummy.data.nickname);
+        UserName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
+                view.getContext().startActivity(intent);
+            }
+        });
+
     }
 
     /**
