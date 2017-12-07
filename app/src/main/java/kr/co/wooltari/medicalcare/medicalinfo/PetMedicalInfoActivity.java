@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.domain.MedicalInfoDummy;
 
 public class PetMedicalInfoActivity extends AppCompatActivity {
 
