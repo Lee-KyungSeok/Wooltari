@@ -102,11 +102,13 @@ public class PetMedicalInputActivity extends AppCompatActivity {
     }
 
     public void save(){
-
+        // 저장로직
+        finish();
     }
 
     public void delete(){
-
+        // 삭제로직
+        finish();
     }
 
     @Override

@@ -2,7 +2,6 @@ package kr.co.wooltari.medicalcare.medicalinfo;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +16,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
-import com.squareup.picasso.Picasso;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
@@ -96,7 +93,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
             Intent intent = new Intent(this,PetMedicalInputActivity.class);
             intent.putExtra(Const.PET_ID,petPK);
             intent.putExtra(Const.PET_MEDICAL_ID,mediPK);
-            startActivityForResult(intent,Const.PET_PROFILE_EDIT);
+            startActivityForResult(intent,Const.PET_PROFILE);
         });
     }
 
