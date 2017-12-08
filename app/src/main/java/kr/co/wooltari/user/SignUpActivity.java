@@ -142,33 +142,40 @@ public class SignUpActivity extends AppCompatActivity {
         _id_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                String id=_id_editText.getText().toString();
-//                AsyncTask.execute(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        Retrofit retrofit = new Retrofit.Builder()
-//                                .baseUrl(URL)
-//                                .addConverterFactory(GsonConverterFactory.create())
-//                                .build();
-//
-//                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
-//                        Call<UserInfo> call = retrofitService.IDPost(id);
-//                        call.enqueue(new Callback<UserInfo>() {
-//                            @Override
-//                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-//                                Log.e(TAG+"1",call.toString());
-//                                Log.e(TAG+"2",response.toString());
-//                            }
-//
-//                            @Override
-//                            public void onFailure(Call<UserInfo> call, Throwable t) {
-//                                Log.e(TAG, "error "+call.toString());
-//                            }
-//                        });
-//
-//                    }
-//                });
+                String id=_id_editText.getText().toString();
+                AsyncTask.execute(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
+
+                        RequestUserInfo requestUserInfo=new RequestUserInfo();
+                        requestUserInfo.setEmail(id);
+                        requestUserInfo.setNickname("");
+                        requestUserInfo.setPassword1("");
+                        requestUserInfo.setPassword2("");
+
+                        Call<UserInfo> call = retrofitService.Post(requestUserInfo);
+                        call.enqueue(new Callback<UserInfo>() {
+                            @Override
+                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                Log.e(TAG+"1",call.toString());
+                                Log.e(TAG+"2",response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserInfo> call, Throwable t) {
+                                Log.e(TAG, "error "+call.toString());
+                            }
+                        });
+
+                    }
+                });
             }
         });
 
@@ -197,7 +204,6 @@ public class SignUpActivity extends AppCompatActivity {
                         ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
 
                         RequestUserInfo requestUserInfo=new RequestUserInfo();
-
                         requestUserInfo.setEmail(id);
                         requestUserInfo.setNickname(nickname);
                         requestUserInfo.setPassword1(password1);
@@ -234,25 +240,26 @@ public class SignUpActivity extends AppCompatActivity {
 
 }
 
+
+
 interface ISendUserInfo {
 
     @Headers("Content-Type: application/json")
     @POST("/auth/signup/")
     public Call<UserInfo> Post(@Body RequestUserInfo requestUserInfo);
+}
 
-//    @Headers("Content-Type: application/json")
-//    @POST("/auth/signup")
-//    @FormUrlEncoded
-//    public Call<UserInfo> IDPost(@Field("id")String _id);
+interface ISendNicknameOnly{
+
 }
 
 class NotVaildEmail
 {
     private String[] email;
 
-    public String[] getEmail ()
+    public String getEmail ()
     {
-        return email;
+        return email[0];
     }
 
     public void setEmail (String[] email)
@@ -280,9 +287,12 @@ class RequestUserInfo{
     public String getNickname(){ return this.nickname;}
     public String getPassword1(){return this.password1;}
     public String getPassword2(){return this.password2;}
-
 }
 
+class ResponseErrorInfo{
+    private String email;
+
+}
 
 
 
