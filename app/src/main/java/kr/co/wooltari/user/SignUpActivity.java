@@ -25,6 +25,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
@@ -141,33 +142,33 @@ public class SignUpActivity extends AppCompatActivity {
         _id_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id=_id_editText.getText().toString();
-                AsyncTask.execute(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl(URL)
-                                .addConverterFactory(GsonConverterFactory.create())
-                                .build();
-
-                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
-                        Call<UserInfo> call = retrofitService.IDPost(id);
-                        call.enqueue(new Callback<UserInfo>() {
-                            @Override
-                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
-                                Log.e(TAG+"1",call.toString());
-                                Log.e(TAG+"2",response.toString());
-                            }
-
-                            @Override
-                            public void onFailure(Call<UserInfo> call, Throwable t) {
-                                Log.e(TAG, "error "+call.toString());
-                            }
-                        });
-
-                    }
-                });
+//                String id=_id_editText.getText().toString();
+//                AsyncTask.execute(new Runnable() {
+//
+//                    @Override
+//                    public void run() {
+//                        Retrofit retrofit = new Retrofit.Builder()
+//                                .baseUrl(URL)
+//                                .addConverterFactory(GsonConverterFactory.create())
+//                                .build();
+//
+//                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
+//                        Call<UserInfo> call = retrofitService.IDPost(id);
+//                        call.enqueue(new Callback<UserInfo>() {
+//                            @Override
+//                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+//                                Log.e(TAG+"1",call.toString());
+//                                Log.e(TAG+"2",response.toString());
+//                            }
+//
+//                            @Override
+//                            public void onFailure(Call<UserInfo> call, Throwable t) {
+//                                Log.e(TAG, "error "+call.toString());
+//                            }
+//                        });
+//
+//                    }
+//                });
             }
         });
 
@@ -195,13 +196,20 @@ public class SignUpActivity extends AppCompatActivity {
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
                         ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
-                        Call<UserInfo> call = retrofitService.Post(id, nickname, password1, password2);
+
+                        RequestUserInfo requestUserInfo=new RequestUserInfo();
+
+                        requestUserInfo.setEmail(id);
+                        requestUserInfo.setNickname(nickname);
+                        requestUserInfo.setPassword1(password1);
+                        requestUserInfo.setPassword2(password2);
+
+                        Call<UserInfo> call = retrofitService.Post(requestUserInfo);
                         call.enqueue(new Callback<UserInfo>() {
                             @Override
                             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                                 Log.e(TAG+"1",call.toString());
                                 Log.e(TAG+"2",response.toString());
-//                                Log.e(TAG+"3", response.body().toString());
 //                                UserInfo userInfo = response.body();
 //                                String joinMassage=userInfo.getUser().getNickname()+"님 환영합니다.\n"+
 //                                        userInfo.getUser().getEmail()+"로 가셔서 가입메일을 확인해주세요!!";
@@ -225,15 +233,15 @@ public class SignUpActivity extends AppCompatActivity {
 }
 
 interface ISendUserInfo {
-    @Headers("Content-Type: application/json")
-    @POST("/auth/signup")
-    @FormUrlEncoded
-    public Call<UserInfo> Post(@Field("id")String _id, @Field("nickname")String nickname, @Field("password1")String password1, @Field("password2")String password2);
 
     @Headers("Content-Type: application/json")
     @POST("/auth/signup")
-    @FormUrlEncoded
-    public Call<UserInfo> IDPost(@Field("id")String _id);
+    public Call<UserInfo> Post(@Body RequestUserInfo requestUserInfo);
+
+//    @Headers("Content-Type: application/json")
+//    @POST("/auth/signup")
+//    @FormUrlEncoded
+//    public Call<UserInfo> IDPost(@Field("id")String _id);
 }
 
 class NotVaildEmail
@@ -256,5 +264,23 @@ class NotVaildEmail
         return "ClassPojo [email = "+email+"]";
     }
 }
+
+class RequestUserInfo{
+    private String email;
+    private String nickname;
+    private String password1;
+    private String password2;
+    public void setEmail(String email){ this.email=email;}
+    public void setNickname(String nickname){ this.nickname=email;}
+    public void setPassword1(String password1){this.password1=password1;}
+    public void setPassword2(String password2){this.password2=password2;}
+    public String getEmail(){ return this.email;}
+    public String getNickname(){ return this.nickname;}
+    public String getPassword1(){return this.password1;}
+    public String getPassword2(){return this.password2;}
+
+}
+
+
 
 
