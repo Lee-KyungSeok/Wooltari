@@ -18,6 +18,9 @@ android {
         enabled true
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com/\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
