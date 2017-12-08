@@ -188,7 +188,6 @@ public class SignUpActivity extends AppCompatActivity {
                 String password2=password2_editText.getText().toString();
 
                 AsyncTask.execute(new Runnable() {
-
                     @Override
                     public void run() {
                         Retrofit retrofit = new Retrofit.Builder()
@@ -210,16 +209,19 @@ public class SignUpActivity extends AppCompatActivity {
                             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                                 Log.e(TAG+"1",call.toString());
                                 Log.e(TAG+"2",response.toString());
-//                                UserInfo userInfo = response.body();
-//                                String joinMassage=userInfo.getUser().getNickname()+"님 환영합니다.\n"+
-//                                        userInfo.getUser().getEmail()+"로 가셔서 가입메일을 확인해주세요!!";
-//                                Toast.makeText(getApplicationContext(), joinMassage, Toast.LENGTH_SHORT);
-
+                                UserInfo userInfo = response.body();
+                                Log.e(TAG,userInfo.toString());
+                                Intent intent=getIntent();
+                                intent.putExtra("email", userInfo.getUser().getEmail());
+                                intent.putExtra("nickname", userInfo.getUser().getNickname());
+                                setResult(RESULT_OK, intent);
+                                finish();
                             }
 
                             @Override
                             public void onFailure(Call<UserInfo> call, Throwable t) {
                                 Log.e(TAG, "error "+call.toString());
+                                finish();
                             }
                         });
 
@@ -235,7 +237,7 @@ public class SignUpActivity extends AppCompatActivity {
 interface ISendUserInfo {
 
     @Headers("Content-Type: application/json")
-    @POST("/auth/signup")
+    @POST("/auth/signup/")
     public Call<UserInfo> Post(@Body RequestUserInfo requestUserInfo);
 
 //    @Headers("Content-Type: application/json")
@@ -271,7 +273,7 @@ class RequestUserInfo{
     private String password1;
     private String password2;
     public void setEmail(String email){ this.email=email;}
-    public void setNickname(String nickname){ this.nickname=email;}
+    public void setNickname(String nickname){ this.nickname=nickname;}
     public void setPassword1(String password1){this.password1=password1;}
     public void setPassword2(String password2){this.password2=password2;}
     public String getEmail(){ return this.email;}

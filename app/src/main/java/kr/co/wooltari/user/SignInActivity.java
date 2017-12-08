@@ -23,6 +23,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private Gson gson;
     private String url="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com/auth/signup/";
+    public static int COMPLETE_SIGNUP=8;
     private static String TAG="SignInActivity";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,24 +38,44 @@ public class SignInActivity extends AppCompatActivity {
 
     public void onClick_Login(View view){
 
-        JsonObject jsonObject=new JsonObject();
-        jsonObject.addProperty("email",id_editText.getText().toString());
-        jsonObject.addProperty("password", id_editText.getText().toString());
-        String json = gson.toJson(jsonObject);
-
-
-
-
-
-
+//        JsonObject jsonObject=new JsonObject();
+//        jsonObject.addProperty("email",id_editText.getText().toString());
+//        jsonObject.addProperty("password", id_editText.getText().toString());
+//        String json = gson.toJson(jsonObject);
+//
+//
+//
+//
+//
+//
 
 
         //       startActivity(new Intent(this,MainActivity.class));
     }
 
     public void onClick_Signup(View view){
-        startActivity(new Intent(this,SignUpActivity.class));
+        Intent intent=new Intent(this,SignUpActivity.class);
+        startActivityForResult(intent, COMPLETE_SIGNUP);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode==RESULT_OK) {
+            if (requestCode == COMPLETE_SIGNUP) {
+                String email = data.getStringExtra("email");
+                String nickname = data.getStringExtra("nickname");
+
+                String joinMassage = nickname + "님 환영합니다.\n" +
+                        email + "로 가셔서 가입메일을 확인해주세요!!";
+
+                Toast.makeText(this, joinMassage, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+
 
     public void onClick_MiggingPassword(View view){ startActivity(new Intent(this,MissingPasswordActivity.class));}
     @Override
