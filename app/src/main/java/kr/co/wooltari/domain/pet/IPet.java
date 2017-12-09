@@ -4,9 +4,12 @@ package kr.co.wooltari.domain.pet;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -16,25 +19,31 @@ import retrofit2.http.Path;
 
 public interface IPet {
     @POST("profile/{user_pk}/pets/")
-    Call<Response<Pet>> savePetData(
-            @Path("user_pk") String userPK,
+    Call<Pet> savePetData(
+//            @Header("Authorization") String token,
+            @Path("user_pk") int userPK,
             @Body Pet petData
     );
 
     @GET("profile/{user_pk}/pets/")
-    Call<Response<PetList>> getPetList(@Path("user_pk") String userPK );
+    Call<PetList> getPetList(
+            @Header("Authorization") String token,
+            @Path("user_pk") int userPK
+    );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")
-    Call<Response<Pet>> getPetData(
-            @Path("user_pk") String userPK,
-            @Path("pet_pk") String petPK
+    Call<Pet> getPetData(
+//            @Header("Authorization") String token,
+            @Path("user_pk") int userPK,
+            @Path("pet_pk") int petPK
     );
 
     // 반응형으로 가져오기 위해 observable 로 생성
     @GET("profile/{user_pk}/pets/{pet_pk}/age/")
-    Observable<Response<Age>> getAge(
-            @Path("user_pk") String userPK,
-            @Path("pet_pk") String petPK
+    Observable<Age> getAge(
+//            @Header("Authorization") String token,
+            @Path("user_pk") int userPK,
+            @Path("pet_pk") int petPK
     );
 
 }

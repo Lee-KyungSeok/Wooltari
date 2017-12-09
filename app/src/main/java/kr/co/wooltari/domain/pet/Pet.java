@@ -11,20 +11,25 @@ public class Pet {
     // @Expose : object 중 해당 값이 null일 경우, json으로 만들 필드를 자동 생략해 준다. (serialize, deserialize 를 정의하여 때에 따라 사용할 수 있다.)
     @Expose(serialize = false, deserialize = true)
     private Owner owner;
-
     @Expose(serialize = false, deserialize = true)
-    private String pk;
-
+    private int pk;
     @Expose
     private boolean is_active;
-
+    @Expose
     private int species;
+    @Expose
     private int breeds;
+    @Expose
     private String name;
+    @Expose
     private String birth_date;
+    @Expose
     private String gender;
+    @Expose
     private String identified_number;
+    @Expose
     private boolean is_neutering;
+    @Expose
     private String body_color;
 
     public String getBody_color() {
@@ -107,11 +112,11 @@ public class Pet {
         this.identified_number = identified_number;
     }
 
-    public String getPk() {
+    public int getPk() {
         return pk;
     }
 
-    public void setPk(String pk) {
+    public void setPk(int pk) {
         this.pk = pk;
     }
 
