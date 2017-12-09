@@ -59,9 +59,9 @@ public class PetDetailActivity extends AppCompatActivity {
         stateInfo = HealthStateDummy.stateData.get(pFK);
         medicalInfo = MedicalInfoDummy.data.get(pFK);
 
-        petDetailTitle.setTitle(petInfo.pName);
-        getSupportActionBar().setTitle(petInfo.pName);
-        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.color));
+        petDetailTitle.setTitle(petInfo.name);
+        getSupportActionBar().setTitle(petInfo.name);
+        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.body_color));
         petDetailProfile.setValue(petInfo);
         petDetailState.setValue(stateInfo);
         if(medicalInfo.petMediInfoList.size()>0) petDetailMedical.setValue(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
@@ -71,17 +71,17 @@ public class PetDetailActivity extends AppCompatActivity {
     private void initToolbar(){
         // 네비게이션 바 및 툴바 세팅
         drawer =findViewById(R.id.drawerPetLayout);
-        new PetNavigationView(this,drawer, findViewById(R.id.navPetView)).setPetSpinnerLocation(petInfo.pName);
+        new PetNavigationView(this,drawer, findViewById(R.id.navPetView)).setPetSpinnerLocation(petInfo.name);
         petDetailTitle = findViewById(R.id.petDetailTitle);
         toolbar = findViewById(R.id.petDetailToolbar);
-        ToolbarUtil.setCommonToolbar(this, toolbar, petInfo.pName);
+        ToolbarUtil.setCommonToolbar(this, toolbar, petInfo.name);
         // 네비게이션 토글 연결
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.color));
+        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.body_color));
     }
 
     private void init(){
@@ -89,7 +89,9 @@ public class PetDetailActivity extends AppCompatActivity {
         petDetailState = new PetDetailState(this, stateInfo);
         petDetailSchedule = new PetDetailSchedule(this);
         petDetailVaccination = new PetDetailVaccination(this);
-        petDetailMedical = new PetDetailMedical(this, medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1), petInfo.pPK);
+        if(medicalInfo.petMediInfoList.size()>0)
+            petDetailMedical = new PetDetailMedical(this, medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1), petInfo.pk);
+        else  petDetailMedical = new PetDetailMedical(this,null,petInfo.pk);
     }
 
     @Override

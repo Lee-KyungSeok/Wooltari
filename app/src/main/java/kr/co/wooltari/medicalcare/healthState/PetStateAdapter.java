@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.util.LoadUtil;
 
 
 /**
@@ -76,10 +75,10 @@ public class PetStateAdapter extends RecyclerView.Adapter {
         } else {
             PetStateProfileHolder holderProfile = (PetStateProfileHolder)holder;
             holderProfile.setImagePetStateProfile(context, petInfo.pProfile);
-            holderProfile.setTextInputPSPName(petInfo.pName);
-            holderProfile.setTextColor(context, petInfo.color);
-            if(petInfo.state) {
-                holderProfile.setBackground(context, petInfo.color);
+            holderProfile.setTextInputPSPName(petInfo.name);
+            holderProfile.setTextColor(context, petInfo.body_color);
+            if(petInfo.is_active) {
+                holderProfile.setBackground(context, petInfo.body_color);
             } else {
                 holderProfile.setBackground(context, "colorPetDefault");
                 holderProfile.setGoneEditButton();

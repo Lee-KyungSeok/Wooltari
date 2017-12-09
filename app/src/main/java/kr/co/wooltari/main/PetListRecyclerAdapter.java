@@ -39,8 +39,8 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
     public void onBindViewHolder(Holder holder, int position) {
         PetDummy.Dummy pet = data.get(position);
         //holder.imageView.setImageURI();
-        holder.pPK = pet.pPK;
-        holder.petName.setText(pet.pName+"");
+        holder.pPK = pet.pk;
+        holder.petName.setText(pet.name +"");
         LoadUtil.circleImageLoad(context,pet.pProfile,holder.petImage);
     }
 

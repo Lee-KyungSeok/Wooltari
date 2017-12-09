@@ -54,7 +54,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         petPK = getIntent().getIntExtra(Const.PET_ID,-1);
         petInfo = PetDummy.data.get(petPK);
         medicalInfo = MedicalInfoDummy.data.get(petPK);
-        int petColor = LoadUtil.loadColor(this,petInfo.color);
+        int petColor = LoadUtil.loadColor(this,petInfo.body_color);
         initToolbar();
         initButton();
         setColor(petColor);
@@ -114,7 +114,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
             Glide.with(this).load(LoadUtil.getResourceImageUri(R.drawable.pet_profile, this))
                     .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMM);
         }
-        textPMMNameValue.setText(petInfo.pName);
+        textPMMNameValue.setText(petInfo.name);
         textPMMDateValue.setText(petMediInfo.medicalDate);
         textPMMAlarmValue.setText("임시임시");
         textPMMDescriptionValue.setText(petMediInfo.description);

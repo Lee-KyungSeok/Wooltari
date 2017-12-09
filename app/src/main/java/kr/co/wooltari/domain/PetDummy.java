@@ -20,38 +20,42 @@ public class PetDummy {
     }
 
     public static class Dummy {
-        public int pPK;
-        public String sex;
-        public String neuter;
-        public String pName;
+        //temp
         public String pProfile;
-        public String petNumber;
-        public boolean state;
-        public String color;
 
-        public Dummy(int pPK, String pName, int num, String petNumber){
-            this.pPK = pPK;
-            this.pName = pName;
+        public int species;
+        public int breeds;
+        public int pk;
+        public String gender;
+        public boolean is_neutering;
+        public String name;
+        public String identified_number;
+        public boolean is_active;
+        public String body_color;
+
+        public Dummy(int pk, String name, int num, String identified_number){
+            this.pk = pk;
+            this.name = name;
             this.pProfile = "https://avatars0.githubusercontent.com/u/" + num + "?v=4";
-            this.petNumber = petNumber;
-            if(pPK%2==0){
-                this.sex = "M";
-                this.neuter = "N";
-                this.state = true;
+            this.identified_number = identified_number;
+            if(pk %2==0){
+                this.gender = "male";
+                this.is_neutering = false;
+                this.is_active = true;
             } else {
-                this.sex = "F";
-                this.neuter = "Y";
-                this.state = false;
+                this.gender = "female";
+                this.is_neutering = true;
+                this.is_active = false;
             }
-            switch (pPK){
-                case 0: this.color = "colorBurgundy"; break;
-                case 1: this.color = "colorPink"; break;
-                case 2: this.color = "colorBeige"; break;
-                case 3: this.color = "colorDarkBlue"; break;
-                case 4: this.color = "colorOrangeMuffler"; break;
-                case 5: this.color = "colorDarkGreen"; break;
-                case 6: this.color = "colorGoldGreen"; break;
-                case 7: this.color = "colorBlueOfSea"; break;
+            switch (pk){
+                case 0: this.body_color = "colorBurgundy"; break;
+                case 1: this.body_color = "colorPink"; break;
+                case 2: this.body_color = "colorBeige"; break;
+                case 3: this.body_color = "colorDarkBlue"; break;
+                case 4: this.body_color = "colorOrangeMuffler"; break;
+                case 5: this.body_color = "colorDarkGreen"; break;
+                case 6: this.body_color = "colorGoldGreen"; break;
+                case 7: this.body_color = "colorBlueOfSea"; break;
             }
         }
     }

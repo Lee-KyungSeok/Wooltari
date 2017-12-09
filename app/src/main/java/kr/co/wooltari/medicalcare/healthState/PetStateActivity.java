@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -75,7 +74,7 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
         View editDialog = LayoutInflater.from(this).inflate(R.layout.dialog_pet_state_edit, null);
         petStateEditDialog = DialogUtil.getCustomDialog(this, editDialog);
         initDialogView(editDialog);
-        setTextViewColor(petInfo.color);
+        setTextViewColor(petInfo.body_color);
         resetPetState();
         dialogBtnListener();
         setEditTextChecking();

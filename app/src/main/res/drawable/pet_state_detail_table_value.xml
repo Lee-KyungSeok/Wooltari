@@ -11,6 +11,6 @@
         />
     <stroke
         android:width="@dimen/pet_state_detail_stroke_size"
-        android:color="@color/colorBlack"
+        android:color="@color/black"
         />
 </shape>
