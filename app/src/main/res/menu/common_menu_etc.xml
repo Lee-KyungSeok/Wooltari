@@ -6,4 +6,9 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_temp_pet_register"
+        android:orderInCategory="100"
+        android:title="펫 임시 등록"
+        app:showAsAction="never" />
 </menu>

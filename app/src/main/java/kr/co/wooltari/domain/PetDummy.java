@@ -12,7 +12,7 @@ import java.util.Random;
 import kr.co.wooltari.domain.pet.IPet;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetError;
-import kr.co.wooltari.domain.pet.RetrofitService;
+import kr.co.wooltari.domain.pet.PetLoader;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -30,7 +30,7 @@ public class PetDummy {
         for(int i=0; i<8; i++){
             data.add(new Dummy(i,"MyPet " + i, i,random.nextInt()+""));
         }
-        loadPetDataByServer(11);
+        PetLoader.getPet(12);
     }
 
     public static class Dummy {
@@ -76,36 +76,5 @@ public class PetDummy {
                 case 7: this.body_color = "colorBlueOfSea"; break;
             }
         }
-    }
-
-    private static void loadPetDataByServer(int PetPK){
-        IPet service = RetrofitService.create(IPet.class, false);
-        Call<Pet> remote = service.getPetData(UserDummy.data.pk, PetPK);
-        remote.enqueue(new Callback<Pet>() {
-            @Override
-            public void onResponse(Call<Pet> call, Response<Pet> response) {
-                Log.e("response","====="+response.toString());
-                Log.e("isSuccessful","====="+response.isSuccessful());
-                Log.e("code","====="+response.code());
-                Log.e("message","====="+response.message());
-                Log.e("headers","====="+response.headers().toString());
-                Log.e("raw","====="+response.raw().toString());
-//                Log.e("raw","====="+response.body().toString()); // 에러가 아닌 경우
-                // 에러처리
-                try {
-                    String errorString = response.errorBody().string();
-                    Gson gson = new Gson();
-                    PetError error = gson.fromJson(errorString,PetError.class);
-                    Log.e("error","====="+error.getDetail());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
-
-            }
-        });
     }
 }
