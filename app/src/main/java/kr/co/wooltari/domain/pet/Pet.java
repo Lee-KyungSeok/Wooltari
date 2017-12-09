@@ -32,6 +32,10 @@ public class Pet {
     @Expose
     private String body_color;
 
+    // 나중에 프로필을 보여줄 때
+    @Expose(serialize = false, deserialize = true)
+    private String profileUrl;
+
     public String getBody_color() {
         return body_color;
     }
@@ -118,6 +122,14 @@ public class Pet {
 
     public void setPk(int pk) {
         this.pk = pk;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     @Override

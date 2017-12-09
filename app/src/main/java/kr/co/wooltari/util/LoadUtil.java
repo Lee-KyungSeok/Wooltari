@@ -55,6 +55,9 @@ public class LoadUtil {
             case "colorLittleBlack": return ContextCompat.getColor(context, R.color.colorLittleBlack);
             case "colorPetDefault": return ContextCompat.getColor(context, R.color.colorBlackE);
             case "black": return ContextCompat.getColor(context, R.color.black);
+            case "gold": return ContextCompat.getColor(context, R.color.gold);
+            case "white": return ContextCompat.getColor(context,R.color.white);
+            case "brown":return ContextCompat.getColor(context, R.color.brown);
             default: return ContextCompat.getColor(context,R.color.colorBlackE);
         }
     }

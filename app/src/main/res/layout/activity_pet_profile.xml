@@ -157,23 +157,15 @@
                             android:gravity="center"
                             android:text="@string/pet_profile_birth" />
 
-                        <Spinner
-                            android:id="@+id/spinnerPetYear"
+                        <EditText
+                            android:id="@+id/editPetBirth"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="2" />
-
-                        <Spinner
-                            android:id="@+id/spinnerPetMonth"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2" />
-
-                        <Spinner
-                            android:id="@+id/spinnerPetDay"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="2" />
+                            android:layout_weight="3"
+                            android:ems="10"
+                            android:hint="@string/pet_profile_birth_hint"
+                            android:inputType="textPersonName|number"
+                            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                     </LinearLayout>
 
@@ -305,7 +297,7 @@
                             android:layout_weight="3"
                             android:ems="10"
                             android:hint="@string/pet_profile_number_hint"
-                            android:inputType="textPersonName"
+                            android:inputType="textPersonName|number"
                             android:textAppearance="@style/TextAppearance.AppCompat.Small" />
 
                         <Button
@@ -345,21 +337,29 @@
                                 android:orientation="horizontal">
 
                                 <RadioButton
-                                    android:id="@+id/radioButtonRed"
+                                    android:id="@+id/radioButtonBrown"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/colorRed"
-                                    android:textColor="@color/colorRed"
-                                    android:checked="true" />
+                                    android:buttonTint="@color/brown"
+                                    android:textColor="@color/brown"
+                                    android:checked="true"/>
 
                                 <RadioButton
-                                    android:id="@+id/radioButtonBurgundy"
+                                    android:id="@+id/radioButtonBlack"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/colorBurgundy"
-                                    android:textColor="@color/colorBurgundy" />
+                                    android:buttonTint="@color/black"
+                                    android:textColor="@color/black"/>
+
+                                <RadioButton
+                                    android:id="@+id/radioButtonGold"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:buttonTint="@color/gold"
+                                    android:textColor="@color/gold"/>
 
                                 <RadioButton
                                     android:id="@+id/radioButtonPink"
@@ -368,14 +368,6 @@
                                     android:layout_weight="1"
                                     android:buttonTint="@color/colorPink"
                                     android:textColor="@color/colorPink"/>
-
-                                <RadioButton
-                                    android:id="@+id/radioButtonBeige"
-                                    android:layout_width="0dp"
-                                    android:layout_height="match_parent"
-                                    android:layout_weight="1"
-                                    android:buttonTint="@color/colorBeige"
-                                    android:textColor="@color/colorBeige"/>
 
                                 <RadioButton
                                     android:id="@+id/radioButtonDarkBlue"
@@ -426,12 +418,12 @@
                                     android:textColor="@color/colorBlueOfSea" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButtonBlack"
+                                    android:id="@+id/radioButtonRed"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/black"
-                                    android:textColor="@color/black" />
+                                    android:buttonTint="@color/colorRed"
+                                    android:textColor="@color/colorRed" />
 
                             </LinearLayout>
                         </RadioGroup>

@@ -5,7 +5,9 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
@@ -45,6 +47,7 @@ public class PetDummy {
         public String identified_number;
         public boolean is_active;
         public String body_color;
+        private String birth_date;
 
         public Dummy(int pk, String name, int num, String identified_number){
             this.pk = pk;
@@ -75,6 +78,13 @@ public class PetDummy {
                 case 6: this.body_color = "colorGoldGreen"; break;
                 case 7: this.body_color = "colorBlueOfSea"; break;
             }
+
+            Random random = new Random();
+            Calendar calendar = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            calendar.add(Calendar.DATE, (-1)*random.nextInt(2500)-300);
+            birth_date = sdf.format(calendar.getTime());
+            Log.e("date","=================================="+birth_date);
         }
     }
 }

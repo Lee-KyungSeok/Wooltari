@@ -37,6 +37,7 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.PetDataFormatUtil;
 import kr.co.wooltari.util.DialogUtil;
 import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.ToolbarUtil;
@@ -45,18 +46,18 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
 
     private FrameLayout imagePetProfileStage;
     private ImageView imagePetProfile;
-    private EditText editPetName, editTextPetNumber;
-    private Spinner spinnerPetSpecies, spinnerPetBreeds, spinnerPetYear, spinnerPetMonth, spinnerPetDay;
+    private EditText editPetName, editTextPetNumber, editPetBirth;
+    private Spinner spinnerPetSpecies, spinnerPetBreeds;
     private TextView textAge, textHumanAge;
     private RadioGroup radioGroupSex, radioGroupNeutral, radioGroupColor;
     private RadioButton radioButtonMale, radioButtonFemale, radioButtonNeuYes, radioButtonNeuNo;
-    private RadioButton radioButtonRed, radioButtonBurgundy, radioButtonPink, radioButtonBeige, radioButtonDarkBlue;
+    private RadioButton radioButtonRed, radioButtonBrown, radioButtonPink, radioButtonGold, radioButtonDarkBlue;
     private RadioButton radioButtonGray, radioButtonDarkGreen, radioButtonGoldGreen, radioButtonBlueOfSea, radioButtonBlack;
     private Button btnNumberSearch, btnPetAddEdit, btnPetCancel, btnPetInfoEdit, btnPetDelete, btnPetState;
 
     private RadioButton activeRadioColor;
 
-    private int pPk = -1;
+    private int petPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
     GradientDrawable gdImage;
     private boolean isImage = false;
@@ -66,7 +67,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_profile);
-        pPk = getIntent().getIntExtra(Const.PET_ID,-1);
+        petPk = getIntent().getIntExtra(Const.PET_ID,-1);
         initView();
         init();
 
@@ -77,18 +78,17 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         imagePetProfileStage = findViewById(R.id.imagePetProfileStage);
         imagePetProfile = findViewById(R.id.imagePetProfile);
         spinnerPetSpecies = findViewById(R.id.spinnerPetSpecies); spinnerPetBreeds = findViewById(R.id.spinnerPetBreeds);
-        spinnerPetYear = findViewById(R.id.spinnerPetYear); spinnerPetMonth = findViewById(R.id.spinnerPetMonth); spinnerPetDay = findViewById(R.id.spinnerPetDay);
         textAge = findViewById(R.id.textAge); textHumanAge = findViewById(R.id.textHumanAge);
         radioGroupSex = findViewById(R.id.radioGroupSex); radioGroupNeutral = findViewById(R.id.radioGroupNeutral);
         radioButtonMale = findViewById(R.id.radioButtonMale); radioButtonFemale = findViewById(R.id.radioButtonFemale);
         radioButtonNeuYes = findViewById(R.id.radioButtonNeuYes); radioButtonNeuNo = findViewById(R.id.radioButtonNeuNo);
-        editTextPetNumber = findViewById(R.id.editTextPetNumber); editPetName = findViewById(R.id.editPetName);
+        editTextPetNumber = findViewById(R.id.editTextPetNumber); editPetName = findViewById(R.id.editPetName); editPetBirth = findViewById(R.id.editPetBirth);
         btnNumberSearch = findViewById(R.id.btnNumberSearch); btnPetInfoEdit = findViewById(R.id.btnPetInfoEdit);
         btnPetAddEdit = findViewById(R.id.btnPetAddEdit); btnPetCancel = findViewById(R.id.btnPetCancel);
         btnPetDelete = findViewById(R.id.btnPetDelete); btnPetState = findViewById(R.id.btnPetState);
         radioGroupColor = findViewById(R.id.radioGroupColor);
-        radioButtonRed = findViewById(R.id.radioButtonRed); radioButtonBurgundy = findViewById(R.id.radioButtonBurgundy);
-        radioButtonPink = findViewById(R.id.radioButtonPink); radioButtonBeige = findViewById(R.id.radioButtonBeige);
+        radioButtonRed = findViewById(R.id.radioButtonRed); radioButtonBrown = findViewById(R.id.radioButtonBrown);
+        radioButtonPink = findViewById(R.id.radioButtonPink); radioButtonGold = findViewById(R.id.radioButtonGold);
         radioButtonDarkBlue = findViewById(R.id.radioButtonDarkBlue); radioButtonGray = findViewById(R.id.radioButtonGray);
         radioButtonDarkGreen = findViewById(R.id.radioButtonDarkGreen); radioButtonGoldGreen = findViewById(R.id.radioButtonGoldGreen);
         radioButtonBlueOfSea = findViewById(R.id.radioButtonBlueOfSea); radioButtonBlack = findViewById(R.id.radioButtonBlack);
@@ -103,10 +103,9 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         setBtnListener(); // 버튼, 라디오 버튼 리스너 세팅
         setImagePopup(); // 카메라, 갤러리 팝업 정의
         setPetSpecies(); // 펫 종류, 종 선택 스피너 정의
-        setPetBirth(); // 펫 생년월일 스피너 정의
-        activeRadioColor = radioButtonRed;
+        activeRadioColor = radioButtonBrown;
 
-        if(pPk==-1){
+        if(petPk ==-1){
             setRegisterPetProfile();
         } else {
             setDefaultPetProfile();
@@ -157,6 +156,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         btnPetAddEdit.setText(getResources().getString(R.string.pet_btn_add));
         btnPetDelete.setVisibility(View.GONE);
         btnPetState.setVisibility(View.GONE);
+        LoadUtil.circleImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.pet_profile_temp,this),imagePetProfile);
         changePetBackground(activeRadioColor.getCurrentTextColor());
     }
 
@@ -167,27 +167,27 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         // 툴바를 Porfile로 세팅
         ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile));
         // 이미지 세팅
-        LoadUtil.circleImageLoad(this,PetDummy.data.get(pPk).pProfile, imagePetProfile);
-        if(PetDummy.data.get(pPk).pProfile!=null) isImage = true;
+//        LoadUtil.circleImageLoad(this,PetDummy.data.get(petPk).pProfile, imagePetProfile);
+        if(PetDummy.data.get(petPk).pProfile!=null) isImage = true;
         // 버튼 상태 정의
         btnPetAddEdit.setText(getResources().getString(R.string.pet_btn_edit));
         // 이름 디폴트 값 정의
-        editPetName.setText(PetDummy.data.get(pPk).name);
+        editPetName.setText(PetDummy.data.get(petPk).name);
         // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
-        checkSpinnerDefaultValue(spinnerPetSpecies, "Dog");
-        checkSpinnerDefaultValue(spinnerPetYear,"2000");
-        checkSpinnerDefaultValue(spinnerPetMonth,"09");
-        checkSpinnerDefaultValue(spinnerPetDay,"23");
+        checkSpinnerDefaultValue(spinnerPetSpecies, PetDataFormatUtil.SpeciesNameById(this,PetDummy.data.get(petPk).species));
+//        checkSpinnerDefaultValue(spinnerPetYear,"2000");
+//        checkSpinnerDefaultValue(spinnerPetMonth,"09");
+//        checkSpinnerDefaultValue(spinnerPetDay,"23");
         // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
         checkRadioSexNeuterValue(radioGroupNeutral);
         checkRadioSexNeuterValue(radioGroupSex);
         // pet Number 디폴트 값 정의
-        editTextPetNumber.setText(PetDummy.data.get(pPk).identified_number);
+        editTextPetNumber.setText(PetDummy.data.get(petPk).identified_number);
         // pet 디폴트 색상 정의
-        checkRadioColorValue(PetDummy.data.get(pPk).body_color);
+        checkRadioColorValue(PetDummy.data.get(petPk).body_color);
         changePetBackground(activeRadioColor.getCurrentTextColor());
         // pet State 체크
-        changeState(!PetDummy.data.get(pPk).is_active);
+        changeState(!PetDummy.data.get(petPk).is_active);
     }
 
     /**
@@ -217,30 +217,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             default: data = new ArrayList<>(); break;
         }
         spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(pPk!=-1) { checkSpinnerDefaultValue(spinnerPetBreeds,"Poodle"); }
-    }
-
-    /**
-     * 펫 생년월일 정의
-     */
-    private void setPetBirth(){
-        List<String> dataYear = new ArrayList<>();
-        for(int i= 2000 ; i<2021 ; i++){ dataYear.add(i+""); }
-        spinnerPetYear.setAdapter(createArrayAdapter(dataYear,getResources().getString(R.string.pet_profile_birth_year)));
-
-        List<String> dataMonth = new ArrayList<>();
-        for(int i=1 ; i<=12 ; i++){
-            if(i<10) dataMonth.add("0"+i+"");
-            else  dataMonth.add(i+"");
-        }
-        spinnerPetMonth.setAdapter(createArrayAdapter(dataMonth,getResources().getString(R.string.pet_profile_birth_month)));
-
-        List<String> dataDay = new ArrayList<>();
-        for(int i=1 ; i<=31 ; i++){
-            if(i<10) dataDay.add("0"+i+"");
-            else  dataDay.add(i+"");
-        }
-        spinnerPetDay.setAdapter(createArrayAdapter(dataDay,getResources().getString(R.string.pet_profile_birth_day)));
+        if(petPk !=-1) { checkSpinnerDefaultValue(spinnerPetBreeds,PetDataFormatUtil.BreedsNameById(this,PetDummy.data.get(petPk).breeds)); }
     }
 
     /**
@@ -325,12 +302,14 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     }
     private String getPetColor(int radioId){
         switch (radioId){
-            case R.id.radioButtonBeige:
-                return "colorBeige";
+            case R.id.radioButtonBlack:
+                return "black";
+            case R.id.radioButtonBrown:
+                return "brown";
+            case R.id.radioButtonGold:
+                return "gold";
             case R.id.radioButtonBlueOfSea:
                 return "colorBlueOfSea";
-            case R.id.radioButtonBurgundy:
-                return "colorBurgundy";
             case R.id.radioButtonDarkBlue:
                 return "colorDarkBlue";
             case R.id.radioButtonDarkGreen:
@@ -339,8 +318,6 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 return "colorGoldGreen";
             case R.id.radioButtonGray:
                 return "colorGray";
-            case R.id.radioButtonBlack:
-                return "black";
             case R.id.radioButtonPink:
                 return "colorPink";
             default:
@@ -365,7 +342,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void checkRadioSexNeuterValue(RadioGroup radioGroup){
         switch (radioGroup.getId()){
             case R.id.radioGroupSex:
-                if ("male".equals(PetDummy.data.get(pPk).gender)) {
+                if ("male".equals(PetDummy.data.get(petPk).gender)) {
                     radioButtonMale.setChecked(true);
                     radioButtonFemale.setChecked(false);
                 } else {
@@ -374,7 +351,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 }
                 break;
             case R.id.radioGroupNeutral:
-                if (PetDummy.data.get(pPk).is_neutering) {
+                if (PetDummy.data.get(petPk).is_neutering) {
                     radioButtonNeuYes.setChecked(true);
                     radioButtonNeuNo.setChecked(false);
                 } else {
@@ -388,16 +365,16 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void checkRadioColorValue(String colorName){
         activeRadioColor.setChecked(false);
         switch (colorName){
+            case "brown": activeRadioColor = radioButtonBrown; break;
+            case "black": activeRadioColor = radioButtonBlack; break;
+            case "gold": activeRadioColor = radioButtonGold; break;
             case "colorRed": activeRadioColor = radioButtonRed; break;
-            case "colorBurgundy": activeRadioColor = radioButtonBurgundy; break;
             case "colorPink": activeRadioColor = radioButtonPink; break;
-            case "colorBeige": activeRadioColor = radioButtonBeige; break;
             case "colorDarkBlue": activeRadioColor = radioButtonDarkBlue; break;
             case "colorGray": activeRadioColor = radioButtonGray; break;
             case "colorDarkGreen": activeRadioColor = radioButtonDarkGreen; break;
             case "colorGoldGreen": activeRadioColor = radioButtonGoldGreen; break;
             case "colorBlueOfSea": activeRadioColor = radioButtonBlueOfSea; break;
-            case "black": activeRadioColor = radioButtonBlack; break;
         }
         activeRadioColor.setChecked(true);
         changePetBackground(activeRadioColor.getCurrentTextColor());
@@ -420,15 +397,13 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         String name = editPetName.getText().toString();
         String species = spinnerPetSpecies.getSelectedItem().toString();
         String breeds = spinnerPetBreeds.getSelectedItem().toString();
-        String year = spinnerPetYear.getSelectedItem().toString();
-        String month = spinnerPetMonth.getSelectedItem().toString();
-        String day = spinnerPetDay.getSelectedItem().toString();
+        String birth = editPetBirth.getText().toString();
         String gender = getPetSex();
         boolean neuterSpay = getPetNeuterSpay();
         String petNum = editTextPetNumber.getText().toString();
         String color = getPetColor(activeRadioColor.getId());
 
-        Log.e("저장 확인"," name = "+name + " species = "+species + " breeds = "+breeds + " birth0 = "+year+month+day
+        Log.e("저장 확인"," name = "+name + " species = "+species + " breeds = "+breeds + " birth = "+birth
         + " gender = "+gender + " neuterSpay = "+neuterSpay + " petNum = "+petNum + " colorId = "+color );
     }
 
@@ -450,7 +425,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         if(isActive){
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_active));
             // 펫 상태 변경
-            PetDummy.data.get(pPk).is_active = false;
+            PetDummy.data.get(petPk).is_active = false;
             // 버튼 삭제
             btnPetAddEdit.setVisibility(View.GONE);
             btnPetCancel.setVisibility(View.GONE);
@@ -464,7 +439,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         } else {
             // 활성화로 바꿈
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_inactive));
-            PetDummy.data.get(pPk).is_active = true;
+            PetDummy.data.get(petPk).is_active = true;
             btnPetAddEdit.setVisibility(View.VISIBLE);
             btnPetCancel.setVisibility(View.VISIBLE);
             btnNumberSearch.setVisibility(View.VISIBLE);
@@ -479,7 +454,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void changeViewEnabled(boolean isEnabled){
         editPetName.setEnabled(isEnabled); editTextPetNumber.setEnabled(isEnabled);
         spinnerPetBreeds.setEnabled(isEnabled); spinnerPetSpecies.setEnabled(isEnabled);
-        spinnerPetYear.setEnabled(isEnabled); spinnerPetMonth.setEnabled(isEnabled); spinnerPetDay.setEnabled(isEnabled);
+        editPetBirth.setEnabled(isEnabled);
         radioButtonMale.setEnabled(isEnabled); radioButtonFemale.setEnabled(isEnabled);
         radioButtonNeuYes.setEnabled(isEnabled); radioButtonNeuNo.setEnabled(isEnabled);
         for(int i=0 ; i<radioGroupColor.getChildCount() ; i++){
@@ -503,7 +478,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 case R.id.btnPetAddEdit: saveDialog.show(); break;
                 case R.id.btnPetCancel: cancelDialog.show(); break;
                 case R.id.btnPetDelete: deleteDialog.show(); break;
-                case R.id.btnPetState: changeState(PetDummy.data.get(pPk).is_active); break;
+                case R.id.btnPetState: changeState(PetDummy.data.get(petPk).is_active); break;
                 case R.id.btnNumberSearch: searchNumber(); break;
                 case R.id.btnPetInfoEdit: break; // 임시용
             }
@@ -548,7 +523,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         if(btnPetState.getVisibility() == View.VISIBLE){
-            if(!PetDummy.data.get(pPk).is_active) finish();
+            if(!PetDummy.data.get(petPk).is_active) finish();
             else backDialog.show();
         } else {
             backDialog.show();

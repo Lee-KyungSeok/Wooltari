@@ -44,6 +44,7 @@
     <string name="pet_profile_edit">Pet Profile Edit</string>
     <string name="pet_profile_name">Name</string>
     <string name="pet_profile_name_hint">Write your pet\'s name</string>
+    <string name="pet_profile_birth_hint">ex) 20160504</string>
     <string name="pet_profile_species">Species</string>
     <string name="pet_profile_breeds">Breeds</string>
     <string name="pet_profile_birth">Birth</string>
