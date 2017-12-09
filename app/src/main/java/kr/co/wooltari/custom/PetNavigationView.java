@@ -36,7 +36,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     NavigationView navigationView;
     Context context;
     Spinner spinnerPetName;
-    int pPk = 0;
+    int petPk = 0;
 
     public PetNavigationView(Context context, DrawerLayout drawerLayout, NavigationView navigationView){
         this.context = context;
@@ -82,7 +82,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         // 이름 배열 생성
         List<String> petNameList = new ArrayList<>();
         for(int i=0 ; i<petData.size() ; i++){
-            petNameList.add(petData.get(i).pName);
+            petNameList.add(petData.get(i).name);
         }
         // 아답터 세팅
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_expandable_list_item_1, petNameList);
@@ -93,9 +93,9 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 LoadUtil.circleImageLoad(context, petData.get(position).pProfile, imageNavPetProfile);
-                pPk = petData.get(position).pPK;
+                petPk = petData.get(position).pk;
                 if(context instanceof PetDetailActivity){
-                    ((PetDetailActivity)context).changeView(pPk);
+                    ((PetDetailActivity)context).changeView(petPk);
                 }
             }
 
@@ -142,7 +142,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
      */
     private void goActivity(Class<?> cls){
         Intent intent= new Intent(context, cls);
-        intent.putExtra(Const.PET_ID,pPk);
+        intent.putExtra(Const.PET_ID, petPk);
         context.startActivity(intent);
     }
 }

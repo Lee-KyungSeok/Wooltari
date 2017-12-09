@@ -69,14 +69,12 @@
         <item>Cat</item>
     </string-array>
     <string-array name="pet_breeds_dog_item">
-        <item>Maltese</item>
+        <item>Shih Tzu</item>
         <item>Golden Retriever</item>
-        <item>Poodle</item>
     </string-array>
     <string-array name="pet_breeds_cat_item">
-        <item>British Shorthair</item>
-        <item>Russian Blue</item>
-        <item>Bengal</item>
+        <item>Korean Shorthair</item>
+        <item>Persian</item>
     </string-array>
 
     <!-- Pet Detail -->

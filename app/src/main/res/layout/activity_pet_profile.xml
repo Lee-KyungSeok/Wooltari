@@ -426,12 +426,12 @@
                                     android:textColor="@color/colorBlueOfSea" />
 
                                 <RadioButton
-                                    android:id="@+id/radioButtonOrangeMuffler"
+                                    android:id="@+id/radioButtonBlack"
                                     android:layout_width="0dp"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:buttonTint="@color/colorOrangeMuffler"
-                                    android:textColor="@color/colorOrangeMuffler" />
+                                    android:buttonTint="@color/black"
+                                    android:textColor="@color/black" />
 
                             </LinearLayout>
                         </RadioGroup>

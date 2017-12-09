@@ -82,13 +82,13 @@ public class PetDetailProfile {
         textPDPBirthValue.setText("생년월일!!!!");
         textPDPAgeValue.setText("나이!!!!");
         textPDPHumanAgeValue.setText("사랑나이!!!!");
-        textPDPSexValue.setText(petInfo.sex);
-        textPDPNeuterValue.setText(petInfo.neuter);
-        textPDPNumValue.setText(petInfo.petNumber);
+        textPDPSexValue.setText(petInfo.gender);
+        textPDPNeuterValue.setText(petInfo.is_neutering+"");
+        textPDPNumValue.setText(petInfo.identified_number);
     }
 
     private void setColor(){
-        int petColor = LoadUtil.loadColor(activity,petInfo.color);
+        int petColor = LoadUtil.loadColor(activity,petInfo.body_color);
         textPDPSpecies.setTextColor(petColor);
         textPDPBreeds.setTextColor(petColor);
         textPDPBirth.setTextColor(petColor);
@@ -103,7 +103,7 @@ public class PetDetailProfile {
     private void setListener(){
         btnPetStateEdit.setOnClickListener(v -> {
             Intent intent = new Intent(activity, PetProfileActivity.class);
-            intent.putExtra(Const.PET_ID, petInfo.pPK);
+            intent.putExtra(Const.PET_ID, petInfo.pk);
             activity.startActivityForResult(intent,Const.PET_PROFILE);
         });
     }
