@@ -1,8 +1,10 @@
 package kr.co.wooltari.domain.pet;
 
 
+import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
@@ -14,15 +16,25 @@ import retrofit2.http.Path;
 
 public interface IPet {
     @POST("profile/{user_pk}/pets/")
-    Call<ResponseBody> savePetData( @Path("user_pk") String userPK );
+    Call<Response<Pet>> savePetData(
+            @Path("user_pk") String userPK,
+            @Body Pet petData
+    );
+
+    @GET("profile/{user_pk}/pets/")
+    Call<Response<PetList>> getPetList(@Path("user_pk") String userPK );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")
-    Call<Pet> getPetData(
+    Call<Response<Pet>> getPetData(
             @Path("user_pk") String userPK,
             @Path("pet_pk") String petPK
     );
 
-//    @GET("profile/{user_pk}/pets/")
-//    Call
+    // 반응형으로 가져오기 위해 observable 로 생성
+    @GET("profile/{user_pk}/pets/{pet_pk}/age/")
+    Observable<Response<Age>> getAge(
+            @Path("user_pk") String userPK,
+            @Path("pet_pk") String petPK
+    );
 
 }

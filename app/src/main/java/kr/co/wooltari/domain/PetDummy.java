@@ -22,7 +22,6 @@ public class PetDummy {
     public static class Dummy {
         //temp
         public String pProfile;
-
         public int species;
         public int breeds;
         public int pk;
@@ -42,10 +41,15 @@ public class PetDummy {
                 this.gender = "male";
                 this.is_neutering = false;
                 this.is_active = true;
+                this.species = 1;
+                if(pk%4==0) this.breeds = 2;
+                else  this.breeds = 1;
             } else {
                 this.gender = "female";
                 this.is_neutering = true;
                 this.is_active = false;
+                this.species = 2;
+                this.breeds = 4;
             }
             switch (pk){
                 case 0: this.body_color = "colorBurgundy"; break;
@@ -58,5 +62,9 @@ public class PetDummy {
                 case 7: this.body_color = "colorBlueOfSea"; break;
             }
         }
+    }
+
+    public void loadPetDataByServer(){
+
     }
 }

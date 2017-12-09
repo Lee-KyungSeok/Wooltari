@@ -1,5 +1,7 @@
 package kr.co.wooltari.domain.pet;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by Kyung on 2017-12-08.
  */
@@ -7,8 +9,15 @@ package kr.co.wooltari.domain.pet;
 public class Pet {
     // @SerialzedName : JSON으로 serialize 될 때 매칭되는 이름을 명시하는 목적으로 사용되는 field 마킹 어노테이션이다.
     // @Expose : object 중 해당 값이 null일 경우, json으로 만들 필드를 자동 생략해 준다. (serialize, deserialize 를 정의하여 때에 따라 사용할 수 있다.)
+    @Expose(serialize = false, deserialize = true)
     private Owner owner;
+
+    @Expose(serialize = false, deserialize = true)
     private String pk;
+
+    @Expose
+    private boolean is_active;
+
     private int species;
     private int breeds;
     private String name;
@@ -17,7 +26,6 @@ public class Pet {
     private String identified_number;
     private boolean is_neutering;
     private String body_color;
-    private boolean is_active;
 
     public String getBody_color() {
         return body_color;
