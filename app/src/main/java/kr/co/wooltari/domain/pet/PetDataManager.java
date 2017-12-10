@@ -299,11 +299,57 @@ public class PetDataManager {
         });
     }
 
+    /**
+     * 펫의 나이를 가져옴
+     */
+    public static void getPetAge(Activity activity, int petPK, CallbackGetPetAge callback){
+        IPet service = PetDataManager.create(IPet.class,true);
+        Call<Age> remote = service.getAge(UserDummy.data.pk,petPK);
+        remote.enqueue(new Callback<Age>() {
+            @Override
+            public void onResponse(Call<Age> call, retrofit2.Response<Age> response) {
+                Log.e("message","====="+response.message());
+                if(response.isSuccessful()){
+                    callback.getPetAge(response.body());
+                } else {
+                    PetError error;
+                    try {
+                        String errorString = response.errorBody().string();
+                        Gson gson = new Gson();
+                        error = gson.fromJson(errorString,PetError.class);
+                        switch (response.code()){
+                            case 404:
+                                if(error.getDetail()!=null){
+                                    Toast.makeText(activity, error.getDetail(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Age> call, Throwable t) {
+                Log.e("getPetAge Failure",t.getMessage());
+                Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public interface CallbackGetPet{
         void getPetData(Pet petData);
     }
 
     public interface CallbackGetPetList{
         void getPetList(List<Pet> petList);
+    }
+
+    public interface CallbackGetPetAge{
+        void getPetAge(Age petAge);
     }
 }

@@ -5,6 +5,7 @@
     <string name="unknown_error">Unknown error</string>
     <string name="invalid_token">You do not access this feature</string>
     <string name="pet_null">Can not find Pet</string>
+    <string name="pet_age_null">Can not find Pet Age</string>
 
     <!-- navigation_bar-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

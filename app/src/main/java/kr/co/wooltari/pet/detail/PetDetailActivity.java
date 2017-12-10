@@ -19,6 +19,7 @@ import kr.co.wooltari.custom.PetNavigationView;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.MedicalInfoDummy;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.Age;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataManager;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
@@ -51,7 +52,18 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_detail);
 
+        init();
         getData();
+    }
+
+    private void init(){
+        petDetailProfile = new PetDetailProfile(this, () -> goActivity(PetProfileActivity.class, Const.PET_PROFILE));
+        petDetailState = new PetDetailState(this, () -> goActivity(PetStateActivity.class,Const.PET_STATE));
+
+        petDetailSchedule = new PetDetailSchedule(this);
+        petDetailVaccination = new PetDetailVaccination(this);
+
+        petDetailMedical = new PetDetailMedical(this ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
     }
 
     private void getData(){
@@ -59,8 +71,8 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         if(petPK<=8) {
             petInfo = PetDummy.data.get(petPK);
             initToolbar();
-            petDetailProfile = new PetDetailProfile(PetDetailActivity.this, petInfo);
-            tempLoad(petPK);
+            petDetailProfile.setValue(petInfo);
+            petDetailProfile.setAge(null);
         } else {
             PetDataManager.getPet(this, petPK, new PetDataManager.CallbackGetPet() {
                 @Override
@@ -70,11 +82,23 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
                     } else {
                         petInfo = petData;
                         initToolbar();
-                        petDetailProfile = new PetDetailProfile(PetDetailActivity.this, petInfo);
-                        tempLoad(petPK);
+                        petDetailProfile.setValue(petInfo);
                     }
                 }
             });
+            PetDataManager.getPetAge(this, petPK, new PetDataManager.CallbackGetPetAge() {
+                @Override
+                public void getPetAge(Age petAge) {
+                    if(petAge==null){
+                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Age age = petAge;
+                        petDetailProfile.setAge(age);
+                    }
+                }
+            });
+
+            tempLoad(petPK);
         }
     }
 
@@ -94,7 +118,10 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
             }
         }
 
-        init();
+        if(stateInfo!=null) petDetailState.setValue(stateInfo);
+
+        if(medicalInfo.petMediInfoList.size()>0) petDetailMedical.setValue(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
+        else petDetailMedical.setValue(null);
     }
 
     /**
@@ -110,6 +137,7 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
             petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
             petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
             petDetailProfile.setValue(petInfo);
+            petDetailProfile.setAge(null);
         } else {
             PetDataManager.getPet(this, petChangePK, new PetDataManager.CallbackGetPet() {
                 @Override
@@ -118,12 +146,23 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
                         Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
                     } else {
                         petInfo = petData;
-                        petDetailProfile = new PetDetailProfile(PetDetailActivity.this, petInfo);
                         petDetailTitle.setTitle(petInfo.getName());
                         getSupportActionBar().setTitle(petInfo.getName());
                         petDetailTitle.setContentScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailProfile.setValue(petInfo);
+                    }
+                }
+            });
+
+            PetDataManager.getPetAge(this, petChangePK, new PetDataManager.CallbackGetPetAge() {
+                @Override
+                public void getPetAge(Age petAge) {
+                    if(petAge==null){
+                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
+                    } else {
+                        Age age = petAge;
+                        petDetailProfile.setAge(age);
                     }
                 }
             });
@@ -154,18 +193,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
 
         petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
         petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
-    }
-
-    private void init(){
-        petDetailState = new PetDetailState(this, stateInfo, () -> goActivity(PetStateActivity.class,Const.PET_STATE));
-
-        petDetailSchedule = new PetDetailSchedule(this);
-        petDetailVaccination = new PetDetailVaccination(this);
-        if(medicalInfo.petMediInfoList.size()>0)
-            petDetailMedical = new PetDetailMedical(this, medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1)
-                    ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
-        else  petDetailMedical = new PetDetailMedical(this,null
-                ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
     }
 
     @Override

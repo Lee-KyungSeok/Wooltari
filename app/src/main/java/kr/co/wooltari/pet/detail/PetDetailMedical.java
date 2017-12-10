@@ -31,11 +31,11 @@ public class PetDetailMedical {
 
     Activity activity;
 
-    public PetDetailMedical(Activity activity, MedicalInfoDummy.petMediInfo lastMedicalInfo, ICallbackPetMedical callback){
+    public PetDetailMedical(Activity activity, ICallbackPetMedical callback){
         this.activity = activity;
 
         initView();
-        setValue(lastMedicalInfo);
+//        setValue(lastMedicalInfo);
 
         PDMMore.setOnClickListener( v -> callback.goPetMedical());
     }

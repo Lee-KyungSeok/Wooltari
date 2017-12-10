@@ -34,11 +34,11 @@ public class PetDetailState {
     Activity activity;
     HealthStateDummy.StateDummy stateInfo;
 
-    public PetDetailState(Activity activity, HealthStateDummy.StateDummy stateInfo, ICallbackPetState callback){
+    public PetDetailState(Activity activity, ICallbackPetState callback){
         this.activity = activity;
 
         initView();
-        if(stateInfo!=null) setValue(stateInfo);
+//        if(stateInfo!=null) setValue(stateInfo);
 
         PDSMore.setOnClickListener(v -> callback.goPetState());
     }

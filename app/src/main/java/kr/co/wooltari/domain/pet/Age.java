@@ -1,11 +1,15 @@
 package kr.co.wooltari.domain.pet;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by Kyung on 2017-12-09.
  */
 
 public class Age {
+    @Expose
     private String conversed_age;
+    @Expose
     private String pet_age;
 
     public String getConversed_age() {

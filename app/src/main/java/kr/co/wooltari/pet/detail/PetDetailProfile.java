@@ -11,6 +11,7 @@ import android.widget.TextView;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.Age;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataFormatUtil;
 import kr.co.wooltari.pet.PetProfileActivity;
@@ -38,13 +39,15 @@ public class PetDetailProfile {
     private TextView textPDPNum, textPDPNumValue;
     private Button btnPetStateEdit;
 
-    public PetDetailProfile(Activity activity, Pet petInfo){
+    public PetDetailProfile(Activity activity, ICallbackPetProfile callback){
         this.activity = activity;
 
         initView();
         setProfileBackground();
-        setValue(petInfo);
-        setListener();
+
+        btnPetStateEdit.setOnClickListener(v -> {
+            callback.goPetProfile();
+        });
     }
 
     private void initView(){
@@ -83,12 +86,20 @@ public class PetDetailProfile {
         textPDPSpeciesValue.setText(PetDataFormatUtil.SpeciesNameById(activity,petInfo.getSpecies()));
         textPDPBreedsValue.setText(PetDataFormatUtil.BreedsNameById(activity,petInfo.getBreeds()));
         textPDPBirthValue.setText(petInfo.getBirth_date());
-        textPDPAgeValue.setText("나이!!!!");
-        textPDPHumanAgeValue.setText("사람나이!!!!");
         textPDPSexValue.setText(petInfo.getGender());
         if(petInfo.getIs_neutering()) textPDPNeuterValue.setText("Y");
         else textPDPNeuterValue.setText("N");
         textPDPNumValue.setText(petInfo.getIdentified_number());
+    }
+
+    public void setAge(Age age){
+        if(age!=null) {
+            textPDPAgeValue.setText(age.getPet_age());
+            textPDPHumanAgeValue.setText(age.getConversed_age());
+        } else {
+            textPDPAgeValue.setText("나이!!!!");
+            textPDPHumanAgeValue.setText("사람나이!!!!");
+        }
     }
 
     private void setColor(){
@@ -104,11 +115,7 @@ public class PetDetailProfile {
         gd.setColor(petColor);
     }
 
-    private void setListener(){
-        btnPetStateEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, PetProfileActivity.class);
-            intent.putExtra(Const.PET_ID, petInfo.getPk());
-            activity.startActivityForResult(intent,Const.PET_PROFILE);
-        });
+    public interface ICallbackPetProfile{
+        void goPetProfile();
     }
 }

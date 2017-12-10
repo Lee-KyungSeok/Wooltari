@@ -31,6 +31,8 @@ public class Pet {
     private boolean is_neutering;
     @Expose
     private String body_color;
+    @Expose
+    private String ages;
 
     // 나중에 프로필을 보여줄 때
     @Expose(serialize = false, deserialize = true)
@@ -130,6 +132,14 @@ public class Pet {
 
     public void setProfileUrl(String profileUrl) {
         this.profileUrl = profileUrl;
+    }
+
+    public String getAges() {
+        return ages;
+    }
+
+    public void setAges(String ages) {
+        this.ages = ages;
     }
 
     @Override
