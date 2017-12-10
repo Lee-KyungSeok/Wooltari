@@ -21,6 +21,10 @@ public class MedicalInfoDummy {
             data.add(new MedicalDummy(i));
         }
     }
+    public static void createMedicalDummy(int petPK){
+        MedicalDummy medicalDummy = new MedicalDummy(petPK);
+        data.add(medicalDummy);
+    }
 
     public static class MedicalDummy {
         public int pPK;

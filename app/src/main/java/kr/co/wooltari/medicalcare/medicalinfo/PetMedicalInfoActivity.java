@@ -13,14 +13,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
-
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.MedicalInfoDummy;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.ToolbarUtil;
 
@@ -40,9 +35,11 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
 
     private BottomSheetBehavior bottomMedicalBehavior;
 
-    private PetDummy.Dummy petInfo = null;
     private MedicalInfoDummy.MedicalDummy medicalInfo = null;
     private int petPK;
+    private String petName;
+    private String petColor;
+    private boolean petActive;
     private int mediPK;
 
     @Override
@@ -51,17 +48,25 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pet_medical_info);
         initView();
 
-        petPK = getIntent().getIntExtra(Const.PET_ID,-1);
-        petInfo = PetDummy.data.get(petPK);
-        medicalInfo = MedicalInfoDummy.data.get(petPK);
-        int petColor = LoadUtil.loadColor(this,petInfo.body_color);
+        petPK = getIntent().getIntExtra(Const.PET_ID, -1);
+        petName = getIntent().getStringExtra(Const.PET_NAME);
+        petColor = getIntent().getStringExtra(Const.PET_COLOR);
+        petActive = getIntent().getBooleanExtra(Const.PET_ACTIVE,true);
+        for(MedicalInfoDummy.MedicalDummy data : MedicalInfoDummy.data){
+            if (data.pPK == petPK) {
+                medicalInfo = data;
+                break;
+            }
+        }
+
+        int petIntColor = LoadUtil.loadColor(this, petColor);
         initToolbar();
         initButton();
-        setColor(petColor);
+        setColor(petIntColor);
 
         if(medicalInfo.petMediInfoList.size()!=0) setData(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
 
-        setRecyclerMedicalBottom(petColor);
+        setRecyclerMedicalBottom(petIntColor);
     }
 
     private void initView() {
@@ -108,13 +113,11 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
     public void setData(MedicalInfoDummy.petMediInfo petMediInfo){
         mediPK = petMediInfo.medicalPk;
         if(petMediInfo.imageUrl!=null) {
-            Glide.with(this).load(petMediInfo.imageUrl)
-                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMM);
+            LoadUtil.recCropImageLoad(this,petMediInfo.imageUrl, imagePMM);
         } else {
-            Glide.with(this).load(LoadUtil.getResourceImageUri(R.drawable.pet_profile, this))
-                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMM);
+            LoadUtil.recCropImageLoad(this, LoadUtil.getResourceImageUri(R.drawable.pet_profile, this),imagePMM);
         }
-        textPMMNameValue.setText(petInfo.name);
+        textPMMNameValue.setText(petName);
         textPMMDateValue.setText(petMediInfo.medicalDate);
         textPMMAlarmValue.setText("임시임시");
         textPMMDescriptionValue.setText(petMediInfo.description);

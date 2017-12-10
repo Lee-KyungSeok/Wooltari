@@ -12,6 +12,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Kyung on 2017-12-08.
@@ -28,6 +29,12 @@ public interface IPet {
     @GET("profile/{user_pk}/pets/")
     Call<PetList> getPetList(
             @Path("user_pk") int userPK
+    );
+
+    @GET("profile/{user_pk}/pets/")
+    Call<PetList> getPetListNext(
+            @Path("user_pk") int userPK,
+            @Query("page") int pageNumber
     );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")

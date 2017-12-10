@@ -1,5 +1,6 @@
 package kr.co.wooltari.custom;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
@@ -21,6 +22,8 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.UserDummy;
+import kr.co.wooltari.domain.pet.Pet;
+import kr.co.wooltari.domain.pet.PetDataManager;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
 import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInfoActivity;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
@@ -37,6 +40,10 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     Context context;
     Spinner spinnerPetName;
     int petPk = 0;
+    String petName = null;
+    String petColor = null;
+    String petProfile = null;
+    boolean petActive = true;
 
     public PetNavigationView(Context context, DrawerLayout drawerLayout, NavigationView navigationView){
         this.context = context;
@@ -71,18 +78,30 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
      */
     private void setPetHeaderView(){
         View petHeaderView = navigationView.inflateHeaderView(R.layout.common_nav_pet_header);
-
-        spinnerPetName = petHeaderView.findViewById(R.id.spinnerPetName);
-        List<PetDummy.Dummy> petData = PetDummy.data;
-        // 펫정보에 디폴트값으로 첫번째 반려동물 이미지 세팅
         ImageView imageNavPetProfile = petHeaderView.findViewById(R.id.imageNavPetProfile);
-        LoadUtil.circleImageLoad(context, petData.get(0).pProfile, imageNavPetProfile);
+        spinnerPetName = petHeaderView.findViewById(R.id.spinnerPetName);
 
+        List<Pet> petData = new ArrayList<>();
+        petData.addAll(PetDummy.data);
+        PetDataManager.getPetList((Activity)context, petDataList -> {
+            petData.addAll(petDataList);
+            // 펫정보에 디폴트값으로 첫번째 반려동물 이미지 세팅
+            LoadUtil.circleImageLoad(context, petData.get(0).getProfileUrl(), imageNavPetProfile);
+            initPetHeaderData(petData,imageNavPetProfile);
+            if(context instanceof PetDetailActivity) ((ISetSpinner)context).setSpinner();
+        });
+
+    }
+
+    /**
+     * 펫 정보 세팅
+     */
+    private void initPetHeaderData(List<Pet> petData, ImageView imageNavPetProfile){
         // 스피너세팅
         // 이름 배열 생성
         List<String> petNameList = new ArrayList<>();
         for(int i=0 ; i<petData.size() ; i++){
-            petNameList.add(petData.get(i).name);
+            petNameList.add(petData.get(i).getName());
         }
         // 아답터 세팅
         ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_expandable_list_item_1, petNameList);
@@ -92,8 +111,16 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         spinnerPetName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                LoadUtil.circleImageLoad(context, petData.get(position).pProfile, imageNavPetProfile);
-                petPk = petData.get(position).pk;
+                if(petData.get(position).getProfileUrl()!=null)
+                    LoadUtil.circleImageLoad(context, petData.get(position).getProfileUrl(), imageNavPetProfile);
+                else
+                    LoadUtil.circleImageLoad(context, LoadUtil.getResourceImageUri(R.drawable.pet_profile_temp,context),imageNavPetProfile);
+
+                petPk = petData.get(position).getPk();
+                petName = petData.get(position).getName();
+                petColor = petData.get(position).getBody_color();
+                petProfile = petData.get(position).getProfileUrl();
+                petActive = petData.get(position).getIs_active();
                 if(context instanceof PetDetailActivity){
                     ((PetDetailActivity)context).changeView(petPk);
                 }
@@ -103,7 +130,6 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
             public void onNothingSelected(AdapterView<?> parent) {
             }
         });
-
     }
 
     /**
@@ -143,6 +169,14 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     private void goActivity(Class<?> cls){
         Intent intent= new Intent(context, cls);
         intent.putExtra(Const.PET_ID, petPk);
+        intent.putExtra(Const.PET_NAME,petName);
+        intent.putExtra(Const.PET_COLOR,petColor);
+        intent.putExtra(Const.PET_PROFILE_URL,petProfile);
+        intent.putExtra(Const.PET_ACTIVE,petActive);
         context.startActivity(intent);
+    }
+
+    public interface ISetSpinner{
+        void setSpinner();
     }
 }

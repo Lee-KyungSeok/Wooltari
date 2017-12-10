@@ -2,6 +2,10 @@
     <string name="app_name">Wooltari</string>
     <string name="title_activity_pet_main">PetMainActivity</string>
 
+    <string name="unknown_error">Unknown error</string>
+    <string name="invalid_token">You do not access this feature</string>
+    <string name="pet_null">Can not find Pet</string>
+
     <!-- navigation_bar-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -62,9 +66,8 @@
     <string name="pet_profile_btn_state_inactive">InActive</string>
     <string name="pet_profile_species_hint">Select Species..</string>
     <string name="pet_profile_breeds_hint">Select Breeds..</string>
-    <string name="pet_profile_birth_year">year</string>
-    <string name="pet_profile_birth_month">month</string>
-    <string name="pet_profile_birth_day">day</string>
+    <string name="pet_profile_save_success">Save Competed</string>
+
     <string-array name="pet_species_item">
         <item>Dog</item>
         <item>Cat</item>

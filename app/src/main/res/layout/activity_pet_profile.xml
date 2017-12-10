@@ -436,19 +436,19 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:id="@+id/btnPetAddEdit"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/pet_btn_add"
-                            android:textAllCaps="false" />
-
-                        <Button
                             android:id="@+id/btnPetCancel"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="@string/pet_btn_cancel"
+                            android:textAllCaps="false" />
+
+                        <Button
+                            android:id="@+id/btnPetAddEdit"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="@string/pet_btn_add"
                             android:textAllCaps="false" />
                     </LinearLayout>
                 </LinearLayout>

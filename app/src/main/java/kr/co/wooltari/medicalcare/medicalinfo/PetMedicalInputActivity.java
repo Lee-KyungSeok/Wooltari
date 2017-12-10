@@ -73,7 +73,7 @@ public class PetMedicalInputActivity extends AppCompatActivity {
         btnPMISave = findViewById(R.id.btnPMISave);
 
         cameraGalleryPopup = new CameraGalleryPopup(this, CameraGalleryPopup.PopupType.PET_MEDICAL, basicProfileUri -> {
-            Glide.with(this).load(basicProfileUri).apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMI);
+            LoadUtil.recCropImageLoad(this,basicProfileUri,imagePMI);
             isImage = false;
         });
 
@@ -85,14 +85,20 @@ public class PetMedicalInputActivity extends AppCompatActivity {
 
     private void setDefaultValue(){
         ToolbarUtil.setCommonToolbar(this,toolbarPetMedicalInput,getResources().getString(R.string.pet_medical_title_edit));
-        MedicalInfoDummy.petMediInfo petMediInfo = MedicalInfoDummy.data.get(petPK).petMediInfoList.get(medicalPK);
+        // 나중에는 서버에서 가져와야 함
+        MedicalInfoDummy.petMediInfo petMediInfo = null;
+        for(MedicalInfoDummy.MedicalDummy data : MedicalInfoDummy.data){
+            if (data.pPK == petPK) {
+                petMediInfo = data.petMediInfoList.get(medicalPK);
+                break;
+            }
+        }
+        if (petMediInfo == null) finish();
         if(petMediInfo.imageUrl!=null) {
-            Glide.with(this).load(petMediInfo.imageUrl)
-                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMI);
+            LoadUtil.recCropImageLoad(this, petMediInfo.imageUrl,imagePMI);
             isImage = true;
         } else {
-            Glide.with(this).load(LoadUtil.getResourceImageUri(R.drawable.pet_profile, this))
-                    .apply(RequestOptions.bitmapTransform(new CenterCrop())).into(imagePMI);
+            LoadUtil.recCropImageLoad(this, LoadUtil.getResourceImageUri(R.drawable.pet_profile, this), imagePMI);
         }
         editPMIDateValue.setText(petMediInfo.medicalDate.replace("-",""));
         editPMIDescriptionValue.setText(petMediInfo.description);

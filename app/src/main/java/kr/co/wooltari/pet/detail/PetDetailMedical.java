@@ -31,12 +31,13 @@ public class PetDetailMedical {
 
     Activity activity;
 
-    public PetDetailMedical(Activity activity, MedicalInfoDummy.petMediInfo lastMedicalInfo, int pFK){
+    public PetDetailMedical(Activity activity, MedicalInfoDummy.petMediInfo lastMedicalInfo, ICallbackPetMedical callback){
         this.activity = activity;
 
         initView();
         setValue(lastMedicalInfo);
-        setMore(pFK);
+
+        PDMMore.setOnClickListener( v -> callback.goPetMedical());
     }
 
     private void initView(){
@@ -69,11 +70,7 @@ public class PetDetailMedical {
         }
     }
 
-    private void setMore(int pFK){
-        PDMMore.setOnClickListener( v -> {
-            Intent intent = new Intent(activity, PetMedicalInfoActivity.class);
-            intent.putExtra(Const.PET_ID,pFK);
-            activity.startActivityForResult(intent,Const.PET_MEDICAL);
-        });
+    public interface ICallbackPetMedical{
+        void goPetMedical();
     }
 }
