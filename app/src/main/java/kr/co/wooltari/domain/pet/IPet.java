@@ -12,6 +12,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Kyung on 2017-12-08.
@@ -27,13 +28,17 @@ public interface IPet {
 
     @GET("profile/{user_pk}/pets/")
     Call<PetList> getPetList(
-            @Header("Authorization") String token,
             @Path("user_pk") int userPK
+    );
+
+    @GET("profile/{user_pk}/pets/")
+    Call<PetList> getPetListNext(
+            @Path("user_pk") int userPK,
+            @Query("page") int pageNumber
     );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")
     Call<Pet> getPetData(
-//            @Header("Authorization") String token,
             @Path("user_pk") int userPK,
             @Path("pet_pk") int petPK
     );
@@ -41,7 +46,6 @@ public interface IPet {
     // 반응형으로 가져오기 위해 observable 로 생성
     @GET("profile/{user_pk}/pets/{pet_pk}/age/")
     Observable<Age> getAge(
-//            @Header("Authorization") String token,
             @Path("user_pk") int userPK,
             @Path("pet_pk") int petPK
     );

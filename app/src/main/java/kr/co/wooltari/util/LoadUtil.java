@@ -32,6 +32,20 @@ public class LoadUtil {
                 .into(imageView);
     }
 
+    public static void recCropImageLoad(Context context, String url, ImageView imageView){
+        Glide.with(context)
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(new CenterCrop()))
+                .into(imageView);
+    }
+
+    public static void recCropImageLoad(Context context, Uri uri, ImageView imageView){
+        Glide.with(context)
+                .load(uri)
+                .apply(RequestOptions.bitmapTransform(new CenterCrop()))
+                .into(imageView);
+    }
+
     public static Uri getResourceImageUri(int resId, Context context){
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                 "://" + context.getResources().getResourcePackageName(resId)
@@ -55,6 +69,9 @@ public class LoadUtil {
             case "colorLittleBlack": return ContextCompat.getColor(context, R.color.colorLittleBlack);
             case "colorPetDefault": return ContextCompat.getColor(context, R.color.colorBlackE);
             case "black": return ContextCompat.getColor(context, R.color.black);
+            case "gold": return ContextCompat.getColor(context, R.color.gold);
+            case "white": return ContextCompat.getColor(context,R.color.white);
+            case "brown":return ContextCompat.getColor(context, R.color.brown);
             default: return ContextCompat.getColor(context,R.color.colorBlackE);
         }
     }

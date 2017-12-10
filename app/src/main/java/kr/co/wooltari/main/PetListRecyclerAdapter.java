@@ -13,19 +13,24 @@ import java.util.List;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
-import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 
 public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecyclerAdapter.Holder>{
 
-    List<PetDummy.Dummy> data;
+    List<Pet> data;
     Context context;
 
-    public PetListRecyclerAdapter(List<PetDummy.Dummy> data, Context context){
+    public PetListRecyclerAdapter(List<Pet> data, Context context){
         this.context=context;
         this.data=data;
+    }
+
+    public void setDataAndRefresh(List<Pet> data){
+        this.data = data;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -37,11 +42,11 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
 
     @Override
     public void onBindViewHolder(Holder holder, int position) {
-        PetDummy.Dummy pet = data.get(position);
+        Pet pet = data.get(position);
         //holder.imageView.setImageURI();
-        holder.pPK = pet.pk;
-        holder.petName.setText(pet.name +"");
-        LoadUtil.circleImageLoad(context,pet.pProfile,holder.petImage);
+        holder.petPK = pet.getPk();
+        holder.petName.setText(pet.getName() +"");
+        if(pet.getProfileUrl()!=null) LoadUtil.circleImageLoad(context,pet.getProfileUrl(),holder.petImage);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
     }
 
     public class Holder extends RecyclerView.ViewHolder{
-        int pPK;
+        int petPK;
         ImageView petImage;
         TextView petName;
         public Holder(View itemView) {
@@ -63,7 +68,7 @@ public class PetListRecyclerAdapter extends RecyclerView.Adapter<PetListRecycler
         private void setListener(View itemView){
             itemView.setOnClickListener( v ->{
                 Intent intent = new Intent(context, PetDetailActivity.class);
-                intent.putExtra(Const.PET_ID, pPK);
+                intent.putExtra(Const.PET_ID, petPK);
                 context.startActivity(intent);
             });
         }

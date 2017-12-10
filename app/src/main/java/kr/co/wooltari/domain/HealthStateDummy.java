@@ -22,8 +22,13 @@ public class HealthStateDummy {
         }
     }
 
+    public static void createStateDummy(int petPK){
+        StateDummy stateDummy = new StateDummy(petPK);
+        stateData.add(stateDummy);
+    }
+
     public static class StateDummy{
-        public int pPk;
+        public int petPk;
         public List<petWeight> petWeightList = new ArrayList<>();
         public double petNowWeight;
         public double petTargetWeight;
@@ -31,23 +36,23 @@ public class HealthStateDummy {
         public double petNeckSize;
         public double petChestSize;
 
-        public StateDummy(int pPk){
-            this.pPk = pPk;
-            petTargetWeight = Math.floor((pPk+1) * 150)/100;
-            petHeight = Math.floor((pPk+1) * 150)/100;
-            petNeckSize = Math.floor((pPk+1) * 110)/100;
-            petChestSize = Math.floor((pPk+1) * 110)/100;
+        public StateDummy(int petPk){
+            this.petPk = petPk;
+            petTargetWeight = Math.floor((petPk +1) * 150)/100;
+            petHeight = Math.floor((petPk +1) * 150)/100;
+            petNeckSize = Math.floor((petPk +1) * 110)/100;
+            petChestSize = Math.floor((petPk +1) * 110)/100;
 
             Random random = new Random();
-            int max = (pPk+2) * 3;
+            int max = (petPk +2) * 3;
             for(int i=1 ; i<=max ; i++){
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.DATE,pPk*i);
+                calendar.add(Calendar.DATE, petPk *i);
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 String weightDateTime = sdf.format(calendar.getTime());
 
-                double weightResult = Math.floor(100*((double)(pPk+1) + random.nextDouble()*((double)(pPk+1)) - (((double)pPk+1)*random.nextDouble())*0.3))/100;
-//                Log.e("weight check!!",pPk+" : weightDateTime = "+weightDateTime + " / weightResult = "+weightResult);
+                double weightResult = Math.floor(100*((double)(petPk +1) + random.nextDouble()*((double)(petPk +1)) - (((double) petPk +1)*random.nextDouble())*0.3))/100;
+//                Log.e("weight check!!",petPk+" : weightDateTime = "+weightDateTime + " / weightResult = "+weightResult);
 
                 petWeightList.add(new petWeight(weightDateTime,weightResult));
                 if(i==max) petNowWeight = weightResult;

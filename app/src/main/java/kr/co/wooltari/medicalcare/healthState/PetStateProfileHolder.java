@@ -63,7 +63,8 @@ public class PetStateProfileHolder extends RecyclerView.ViewHolder {
     }
 
     public void setImagePetStateProfile(Context context, String imageUrl){
-        LoadUtil.circleImageLoad(context,imageUrl,imagePetStateProfile);
+        if(imageUrl==null) LoadUtil.circleImageLoad(context,LoadUtil.getResourceImageUri(R.drawable.pet_profile_temp,context),imagePetStateProfile);
+        else LoadUtil.circleImageLoad(context,imageUrl,imagePetStateProfile);
     }
 
     public void setTextColor(Context context, String color){

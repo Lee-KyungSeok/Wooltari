@@ -18,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".main.MainActivity" />
-        <activity android:name=".pet.detail.PetDetailActivity" />
+        <activity android:name=".pet.detail.PetDetailActivity"
+            android:theme="@style/DetailPetTheme"/>
         <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".main.EmergencyActivity" />

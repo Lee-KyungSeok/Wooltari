@@ -11,7 +11,7 @@ public class Pet {
     // @Expose : object 중 해당 값이 null일 경우, json으로 만들 필드를 자동 생략해 준다. (serialize, deserialize 를 정의하여 때에 따라 사용할 수 있다.)
     @Expose(serialize = false, deserialize = true)
     private Owner owner;
-    @Expose(serialize = false, deserialize = true)
+    @Expose
     private int pk;
     @Expose
     private boolean is_active;
@@ -31,6 +31,10 @@ public class Pet {
     private boolean is_neutering;
     @Expose
     private String body_color;
+
+    // 나중에 프로필을 보여줄 때
+    @Expose(serialize = false, deserialize = true)
+    private String profileUrl;
 
     public String getBody_color() {
         return body_color;
@@ -118,6 +122,14 @@ public class Pet {
 
     public void setPk(int pk) {
         this.pk = pk;
+    }
+
+    public String getProfileUrl() {
+        return profileUrl;
+    }
+
+    public void setProfileUrl(String profileUrl) {
+        this.profileUrl = profileUrl;
     }
 
     @Override

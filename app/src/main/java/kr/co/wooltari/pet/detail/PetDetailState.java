@@ -34,12 +34,13 @@ public class PetDetailState {
     Activity activity;
     HealthStateDummy.StateDummy stateInfo;
 
-    public PetDetailState(Activity activity, HealthStateDummy.StateDummy stateInfo){
+    public PetDetailState(Activity activity, HealthStateDummy.StateDummy stateInfo, ICallbackPetState callback){
         this.activity = activity;
 
         initView();
         if(stateInfo!=null) setValue(stateInfo);
-        setListener();
+
+        PDSMore.setOnClickListener(v -> callback.goPetState());
     }
 
     private void initView(){
@@ -80,11 +81,7 @@ public class PetDetailState {
         chartPDSState.invalidate();
     }
 
-    private void setListener(){
-        PDSMore.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, PetStateActivity.class);
-            intent.putExtra(Const.PET_ID, stateInfo.pPk);
-            activity.startActivityForResult(intent,Const.PET_STATE);
-        });
+    public interface ICallbackPetState{
+        void goPetState();
     }
 }

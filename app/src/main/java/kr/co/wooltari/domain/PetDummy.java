@@ -1,111 +1,84 @@
 package kr.co.wooltari.domain;
 
-import android.util.Log;
-
-import com.google.gson.Gson;
-
-import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
-import kr.co.wooltari.domain.pet.IPet;
 import kr.co.wooltari.domain.pet.Pet;
-import kr.co.wooltari.domain.pet.PetError;
-import kr.co.wooltari.domain.pet.RetrofitService;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import kr.co.wooltari.domain.pet.PetDataManager;
 
 /**
  * Created by Kyung on 2017-11-28.
  */
 
 public class PetDummy {
-    public static List<Dummy> data;
+    public static List<Pet> data;
 
     static {
         Random random = new Random();
         data = new ArrayList<>();
-        for(int i=0; i<8; i++){
-            data.add(new Dummy(i,"MyPet " + i, i,random.nextInt()+""));
+        for (int i = 0; i < 8; i++) {
+            data.add(createDummy(i, "MyPet " + i, i, random.nextInt() + ""));
         }
-        loadPetDataByServer(11);
+//        PetDataManager.getPet(12);
     }
 
-    public static class Dummy {
-        //temp
-        public String pProfile;
-        public int species;
-        public int breeds;
-        public int pk;
-        public String gender;
-        public boolean is_neutering;
-        public String name;
-        public String identified_number;
-        public boolean is_active;
-        public String body_color;
+    public static Pet createDummy(int pk, String name, int num, String identified_number) {
+        int species;
+        int breeds;
+        String gender;
+        boolean is_neutering;
+        boolean is_active;
+        String body_color = null;
+        String birth_date;
 
-        public Dummy(int pk, String name, int num, String identified_number){
-            this.pk = pk;
-            this.name = name;
-            this.pProfile = "https://avatars0.githubusercontent.com/u/" + num + "?v=4";
-            this.identified_number = identified_number;
-            if(pk %2==0){
-                this.gender = "male";
-                this.is_neutering = false;
-                this.is_active = true;
-                this.species = 1;
-                if(pk%4==0) this.breeds = 2;
-                else  this.breeds = 1;
-            } else {
-                this.gender = "female";
-                this.is_neutering = true;
-                this.is_active = false;
-                this.species = 2;
-                this.breeds = 4;
-            }
-            switch (pk){
-                case 0: this.body_color = "colorBurgundy"; break;
-                case 1: this.body_color = "colorPink"; break;
-                case 2: this.body_color = "colorBeige"; break;
-                case 3: this.body_color = "colorDarkBlue"; break;
-                case 4: this.body_color = "colorOrangeMuffler"; break;
-                case 5: this.body_color = "colorDarkGreen"; break;
-                case 6: this.body_color = "colorGoldGreen"; break;
-                case 7: this.body_color = "colorBlueOfSea"; break;
-            }
+        if (pk % 2 == 0) {
+            gender = "male";
+            is_neutering = false;
+            is_active = true;
+            species = 1;
+            if (pk % 4 == 0) breeds = 2;
+            else breeds = 1;
+        } else {
+            gender = "female";
+            is_neutering = true;
+            is_active = false;
+            species = 2;
+            breeds = 4;
         }
-    }
 
-    private static void loadPetDataByServer(int PetPK){
-        IPet service = RetrofitService.create(IPet.class, false);
-        Call<Pet> remote = service.getPetData(UserDummy.data.pk, PetPK);
-        remote.enqueue(new Callback<Pet>() {
-            @Override
-            public void onResponse(Call<Pet> call, Response<Pet> response) {
-                Log.e("response","====="+response.toString());
-                Log.e("isSuccessful","====="+response.isSuccessful());
-                Log.e("code","====="+response.code());
-                Log.e("message","====="+response.message());
-                Log.e("headers","====="+response.headers().toString());
-                Log.e("raw","====="+response.raw().toString());
-//                Log.e("raw","====="+response.body().toString()); // 에러가 아닌 경우
-                // 에러처리
-                try {
-                    String errorString = response.errorBody().string();
-                    Gson gson = new Gson();
-                    PetError error = gson.fromJson(errorString,PetError.class);
-                    Log.e("error","====="+error.getDetail());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        switch (pk) {
+            case 0: body_color = "colorBurgundy"; break;
+            case 1: body_color = "colorPink"; break;
+            case 2: body_color = "colorBeige"; break;
+            case 3: body_color = "colorDarkBlue"; break;
+            case 4:body_color = "colorOrangeMuffler";break;
+            case 5:body_color = "colorDarkGreen"; break;
+            case 6: body_color = "colorGoldGreen"; break;
+            case 7: body_color = "colorBlueOfSea"; break;
+        }
 
-            @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
+        Random random = new Random();
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        calendar.add(Calendar.DATE, (-1) * random.nextInt(2500) - 300);
+        birth_date = sdf.format(calendar.getTime());
 
-            }
-        });
+        Pet pet = new Pet();
+        pet.setPk(pk);
+        pet.setName(name);
+        pet.setProfileUrl("https://avatars0.githubusercontent.com/u/" + num + "?v=4");
+        pet.setIdentified_number(identified_number);
+        pet.setGender(gender);
+        pet.setIs_neutering(is_neutering);
+        pet.setIs_active(is_active);
+        pet.setSpecies(species);
+        pet.setBreeds(breeds);
+        pet.setBody_color(body_color);
+        pet.setBirth_date(birth_date);
+
+        return pet;
     }
 }

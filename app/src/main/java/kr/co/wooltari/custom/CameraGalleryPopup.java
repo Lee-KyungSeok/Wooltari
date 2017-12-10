@@ -141,7 +141,7 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
         int resId = 0;
         switch (type){
             case PET_MEDICAL: resId = R.drawable.pet_profile; break;
-            case PET_PROFILE: resId = R.drawable.pet_profile; break;
+            case PET_PROFILE: resId = R.drawable.pet_profile_temp; break;
             case USER_PROFILE: resId = R.drawable.user_profile; break;
         }
         Uri imageUri = LoadUtil.getResourceImageUri(resId,context);

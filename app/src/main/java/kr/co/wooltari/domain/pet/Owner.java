@@ -1,15 +1,23 @@
 package kr.co.wooltari.domain.pet;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Created by Kyung on 2017-12-08.
  */
 
 public class Owner {
+    @Expose
     private String pk;
+    @Expose
     private String email;
+    @Expose
     private String nickname;
+    @Expose
     private String user_type;
+    @Expose
     private String is_active;
+    @Expose
     private String date_joined;
 
     public String getDate_joined() {
