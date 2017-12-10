@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "453369310210",
+    "firebase_url": "https://wooltari-1bcf7.firebaseio.com",
+    "project_id": "wooltari-1bcf7",
+    "storage_bucket": "wooltari-1bcf7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453369310210:android:41c5805e0ad304d0",
+        "android_client_info": {
+          "package_name": "kr.co.wooltari"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453369310210-t0dgae5v4ld4f5mubhg16egrn7jimmcp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "kr.co.wooltari",
+            "certificate_hash": "ac417f4966f792fcd0ffdc1059e37190fc513b37"
+          }
+        },
+        {
+          "client_id": "453369310210-l457bfspklb1b17pvjr3g5lfjeurs7bp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-yfCaHDzbZMV_xjhOvuzoGto4-hHAUHI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453369310210-l457bfspklb1b17pvjr3g5lfjeurs7bp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
