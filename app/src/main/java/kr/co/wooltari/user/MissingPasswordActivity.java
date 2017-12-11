@@ -1,5 +1,7 @@
 package kr.co.wooltari.user;
 
+import android.content.Intent;
+import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 
@@ -26,6 +30,7 @@ import retrofit2.http.POST;
 
 public class MissingPasswordActivity extends AppCompatActivity {
     EditText input_email_edittext;
+    TextView errormessage_textview;
     Button cancel_button;
     Button sendemail_button;
     private String URL="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com:80/";
@@ -40,6 +45,7 @@ public class MissingPasswordActivity extends AppCompatActivity {
         input_email_edittext=findViewById(R.id.missingpasswordactivity_input_email_edittext);
         cancel_button=findViewById(R.id.missingpasswordactivity_cancel_buttoon);
         sendemail_button=findViewById(R.id.missingpasswordacitivy_sendEmail_button);
+        errormessage_textview=findViewById(R.id.missingpasswordactivity_errormessage_textview);
     }
 
     public void onClick_Request_MissingPassword(View view) {
@@ -63,50 +69,34 @@ public class MissingPasswordActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(Call<SuccessMissingEmailInfo> call, Response<SuccessMissingEmailInfo> response) {
-//                        Log.e(TAG+"0", response.isSuccessful()+"");
-//                        Log.e(TAG+"1",call.toString());
-//                        Log.e(TAG+"2",response.toString());
-//                        Log.e(TAG+"3", response.raw().toString());
-//                        Log.e(TAG+"4", response.message().toString());
-//                        try {
-//                            Log.e(TAG+"5", response.errorBody().string());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Log.e(TAG+"5", response.body().getEmail()[0]);
-//                        Log.e(TAG+"6", response.body().getNon_field_errors()[0]);
-//                        Log.e(TAG+"7", response.body().getMessage());
-                        try {
-                        String errorString=response.errorBody().string();
-                        Log.e("TAG1", errorString);
-                            Gson gson = new Gson();
-//                            Type type = new TypeToken<List<EmailNoFoundError>>() {}.getType();
-//                            Type type = new TypeToken<List<EmailNoFoundError>>() {}.getType();
-                            EmailNoFoundError error = gson.fromJson(errorString, EmailNoFoundError.class);
-                            Log.e("TAG2", error.toString());
-//                            List<EmailNoFoundError> fromJson = gson.fromJson(json, type);
+                        Log.e(TAG+"0", response.isSuccessful()+"");
+                        Log.e(TAG+"1",response.code()+" ");
 
-//                            for (Task task : fromJson) {
-//                                System.out.println(task);
-//                            }
+                        String responseMessage="";
+                        if(response.code()==200) {
+                            responseMessage = response.body().getTo_email();
+                            Intent intent = getIntent();
+                            intent.putExtra("email", responseMessage);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }else if(response.code()==400){
+                            try {
+                                responseMessage = response.errorBody().string();
+                                Gson gson = new Gson();
+                                MissingEmailRequestError error = gson.fromJson(responseMessage, MissingEmailRequestError.class);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                                if(responseMessage.contains("non_field_errors")){
+                                    errormessage_textview.setText(error.getNon_field_errors()[0]);
+                                    Log.e(TAG+"5", error.getNon_field_errors()[0]);
+                                }else{
+                                    errormessage_textview.setText(error.getEmail()[0]);
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }else{
+                            errormessage_textview.setText("알수없는 에러가 발성하였습니다 앱을 종료하고 다시 시도해주세요");
                         }
-
-//                        if(response.code()==200 & response.body().getMessage().equals("Your temporary password has been emailed.")) {
-//                            String responseMessage = response.body().getTo_email();
-//                            Intent intent = getIntent();
-//                            intent.putExtra("email", responseMessage);
-//                            setResult(RESULT_OK, intent);
-//                            finish();
-//                        }else if(response.code()==400){
-//                            String responseMessage = response.body().toString();
-//                            Log.e(TAG, responseMessage);
-//                        }else{
-//                            String responseMessage = response.body().toString();
-//                            Log.e(TAG, responseMessage);
-//                        }
                     }
 
                     @Override
@@ -124,7 +114,7 @@ public class MissingPasswordActivity extends AppCompatActivity {
         finish();
     }
 }
-class EmailNoFoundError {
+class MissingEmailRequestError {
 
     private String[] non_field_errors;
     private String[] email;
@@ -147,7 +137,7 @@ class EmailNoFoundError {
 
     @Override
     public String toString() {
-        return "EmailNoFoundError{" +
+        return "MissingEmailRequestError{" +
                 "non_field_errors=" + Arrays.toString(non_field_errors) +
                 ", email=" + Arrays.toString(email) +
                 '}';
@@ -174,7 +164,6 @@ class RequestEmailOnlyInfo
     }
 }
 
-// TODO: 스펠링 바꿀것
 class SuccessMissingEmailInfo
 {
     private String message;
@@ -228,5 +217,3 @@ class SuccessMissingEmailInfo
                 '}';
     }
 }
-
-
