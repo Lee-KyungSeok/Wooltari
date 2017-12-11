@@ -9,11 +9,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+
+import java.io.IOException;
 
 import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.main.MainActivity;
@@ -30,9 +33,11 @@ import retrofit2.http.POST;
 public class SignInActivity extends AppCompatActivity {
     private EditText id_editText;
     private EditText password_editText;
+    private TextView errormessage_textview;
 
     private Gson gson;
     private String URL="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com:80/";
+
     public static int COMPLETE_SIGNUP=8;
     public static int COMPLETE_MISSING_PASSWORD=9;
     
@@ -46,13 +51,12 @@ public class SignInActivity extends AppCompatActivity {
     private void init(){
         id_editText=findViewById(R.id.signin_id_edittext);
         password_editText=findViewById(R.id.signin_password_edittext);
+        errormessage_textview=findViewById(R.id.signinactivity_errormessage_textview);
     }
 
     public void onClick_Login(View view){
         String id=id_editText.getText().toString();
         String password=password_editText.getText().toString();
-
-
 
         AsyncTask.execute(new Runnable() {
             @Override
@@ -73,12 +77,28 @@ public class SignInActivity extends AppCompatActivity {
                     public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                         Log.e(TAG+"1",call.toString());
                         Log.e(TAG+"2",response.toString());
+                        String responseMessage="";
                         if(response.code()==200) {
                             UserInfo userInfo = response.body();
                             Log.e(TAG, userInfo.toString());
 
                             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
                             startActivity(intent);
+                        }else if(response.code()==401){
+                            try {
+                                responseMessage=response.errorBody().string();
+                                Log.e(TAG, responseMessage);
+                                Gson gson = new Gson();
+                                ResponseUserLoginInfo error = gson.fromJson(responseMessage, ResponseUserLoginInfo.class);
+
+                                if(responseMessage.contains("message")){
+                                    errormessage_textview.setText(error.getMessage());
+                                }else{
+                                    errormessage_textview.setText(error.getDetail());
+                                }
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
 
@@ -113,9 +133,8 @@ public class SignInActivity extends AppCompatActivity {
             }else if(requestCode==COMPLETE_MISSING_PASSWORD){
                 String email=data.getStringExtra("email");
                 joinMassage=email+"로 가셔서 임시 패스워드를 확인해주세요!";
-                
-                
             }
+
             Toast.makeText(this, joinMassage, Toast.LENGTH_LONG).show();
         }
     }
@@ -148,7 +167,26 @@ interface ISendUserLoginInfo {
     @POST("/auth/login/")
     public Call<UserInfo> Post(@Body RequestUserLoginInfo requestUserLoginInfo);
 }
+class ResponseUserLoginInfo{
+    private String message;
+    private String detail;
 
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+}
 class RequestUserLoginInfo{
     private String id;
     private String password;
