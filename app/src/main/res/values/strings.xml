@@ -24,6 +24,22 @@
     <string name="popup_btn_gallery">Select photo</string>
     <string name="popup_btn_delete">Delete</string>
 
+    <!--PetAlarmDialog -->
+    <string name="alarm_dialog_title">Alarm Setting</string>
+    <string name="alarm_dialog_pet">Pet : </string>
+    <string name="alarm_dialog_date">Date : </string>
+    <string name="alarm_dialog_time">- Time -</string>
+    <string name="alarm_dialog_content">- Contents -</string>
+    <string name="alarm_dialog_sound">Sound</string>
+    <string name="alarm_dialog_on_off">Alarm On/Off</string>
+    <string name="alarm_dialog_hour_hint">Hour..</string>
+    <string name="alarm_dialog_min_hint">Min..</string>
+    <string name="alarm_dialog_sound_hint">Select Sound..</string>
+    <string-array name="alarm_pet_sound">
+        <item>Dog</item> <item>Cat</item> <item>Bird</item> <item>Sheep</item>
+    </string-array>
+
+
     <!-- AlertDialog -->
     <string name="alert_ok">OK</string>
     <string name="alert_permission_title">Permission Required</string>
