@@ -38,6 +38,13 @@
         android:text="Login"
         android:onClick="onClick_Login" />
 
+    <CheckBox
+        android:id="@+id/signin_autologin_checkbox"
+        android:layout_width="250sp"
+        android:layout_height="wrap_content"
+        android:text="자동로그인 설정"
+        android:layout_gravity="center_horizontal"/>
+
     <Button
         android:id="@+id/button_search_password"
         android:layout_width="250sp"
