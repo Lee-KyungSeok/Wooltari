@@ -12,19 +12,27 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
-import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.util.LoadUtil;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+import retrofit2.http.Body;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Headers;
+import retrofit2.http.POST;
 
 public class SignUpActivity extends AppCompatActivity {
+    private String TAG="SignUpActivity";
     // 위젯들
     private ImageView UserProfileImageview;
 
@@ -49,6 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
     CameraGalleryPopup cameraGalleryPopup = null;
     boolean isImage = false;
 
+    private String URL="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com:80/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,9 +68,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void init(){
 //        profile 필드
-        // TODO 지금은 url 이지만 나중에는 기본 이미지따다가 그걸로 바꿀것
         UserProfileImageview=findViewById(R.id.user_profile_imageview);
-//        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).pProfile, UserProfileImageview);
 
 //        id 필드
         _id_editText=findViewById(R.id.id_editText);
@@ -129,17 +136,44 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        join_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-//                가입한다
-            }
-        });
 
         _id_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String id=_id_editText.getText().toString();
+                AsyncTask.execute(new Runnable() {
 
+                    @Override
+                    public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+
+                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
+
+                        RequestUserInfo requestUserInfo=new RequestUserInfo();
+                        requestUserInfo.setEmail(id);
+                        requestUserInfo.setNickname("");
+                        requestUserInfo.setPassword1("");
+                        requestUserInfo.setPassword2("");
+
+                        Call<UserInfo> call = retrofitService.Post(requestUserInfo);
+                        call.enqueue(new Callback<UserInfo>() {
+                            @Override
+                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                Log.e(TAG+"1",call.toString());
+                                Log.e(TAG+"2",response.toString());
+                            }
+
+                            @Override
+                            public void onFailure(Call<UserInfo> call, Throwable t) {
+                                Log.e(TAG, "error "+call.toString());
+                            }
+                        });
+
+                    }
+                });
             }
         });
 
@@ -161,36 +195,40 @@ public class SignUpActivity extends AppCompatActivity {
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
+                        Retrofit retrofit = new Retrofit.Builder()
+                                .baseUrl(URL)
+                                .addConverterFactory(GsonConverterFactory.create())
+                                .build();
+                        ISendUserInfo retrofitService = retrofit.create(ISendUserInfo.class);
 
-                        try {
-                            URL httpbinEndpoint = new URL("https://wooltari.co.kr/auth/signup/");
-                            HttpsURLConnection myConnection;
+                        RequestUserInfo requestUserInfo=new RequestUserInfo();
+                        requestUserInfo.setEmail(id);
+                        requestUserInfo.setNickname(nickname);
+                        requestUserInfo.setPassword1(password1);
+                        requestUserInfo.setPassword2(password2);
 
-//                            myConnection = (HttpsURLConnection) httpbinEndpoint.openConnection();
-//                            myConnection.setRequestMethod("POST");
-//                            String queryStringData = "email="+id+"&"+
-//                                    "nickname="+nickname+"&"+
-//                                    "password1="+password1+"&"+
-//                                    "password2="+password2;
-//
-//                            myConnection.setDoOutput(true);
-//                            myConnection.getOutputStream().write(queryStringData.getBytes());
-//
-//                            Log.e("myConnection",queryStringData);
-//                            if (myConnection.getResponseCode() == 201) {
-//                                // Success
-//                                Log.e("myConnection","connection sucess!!");
-//                                _id_editText.setText(myConnection.getResponseMessage().substring(500));
-//                            }else if (myConnection.getResponseCode()==400){
-//                                // Error
-//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-//                            }else {
-//                                Log.e("myConnection",myConnection.getResponseCode()+" "+myConnection.getResponseMessage());
-//                            }
+                        Call<UserInfo> call = retrofitService.Post(requestUserInfo);
+                        call.enqueue(new Callback<UserInfo>() {
+                            @Override
+                            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                                Log.e(TAG+"1",call.toString());
+                                Log.e(TAG+"2",response.toString());
+                                UserInfo userInfo = response.body();
+                                Log.e(TAG,userInfo.toString());
+                                Intent intent=getIntent();
+                                intent.putExtra("email", userInfo.getUser().getEmail());
+                                intent.putExtra("nickname", userInfo.getUser().getNickname());
+                                setResult(RESULT_OK, intent);
+                                finish();
+                            }
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                            @Override
+                            public void onFailure(Call<UserInfo> call, Throwable t) {
+                                Log.e(TAG, "error "+call.toString());
+                                finish();
+                            }
+                        });
+
                     }
                 });
             }
@@ -199,4 +237,60 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 }
+
+
+
+interface ISendUserInfo {
+
+    @Headers("Content-Type: application/json")
+    @POST("/auth/signup/")
+    public Call<UserInfo> Post(@Body RequestUserInfo requestUserInfo);
+}
+
+interface ISendNicknameOnly{
+
+}
+
+class NotVaildEmail
+{
+    private String[] email;
+
+    public String getEmail ()
+    {
+        return email[0];
+    }
+
+    public void setEmail (String[] email)
+    {
+        this.email = email;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "ClassPojo [email = "+email+"]";
+    }
+}
+
+class RequestUserInfo{
+    private String email;
+    private String nickname;
+    private String password1;
+    private String password2;
+    public void setEmail(String email){ this.email=email;}
+    public void setNickname(String nickname){ this.nickname=nickname;}
+    public void setPassword1(String password1){this.password1=password1;}
+    public void setPassword2(String password2){this.password2=password2;}
+    public String getEmail(){ return this.email;}
+    public String getNickname(){ return this.nickname;}
+    public String getPassword1(){return this.password1;}
+    public String getPassword2(){return this.password2;}
+}
+
+class ResponseErrorInfo{
+    private String email;
+
+}
+
+
 

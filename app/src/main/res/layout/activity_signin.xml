@@ -14,18 +14,20 @@
         />
 
     <EditText
-        android:id="@+id/edit_login"
+        android:id="@+id/signin_id_edittext"
         android:layout_height="wrap_content"
         android:layout_width="250sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="30sp"
+        android:text="nyagum@gmail.com"
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/edit_password"
+        android:id="@+id/signin_password_edittext"
         android:layout_height="wrap_content"
         android:layout_width="250sp"
         android:layout_gravity="center_horizontal"
+        android:text="nyagum"
         android:inputType="textPassword" />
 
     <Button

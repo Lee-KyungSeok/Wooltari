@@ -32,7 +32,8 @@
             android:ems="10"
             android:layout_weight="80"
             android:inputType="textEmailAddress"
-            android:hint="@string/signup_edittext_hint_id"/>
+            android:hint="@string/signup_edittext_hint_id"
+            android:text="nyagum@gmail.com"/>
         <Button
             android:id="@+id/id_button"
             android:layout_width="wrap_content"
@@ -59,7 +60,8 @@
             android:layout_weight="80"
             android:ems="10"
             android:inputType="textPersonName"
-            android:hint="@string/signup_edittext_hint_nickname" />
+            android:hint="@string/signup_edittext_hint_nickname"
+            android:text="nyagum"/>
 
         <Button
             android:id="@+id/nickname_button"
@@ -83,6 +85,7 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/signup_edittext_hint_password1"
+        android:text="12341234"
         />
     <TextView
         android:id="@+id/password1_textView_errormassage"
@@ -98,7 +101,8 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="textPassword"
-        android:hint="@string/signup_edittext_hint_password2" />
+        android:hint="@string/signup_edittext_hint_password2"
+        android:text="12341234"/>
     <TextView
         android:id="@+id/password2_textView_errormassage"
         android:layout_width="match_parent"
