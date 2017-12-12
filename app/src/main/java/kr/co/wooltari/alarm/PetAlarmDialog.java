@@ -1,10 +1,14 @@
 package kr.co.wooltari.alarm;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.NotificationManager;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
@@ -139,9 +144,44 @@ public class PetAlarmDialog {
         return adapter;
     }
 
+    /**
+     * 노티 퍼미션을 체크
+     * 알람을 show 할 때 띄우도록 한다.
+     */
+    private boolean checkNotificationPermission(){
+        boolean check = false;
+        Set<String> notificationListenerSet = NotificationManagerCompat.getEnabledListenerPackages(activity);
+        String myPackageName = activity.getPackageName();
+        for(String packageName : notificationListenerSet){
+            if (packageName == null) continue;
+            if (packageName.equals(myPackageName)) check = true;
+        }
+
+        if(!check) {
+            DialogUtil.showDialog(activity, activity.getResources().getString(R.string.alarm_dialog_permission_title)
+                    , activity.getResources().getString(R.string.alarm_dialog_permission_msg), new DialogUtil.IDialogEvent() {
+                        @Override
+                        public void activateAction() {
+                            Intent intent = new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS");
+                            activity.startActivityForResult(intent, Const.PERMISSION_REQ_NOTIFICATION);
+                        }
+                    });
+        }
+        return check;
+    }
+
+    /**
+     *
+     */
+    public void failPermission(){
+
+    }
+
     public void show(String petName, String date, String content){
-        setTextView(petName, date, content);
-        petAlarmDialog.show();
+        if(checkNotificationPermission()) {
+            setTextView(petName, date, content);
+            petAlarmDialog.show();
+        }
     }
 
     public void cancel(){

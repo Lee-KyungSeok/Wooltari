@@ -5,7 +5,10 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.R;
@@ -16,6 +19,9 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
+
+        Log.e("refreshedToken", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
+
     }
 
     public void onClick_Login(View view){

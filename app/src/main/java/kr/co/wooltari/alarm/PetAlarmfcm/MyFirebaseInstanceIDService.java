@@ -1,4 +1,4 @@
-package kr.co.wooltari.alarm.service;
+package kr.co.wooltari.alarm.PetAlarmfcm;
 
 import android.util.Log;
 

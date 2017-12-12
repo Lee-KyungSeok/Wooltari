@@ -1,10 +1,9 @@
-package kr.co.wooltari.alarm.service;
+package kr.co.wooltari.alarm.PetAlarmfcm;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
@@ -16,7 +15,6 @@ import com.google.firebase.messaging.RemoteMessage;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
-import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.user.SignInActivity;
 
 /**

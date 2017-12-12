@@ -36,6 +36,8 @@
     <string name="alarm_dialog_hour_hint">Hour..</string>
     <string name="alarm_dialog_min_hint">Min..</string>
     <string name="alarm_dialog_sound_hint">Select Sound..</string>
+    <string name="alarm_dialog_permission_title">Permission Required</string>
+    <string name="alarm_dialog_permission_msg">If you want to use the Alarm, Please this app access your alarm Permission. \n If you click the "OK" Button, screen moves to your alarm settings</string>
     <string-array name="alarm_pet_sound">
         <item>Dog</item> <item>Cat</item> <item>Bird</item> <item>Sheep</item>
     </string-array>
