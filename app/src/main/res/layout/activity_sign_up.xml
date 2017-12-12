@@ -8,15 +8,15 @@
     android:orientation="vertical">
 
     <!-- 프로필 사진 -->
-    <ImageView
-        android:id="@+id/user_profile_imageview"
-        android:layout_width="@dimen/user_image_width"
-        android:layout_height="@dimen/user_image_height"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@drawable/user_profile"
-        android:onClick="onClick_set_image"
-        android:layout_gravity="center"
-        android:layout_marginTop="100sp"/>
+    <!--<ImageView-->
+        <!--android:id="@+id/user_profile_imageview"-->
+        <!--android:layout_width="@dimen/user_image_width"-->
+        <!--android:layout_height="@dimen/user_image_height"-->
+        <!--android:paddingTop="@dimen/nav_header_vertical_spacing"-->
+        <!--app:srcCompat="@drawable/user_profile"-->
+        <!--android:onClick="onClick_set_image"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="100sp"/>-->
 
 
     <!-- 아이디 -->
@@ -24,6 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="100"
+        android:layout_marginTop="150sp"
         >
         <EditText
             android:id="@+id/id_editText"
@@ -33,7 +34,8 @@
             android:layout_weight="80"
             android:inputType="textEmailAddress"
             android:hint="@string/signup_edittext_hint_id"
-            android:text="nyagum@gmail.com"/>
+            android:text="nyagum@gmail.com"
+            />
         <Button
             android:id="@+id/id_button"
             android:layout_width="wrap_content"
@@ -45,7 +47,8 @@
         android:id="@+id/id_textView_errorMassage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:textColor="@color/colorRed"/>
 
 
     <!-- 닉네임 -->
@@ -61,20 +64,22 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:hint="@string/signup_edittext_hint_nickname"
-            android:text="nyagum"/>
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/nickname_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="20"
-            android:text="@string/signup_button_text_duplication_is_not_allowed" />
+            android:text="@string/signup_button_text_duplication_is_not_allowed"
+            android:enabled="false"/>
     </LinearLayout>
     <TextView
         android:id="@+id/nickname_textView_errormassage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:textColor="@color/colorRed"/>
 
 
     <!-- 패스워드1 -->
@@ -86,12 +91,14 @@
         android:inputType="textPassword"
         android:hint="@string/signup_edittext_hint_password1"
         android:text="12341234"
+        android:enabled="false"
         />
     <TextView
         android:id="@+id/password1_textView_errormassage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:textColor="@color/colorRed"/>
 
 
     <!-- 패스워드2 -->
@@ -102,12 +109,14 @@
         android:ems="10"
         android:inputType="textPassword"
         android:hint="@string/signup_edittext_hint_password2"
-        android:text="12341234"/>
+        android:text="12341234"
+        android:enabled="false"/>
     <TextView
         android:id="@+id/password2_textView_errormassage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text=" "/>
+        android:text=" "
+        android:textColor="@color/colorRed"/>
 
     <!-- 확인 취소버튼 -->
     <LinearLayout
