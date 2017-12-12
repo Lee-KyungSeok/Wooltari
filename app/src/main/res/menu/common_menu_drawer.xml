@@ -16,6 +16,10 @@
             android:id="@+id/nav_medical_info"
             android:icon="?android:attr/listChoiceIndicatorSingle"
             android:title="@string/navigation_drawer_item_medical_info" />
+        <item
+            android:id="@+id/nav_temp_detail"
+            android:icon="?android:attr/listChoiceIndicatorSingle"
+            android:title="temp Pet Detail" />
     </group>
 
 </menu>

@@ -6,6 +6,7 @@
     <string name="invalid_token">You do not access this feature</string>
     <string name="pet_null">Can not find your Pet</string>
     <string name="pet_age_null">Can not find Pet Age</string>
+    <string name="pet_breed_null">Can not find this Pet Breeds</string>
     <string name="pet_delete_success">Delete your Pet success</string>
 
     <!-- navigation_bar-->
@@ -13,7 +14,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="navigation_drawer_item_pet_state">Pet State</string>
     <string name="navigation_drawer_item_vaccination">Vaccination</string>
-    <string name="navigation_drawer_item_medical_info">Medical_Info</string>
+    <string name="navigation_drawer_item_medical_info">Medical Info</string>
 
     <!-- toolbar-->
     <string name="action_settings">24 hour hospital</string>
@@ -49,6 +50,8 @@
     <string name="alert_permission_msg">Permissions needed to use this feature.\nPlease grant access in your devices\'s setting</string>
     <string name="alert_pet_save_title">Pet information save</string>
     <string name="alert_pet_save_msg">Are you sure you want to add your Pet?</string>
+    <string name="alert_pet_active_title">Pet information change state</string>
+    <string name="alert_pet_active_msg">Are you sure you want to change your Pet state?</string>
     <string name="alert_pet_delete_title">Pet Information delete</string>
     <string name="alert_pet_delete_msg">Are you sure you want to delete your Pet?</string>
     <string name="alert_pet_cancel_title">Pet information cancel</string>
@@ -87,6 +90,9 @@
     <string name="pet_profile_species_hint">Select Species..</string>
     <string name="pet_profile_breeds_hint">Select Breeds..</string>
     <string name="pet_profile_save_success">Save Competed</string>
+    <string name="pet_profile_update_success">Update Competed</string>
+    <string name="pet_profile_delete_success">Delete Competed</string>
+    <string name="pet_profile_change_active_success">Change State Competed</string>
 
     <string-array name="pet_species_item">
         <item>dog</item>
@@ -97,7 +103,7 @@
         <item>Golden Retriever</item>
     </string-array>
     <string-array name="pet_breeds_cat_item">
-        <item>Domestic Korean Short Hair</item>
+        <item>Korean Short Hair</item>
         <item>persian</item>
     </string-array>
 

@@ -221,8 +221,12 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         switch (requestCode){
             case Const.PET_PROFILE:
                 if(resultCode == RESULT_OK) {
-                    getData();
-                    petDetailProfile.setValue(petInfo);
+                    if(data.getIntExtra(Const.PET_INFO,-1) == Const.PET_PROFILE_DELETE){
+                        finish();
+                    } else {
+                        getData();
+                        petDetailProfile.setValue(petInfo);
+                    }
                 }
                 break;
 

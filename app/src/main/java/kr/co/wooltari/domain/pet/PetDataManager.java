@@ -79,19 +79,17 @@ public class PetDataManager {
     /**
      * 펫 정보를 저장
      */
-    public static void savePet(Activity activity, Pet pet){
+    public static void savePet(Activity activity, Pet pet, CallbackGetPet callback){
         IPet service = PetDataManager.create(IPet.class, true);
         Call<PetOne> remote = service.savePetData(UserDummy.data.pk,pet);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
-
+                callback.getPetData(response.body().getPet());
                 if(201 == response.code()){
                     Log.e("save data","===="+response.body().getPet().toString());
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_save_success), Toast.LENGTH_SHORT).show();
-                    activity.setResult(Activity.RESULT_OK);
-                    activity.finish();
                 } else {
                     PetError error;
                     try {
@@ -121,6 +119,9 @@ public class PetDataManager {
                             case 401:
                                 Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
                                 break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -138,16 +139,19 @@ public class PetDataManager {
     }
 
     /**
-     * 펫 정보를 업데이트
+     * 펫 정보(활성화 여부)를 업데이트
+     *  - boolean 이 사용 안되어 String 형태로 넘겨줌.
      */
-    public static void updatePet(Activity activity, int petPK, CallbackGetPet callback){
+    public static void updatePetActive(Activity activity, int petPK, ActivePet active, CallbackGetPet callback){
         IPet service = PetDataManager.create(IPet.class, true);
-        Call<PetOne> remote = service.updatePetData(UserDummy.data.pk, petPK);
+        Call<PetOne> remote = service.updatePetActive(UserDummy.data.pk, petPK, active);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
                 if(200 == response.code()){
+                    Log.e("update active data","===="+response.body().getPet().toString());
+                    Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_change_active_success), Toast.LENGTH_SHORT).show();
                     callback.getPetData(response.body().getPet());
                 } else {
                     PetError error;
@@ -169,6 +173,63 @@ public class PetDataManager {
                                 } else {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
+                                break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<PetOne> call, Throwable t) {
+                Log.e("updatePet Failure",t.getMessage());
+                Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    /**
+     * 펫 정보를 업데이트
+     */
+    public static void updatePet(Activity activity, int petPK, Pet pet, CallbackGetPet callback){
+        IPet service = PetDataManager.create(IPet.class, true);
+        Call<PetOne> remote = service.updatePetData(UserDummy.data.pk, petPK, pet);
+        remote.enqueue(new Callback<PetOne>() {
+            @Override
+            public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
+                Log.e("message","====="+response.message());
+                if(200 == response.code()){
+                    Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_update_success), Toast.LENGTH_SHORT).show();
+                    Log.e("update data","===="+response.body().getPet().toString());
+                    callback.getPetData(response.body().getPet());
+                } else {
+                    PetError error;
+                    try {
+                        String errorString = response.errorBody().string();
+                        Gson gson = new Gson();
+                        error = gson.fromJson(errorString,PetError.class);
+                        switch (response.code()){
+                            case 400:
+                                if(error.getDetail()!=null){
+                                    Toast.makeText(activity, error.getDetail(), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case 401:
+                                if(error.getDetail()!=null){
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     } catch (IOException e) {
@@ -197,6 +258,7 @@ public class PetDataManager {
             public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
                 Log.e("message","====="+response.message());
                 if(204 == response.code()){
+                    Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_delete_success), Toast.LENGTH_SHORT).show();
                     callback.deletePetData();
                 } else {
                     PetError error;
@@ -225,6 +287,9 @@ public class PetDataManager {
                                 } else {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
+                                break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     } catch (IOException e) {
@@ -286,6 +351,9 @@ public class PetDataManager {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
                                 break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -304,6 +372,7 @@ public class PetDataManager {
 
     /**
      * 다음 리스트를 가져오는 메소드
+     *  - (API 에서 삭제된 기능)
      */
     public static void getPetListNext(Activity activity, int pageNumber, CallbackGetPetList callback) {
         IPet service = PetDataManager.create(IPet.class, true);
@@ -335,6 +404,9 @@ public class PetDataManager {
                                 } else {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
+                                break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
                                 break;
                         }
                     } catch (IOException e) {
@@ -378,6 +450,9 @@ public class PetDataManager {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
                                 break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -420,6 +495,9 @@ public class PetDataManager {
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                                 }
                                 break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -430,6 +508,48 @@ public class PetDataManager {
 
             @Override
             public void onFailure(Call<Age> call, Throwable t) {
+                Log.e("getPetAge Failure",t.getMessage());
+                Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public static void getBreedsList(Activity activity, Breed speciesFormatBreed, CallbackGetBreeds callback){
+        IPet service = PetDataManager.create(IPet.class, true);
+        Call<List<Breed>> remote = service.getBreedsList(speciesFormatBreed);
+        remote.enqueue(new Callback<List<Breed>>() {
+            @Override
+            public void onResponse(Call<List<Breed>> call, retrofit2.Response<List<Breed>> response) {
+                Log.e("message","====="+response.message());
+                if(200 == response.code()){
+                    callback.getBreeds(response.body());
+                } else {
+                    PetError error;
+                    try {
+                        String errorString = response.errorBody().string();
+                        Gson gson = new Gson();
+                        error = gson.fromJson(errorString,PetError.class);
+                        switch (response.code()){
+                            case 400:
+                                if(error.getDetail()!=null){
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.pet_breed_null), Toast.LENGTH_SHORT).show();
+                                } else {
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                }
+                                break;
+                            case 405:
+                                Toast.makeText(activity, activity.getResources().getString(R.string.invalid_token), Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Breed>> call, Throwable t) {
                 Log.e("getPetAge Failure",t.getMessage());
                 Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }
@@ -450,5 +570,9 @@ public class PetDataManager {
 
     public interface CallbackDeletePetData{
         void deletePetData();
+    }
+
+    public interface CallbackGetBreeds{
+        void getBreeds(List<Breed> breedList);
     }
 }
