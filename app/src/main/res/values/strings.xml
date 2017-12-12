@@ -2,6 +2,12 @@
     <string name="app_name">Wooltari</string>
     <string name="title_activity_pet_main">PetMainActivity</string>
 
+    <string name="unknown_error">Unknown error</string>
+    <string name="invalid_token">You do not access this feature</string>
+    <string name="pet_null">Can not find your Pet</string>
+    <string name="pet_age_null">Can not find Pet Age</string>
+    <string name="pet_delete_success">Delete your Pet success</string>
+
     <!-- navigation_bar-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,6 +25,24 @@
     <string name="popup_btn_gallery">Select photo</string>
     <string name="popup_btn_delete">Delete</string>
 
+    <!--PetAlarmDialog -->
+    <string name="alarm_dialog_title">Alarm Setting</string>
+    <string name="alarm_dialog_pet">Pet : </string>
+    <string name="alarm_dialog_date">Date : </string>
+    <string name="alarm_dialog_time">- Time -</string>
+    <string name="alarm_dialog_content">- Contents -</string>
+    <string name="alarm_dialog_sound">Sound</string>
+    <string name="alarm_dialog_on_off">Alarm On/Off</string>
+    <string name="alarm_dialog_hour_hint">Hour..</string>
+    <string name="alarm_dialog_min_hint">Min..</string>
+    <string name="alarm_dialog_sound_hint">Select Sound..</string>
+    <string name="alarm_dialog_permission_title">Permission Required</string>
+    <string name="alarm_dialog_permission_msg">If you want to use the Alarm, Please this app access your alarm Permission. \n If you click the "OK" Button, screen moves to your alarm settings</string>
+    <string-array name="alarm_pet_sound">
+        <item>Dog</item> <item>Cat</item> <item>Bird</item> <item>Sheep</item>
+    </string-array>
+
+
     <!-- AlertDialog -->
     <string name="alert_ok">OK</string>
     <string name="alert_permission_title">Permission Required</string>
@@ -32,12 +56,19 @@
     <string name="alert_pet_cancel_back_title">Pet information cancel</string>
     <string name="alert_pet_cancel_back_msg">Are you sure you want to cancel your work?\nIf you press the back button, the work will be canceled</string>
 
+    <!-- Pet Common -->
+    <string name="pet_btn_add">Add</string>
+    <string name="pet_btn_edit">Edit</string>
+    <string name="pet_btn_delete">Delete</string>
+    <string name="pet_btn_cancel">Cancel</string>
+
     <!-- Pet Profile -->
     <string name="pet_profile">Pet Profile</string>
     <string name="pet_profile_register">Pet Register</string>
     <string name="pet_profile_edit">Pet Profile Edit</string>
     <string name="pet_profile_name">Name</string>
     <string name="pet_profile_name_hint">Write your pet\'s name</string>
+    <string name="pet_profile_birth_hint">ex) 20160504</string>
     <string name="pet_profile_species">Species</string>
     <string name="pet_profile_breeds">Breeds</string>
     <string name="pet_profile_birth">Birth</string>
@@ -53,28 +84,21 @@
     <string name="pet_profile_color">Color</string>
     <string name="pet_profile_btn_state_active">Active</string>
     <string name="pet_profile_btn_state_inactive">InActive</string>
-    <string name="pet_profile_btn_add">Add</string>
-    <string name="pet_profile_btn_edit">Edit</string>
-    <string name="pet_profile_btn_delete">Delete</string>
-    <string name="pet_profile_btn_cancel">Cancel</string>
     <string name="pet_profile_species_hint">Select Species..</string>
     <string name="pet_profile_breeds_hint">Select Breeds..</string>
-    <string name="pet_profile_birth_year">year</string>
-    <string name="pet_profile_birth_month">month</string>
-    <string name="pet_profile_birth_day">day</string>
+    <string name="pet_profile_save_success">Save Competed</string>
+
     <string-array name="pet_species_item">
-        <item>Dog</item>
-        <item>Cat</item>
+        <item>dog</item>
+        <item>cat</item>
     </string-array>
     <string-array name="pet_breeds_dog_item">
-        <item>Maltese</item>
+        <item>Shih Tzu</item>
         <item>Golden Retriever</item>
-        <item>Poodle</item>
     </string-array>
     <string-array name="pet_breeds_cat_item">
-        <item>British Shorthair</item>
-        <item>Russian Blue</item>
-        <item>Bengal</item>
+        <item>Domestic Korean Short Hair</item>
+        <item>persian</item>
     </string-array>
 
     <!-- Pet Detail -->
@@ -111,10 +135,17 @@
     <string name="pet_state_save_invalid">Some format is invalid</string>
 
     <!-- Medical Info -->
+    <string name="pet_medical_title">Medical Information</string>
+    <string name="pet_medical_title_input">new Medical Info</string>
+    <string name="pet_medical_title_edit">edit Medical Info</string>
     <string name="pet_medical_no_image">No Image</string>
     <string name="pet_medical_date">Date</string>
-    <string name="pet_medical_description">description</string>
-    <string name="pet_medical_comment">comment</string>
+    <string name="pet_medical_description">Description</string>
+    <string name="pet_medical_comment">Comment</string>
+    <string name="pet_medical_alarm">Alarm</string>
+    <string name="pet_medical_information_edit">Edit info</string>
+    <string name="pet_medical_information_add">Add info</string>
+    <string name="pet_medical_past_info">Other Information</string>
 
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>

@@ -7,8 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.main.EmergencyActivity;
 import kr.co.wooltari.R;
+import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInfoActivity;
+import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInputActivity;
+import kr.co.wooltari.pet.PetProfileActivity;
 
 
 /**
@@ -29,13 +33,18 @@ public class ToolbarUtil {
     }
 
     public static boolean setMenuItemSelectedAction(Activity activity, MenuItem item){
+        Intent intent;
         switch (item.getItemId()){
             case R.id.menu_24_hospital:
-                Intent intent = new Intent(activity, EmergencyActivity.class);
+                intent = new Intent(activity, EmergencyActivity.class);
                 activity.startActivity(intent);
                 return true;
             case android.R.id.home:
                 activity.finish();
+                return true;
+            case R.id.menu_temp_pet_register:
+                intent = new Intent(activity, PetProfileActivity.class);
+                activity.startActivity(intent);
                 return true;
         }
         return false;

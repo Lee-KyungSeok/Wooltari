@@ -1,7 +1,6 @@
 package kr.co.wooltari.pet.detail;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.Button;
@@ -12,6 +11,9 @@ import android.widget.TextView;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.Age;
+import kr.co.wooltari.domain.pet.Pet;
+import kr.co.wooltari.domain.pet.PetDataFormatUtil;
 import kr.co.wooltari.pet.PetProfileActivity;
 import kr.co.wooltari.util.LoadUtil;
 
@@ -22,7 +24,7 @@ import kr.co.wooltari.util.LoadUtil;
 public class PetDetailProfile {
 
     Activity activity;
-    PetDummy.Dummy petInfo;
+    Pet petInfo;
     GradientDrawable gd;
 
     private FrameLayout imagePetDetailProfileStage;
@@ -37,13 +39,15 @@ public class PetDetailProfile {
     private TextView textPDPNum, textPDPNumValue;
     private Button btnPetStateEdit;
 
-    public PetDetailProfile(Activity activity, PetDummy.Dummy petInfo){
+    public PetDetailProfile(Activity activity, ICallbackPetProfile callback){
         this.activity = activity;
 
         initView();
         setProfileBackground();
-        setValue(petInfo);
-        setListener();
+
+        btnPetStateEdit.setOnClickListener(v -> {
+            callback.goPetProfile();
+        });
     }
 
     private void initView(){
@@ -74,22 +78,32 @@ public class PetDetailProfile {
         imagePetDetailProfileStage.setBackground(gd);
     }
 
-    public void setValue(PetDummy.Dummy petInfo){
+    public void setValue(Pet petInfo){
         this.petInfo = petInfo;
         setColor();
-        LoadUtil.circleImageLoad(activity,petInfo.pProfile,imagePetDetailProfile);
-        textPDPSpeciesValue.setText("종류!!");
-        textPDPBreedsValue.setText("종!!!!");
-        textPDPBirthValue.setText("생년월일!!!!");
-        textPDPAgeValue.setText("나이!!!!");
-        textPDPHumanAgeValue.setText("사랑나이!!!!");
-        textPDPSexValue.setText(petInfo.sex);
-        textPDPNeuterValue.setText(petInfo.neuter);
-        textPDPNumValue.setText(petInfo.petNumber);
+        if(petInfo.getProfileUrl()!=null) LoadUtil.circleImageLoad(activity,petInfo.getProfileUrl(),imagePetDetailProfile);
+        else LoadUtil.circleImageLoad(activity,LoadUtil.getResourceImageUri(R.drawable.pet_profile_temp,activity),imagePetDetailProfile);
+        textPDPSpeciesValue.setText(petInfo.getSpecies());
+        textPDPBreedsValue.setText(petInfo.getBreeds());
+        textPDPBirthValue.setText(petInfo.getBirth_date());
+        textPDPSexValue.setText(petInfo.getGender());
+        if(petInfo.getIs_neutering()) textPDPNeuterValue.setText("Y");
+        else textPDPNeuterValue.setText("N");
+        textPDPNumValue.setText(petInfo.getIdentified_number());
+    }
+
+    public void setAge(Age age){
+        if(age!=null) {
+            textPDPAgeValue.setText(age.getPet_age());
+            textPDPHumanAgeValue.setText(age.getConversed_age());
+        } else {
+            textPDPAgeValue.setText("나이!!!!");
+            textPDPHumanAgeValue.setText("사람나이!!!!");
+        }
     }
 
     private void setColor(){
-        int petColor = LoadUtil.loadColor(activity,petInfo.color);
+        int petColor = LoadUtil.loadColor(activity,petInfo.getBody_color());
         textPDPSpecies.setTextColor(petColor);
         textPDPBreeds.setTextColor(petColor);
         textPDPBirth.setTextColor(petColor);
@@ -101,11 +115,7 @@ public class PetDetailProfile {
         gd.setColor(petColor);
     }
 
-    private void setListener(){
-        btnPetStateEdit.setOnClickListener(v -> {
-            Intent intent = new Intent(activity, PetProfileActivity.class);
-            intent.putExtra(Const.PET_ID, petInfo.pPK);
-            activity.startActivityForResult(intent,Const.PET_PROFILE_EDIT);
-        });
+    public interface ICallbackPetProfile{
+        void goPetProfile();
     }
 }

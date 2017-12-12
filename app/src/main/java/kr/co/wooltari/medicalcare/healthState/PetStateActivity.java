@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,6 @@ import io.reactivex.Observable;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.HealthStateDummy;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.util.DialogUtil;
 import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.ToolbarUtil;
@@ -35,7 +33,6 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
 
 
     private PetStateAdapter adapter;
-    private PetDummy.Dummy petInfo;
     private HealthStateDummy.StateDummy stateInfo;
     private AlertDialog petStateEditDialog;
     private TextView textPSEWeight, textPSEGoalWeight, textPSEHeight, textPSENeckSize, textPSEChestSize, textPetStateValid;
@@ -47,13 +44,22 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pet_state);
 
-        int pPk = getIntent().getIntExtra(Const.PET_ID, -1);
-        petInfo = PetDummy.data.get(pPk);
-        stateInfo = HealthStateDummy.stateData.get(pPk);
+        int petPk = getIntent().getIntExtra(Const.PET_ID, -1);
+        String petName = getIntent().getStringExtra(Const.PET_NAME);
+        String petColor = getIntent().getStringExtra(Const.PET_COLOR);
+        String petProfile = getIntent().getStringExtra(Const.PET_PROFILE_URL);
+        boolean petActive = getIntent().getBooleanExtra(Const.PET_ACTIVE,true);
+
+        for(HealthStateDummy.StateDummy checkData : HealthStateDummy.stateData) {
+            if(checkData.petPk == petPk) {
+                stateInfo = checkData;
+                break;
+            }
+        }
 
         initView();
-        setRecyclerState();
-        setCustomDialog();
+        setRecyclerState(petPk, petName, petColor, petActive, petProfile);
+        setCustomDialog(petColor);
     }
 
     private void initView() {
@@ -61,21 +67,21 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
         ToolbarUtil.setCommonToolbar(this, findViewById(R.id.toolbarPetState), getResources().getString(R.string.pet_state_title));
     }
 
-    private void setRecyclerState() {
+    private void setRecyclerState(int pk, String name, String color, boolean isActive, String profile) {
         PetStateLayoutManager manager = new PetStateLayoutManager(this);
         manager.setView(recyclerState);
         PetStateDivider divider = new PetStateDivider(this);
         divider.setView(recyclerState);
-        adapter = new PetStateAdapter(this, petInfo);
+        adapter = new PetStateAdapter(this, pk, name, color, isActive, profile);
         adapter.setView(recyclerState);
         adapter.setDataAndRefresh(stateInfo);
     }
 
-    private void setCustomDialog() {
+    private void setCustomDialog(String color) {
         View editDialog = LayoutInflater.from(this).inflate(R.layout.dialog_pet_state_edit, null);
         petStateEditDialog = DialogUtil.getCustomDialog(this, editDialog);
         initDialogView(editDialog);
-        setTextViewColor(petInfo.color);
+        setTextViewColor(color);
         resetPetState();
         dialogBtnListener();
         setEditTextChecking();

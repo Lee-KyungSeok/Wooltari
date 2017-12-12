@@ -3,8 +3,10 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorWhite">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="gold">#cc8f1c</color>
+    <color name="brown">#603a17</color>
     
     <!-- Pet Color -->
     <color name="colorBlackE">#EEEEEE</color>

@@ -17,8 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".main.MainActivity"></activity>
-        <activity android:name=".pet.detail.PetDetailActivity" />
+        <activity android:name=".main.MainActivity" />
+        <activity
+            android:name=".pet.detail.PetDetailActivity"
+            android:theme="@style/DetailPetTheme" />
         <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".main.EmergencyActivity" />
@@ -49,6 +51,26 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".medicalcare.medicalinfo.PetMedicalInfoActivity" />
+        <activity android:name=".medicalcare.medicalinfo.PetMedicalInputActivity" />
+
+        <service android:name=".alarm.PetAlarmfcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".alarm.PetAlarmfcm.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".alarm.PetAlarmNotificationService.PetAlarmNotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
+            </intent-filter>
+        </service>
         <activity android:name=".main.UserDetailActivity"></activity>
     </application>
 

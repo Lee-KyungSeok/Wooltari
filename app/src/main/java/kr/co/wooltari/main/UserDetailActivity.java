@@ -42,7 +42,7 @@ public class UserDetailActivity extends AppCompatActivity{
         EmailTextView=findViewById(R.id.userdetail_email_textview);
         NickNameEdittext =findViewById(R.id.userdetail_nickname_edittext);
 
-        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).pProfile, UserimageImageview);
+        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).getProfileUrl(), UserimageImageview);
         gradientDrawable = new GradientDrawable();
         gradientDrawable.setShape(GradientDrawable.OVAL);
         UserimageImageview.setBackground(gradientDrawable);

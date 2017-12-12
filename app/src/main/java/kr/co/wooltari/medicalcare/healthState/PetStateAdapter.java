@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.util.LoadUtil;
 
 
 /**
@@ -19,15 +18,23 @@ import kr.co.wooltari.util.LoadUtil;
 public class PetStateAdapter extends RecyclerView.Adapter {
 
     private HealthStateDummy.StateDummy petState = null;
-    private PetDummy.Dummy petInfo = null;
     private Context context;
+    private int petPk;
+    private String petName;
+    private String petColor;
+    private boolean petActive;
+    private String petProfileUrl;
     private final int STATE_PROFILE = 20;
     private final int  STATE_CHART = 21;
     private final int  STATE_DETAIL = 22;
 
-    public PetStateAdapter(Context context, PetDummy.Dummy petInfo){
+    public PetStateAdapter(Context context, int petPk, String petName, String petColor, boolean petActive, String petProfileUrl){
         this.context = context;
-        this.petInfo = petInfo;
+        this.petPk = petPk;
+        this.petName = petName;
+        this.petColor = petColor;
+        this.petActive = petActive;
+        this.petProfileUrl = petProfileUrl;
     }
 
     public void setView(RecyclerView recyclerView){
@@ -75,11 +82,11 @@ public class PetStateAdapter extends RecyclerView.Adapter {
             holderDetail.setViewPagerPSD(context,petState.petWeightList);
         } else {
             PetStateProfileHolder holderProfile = (PetStateProfileHolder)holder;
-            holderProfile.setImagePetStateProfile(context, petInfo.pProfile);
-            holderProfile.setTextInputPSPName(petInfo.pName);
-            holderProfile.setTextColor(context, petInfo.color);
-            if(petInfo.state) {
-                holderProfile.setBackground(context, petInfo.color);
+            holderProfile.setImagePetStateProfile(context, petProfileUrl);
+            holderProfile.setTextInputPSPName(petName);
+            holderProfile.setTextColor(context, petColor);
+            if(petActive) {
+                holderProfile.setBackground(context, petColor);
             } else {
                 holderProfile.setBackground(context, "colorPetDefault");
                 holderProfile.setGoneEditButton();

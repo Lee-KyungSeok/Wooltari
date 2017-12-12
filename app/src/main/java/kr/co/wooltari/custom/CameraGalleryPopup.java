@@ -29,6 +29,7 @@ import kr.co.wooltari.BuildConfig;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.util.DialogUtil;
+import kr.co.wooltari.util.LoadUtil;
 import kr.co.wooltari.util.PermissionUtil;
 
 /**
@@ -139,15 +140,11 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
     private void loadBasicImageResource(){
         int resId = 0;
         switch (type){
-            case PET_MEDICAL: resId = R.drawable.ic_menu_slideshow; break;
-            case PET_PROFILE: resId = R.drawable.pet_profile; break;
+            case PET_MEDICAL: resId = R.drawable.pet_profile; break;
+            case PET_PROFILE: resId = R.drawable.pet_profile_temp; break;
             case USER_PROFILE: resId = R.drawable.user_profile; break;
         }
-        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
-                "://" + context.getResources().getResourcePackageName(resId)
-                + '/' + context.getResources().getResourceTypeName(resId)
-                + '/' + context.getResources().getResourceEntryName(resId)
-        );
+        Uri imageUri = LoadUtil.getResourceImageUri(resId,context);
         iDelete.setBasicImage(imageUri);
         dialog.cancel();
     }

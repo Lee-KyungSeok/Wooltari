@@ -1,6 +1,7 @@
 package kr.co.wooltari.pet.detail;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.widget.TextView;
 
@@ -13,7 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.HealthStateDummy;
+import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
 
 /**
  * Created by Kyung on 2017-12-07.
@@ -31,11 +34,13 @@ public class PetDetailState {
     Activity activity;
     HealthStateDummy.StateDummy stateInfo;
 
-    public PetDetailState(Activity activity, HealthStateDummy.StateDummy stateInfo){
+    public PetDetailState(Activity activity, ICallbackPetState callback){
         this.activity = activity;
 
         initView();
-        setValue(stateInfo);
+//        if(stateInfo!=null) setValue(stateInfo);
+
+        PDSMore.setOnClickListener(v -> callback.goPetState());
     }
 
     private void initView(){
@@ -74,5 +79,9 @@ public class PetDetailState {
         LineData lineData = new LineData(weightDataSet, goalDataSet);
         chartPDSState.setData(lineData);
         chartPDSState.invalidate();
+    }
+
+    public interface ICallbackPetState{
+        void goPetState();
     }
 }
