@@ -8,13 +8,19 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import kr.co.wooltari.R;
 import kr.co.wooltari.custom.PetNavigationView;
+import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.ToolbarUtil;
 
@@ -48,7 +54,18 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        setFragment(new dataFragment());
+
+//        RecyclerView petlist=findViewById(R.id.Main_PetList_RecycleView);
+//
+//        List<PetDummy.Dummy> data=new ArrayList<>();
+//        data.clear();
+//        data.addAll(PetDummy.data);
+//
+//        PetListRecyclerAdapter petListAdapter=new PetListRecyclerAdapter(data, this);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+//
+//        petlist.setLayoutManager(layoutManager);
+//        petlist.setAdapter(petListAdapter);
     }
 
     
@@ -73,18 +90,4 @@ public class MainActivity extends AppCompatActivity {
         return ToolbarUtil.setMenuItemSelectedAction(this, item) || super.onOptionsItemSelected(item);
     }
 
-    //=============================Pet 화면으로 넘기는 임시 버튼===============================
-    public void goPet(View v){
-        startActivity(new Intent(this, PetDetailActivity.class));
-    }
-
-    public void setFragment(Fragment fragment){
-        if(fragment!=null){
-            FragmentTransaction ft= getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_main,fragment);
-            ft.commit();
-        }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawerMainLayout);
-        drawer.closeDrawer(GravityCompat.START);
-    }
 }
