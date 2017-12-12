@@ -83,8 +83,8 @@ public class PetDetailProfile {
         setColor();
         if(petInfo.getProfileUrl()!=null) LoadUtil.circleImageLoad(activity,petInfo.getProfileUrl(),imagePetDetailProfile);
         else LoadUtil.circleImageLoad(activity,LoadUtil.getResourceImageUri(R.drawable.pet_profile_temp,activity),imagePetDetailProfile);
-        textPDPSpeciesValue.setText(PetDataFormatUtil.SpeciesNameById(activity,petInfo.getSpecies()));
-        textPDPBreedsValue.setText(PetDataFormatUtil.BreedsNameById(activity,petInfo.getBreeds()));
+        textPDPSpeciesValue.setText(petInfo.getSpecies());
+        textPDPBreedsValue.setText(petInfo.getBreeds());
         textPDPBirthValue.setText(petInfo.getBirth_date());
         textPDPSexValue.setText(petInfo.getGender());
         if(petInfo.getIs_neutering()) textPDPNeuterValue.setText("Y");

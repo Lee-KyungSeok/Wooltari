@@ -26,8 +26,8 @@ public class PetDummy {
     }
 
     public static Pet createDummy(int pk, String name, int num, String identified_number) {
-        int species;
-        int breeds;
+        String species;
+        String breeds;
         String gender;
         boolean is_neutering;
         boolean is_active;
@@ -38,15 +38,15 @@ public class PetDummy {
             gender = "male";
             is_neutering = false;
             is_active = true;
-            species = 1;
-            if (pk % 4 == 0) breeds = 2;
-            else breeds = 1;
+            species = "dog";
+            if (pk % 4 == 0) breeds = "golden retriever";
+            else breeds = "shih tzu";
         } else {
             gender = "female";
             is_neutering = true;
             is_active = false;
-            species = 2;
-            breeds = 4;
+            species = "cat";
+            breeds = "korean shorthair";
         }
 
         switch (pk) {
