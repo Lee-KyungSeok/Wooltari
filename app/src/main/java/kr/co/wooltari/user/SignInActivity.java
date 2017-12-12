@@ -17,6 +17,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import java.io.IOException;
+import java.util.Date;
 
 import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.main.MainActivity;
@@ -55,6 +56,7 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     public void onClick_Login(View view){
+        errormessage_textview.setText(" ");
         String id=id_editText.getText().toString();
         String password=password_editText.getText().toString();
 
@@ -67,23 +69,26 @@ public class SignInActivity extends AppCompatActivity {
                         .build();
                 ISendUserLoginInfo retrofitService = retrofit.create(ISendUserLoginInfo.class);
 
-                RequestUserLoginInfo requestUserLoginInfo=new RequestUserLoginInfo();
-                requestUserLoginInfo.setId(id);
-                requestUserLoginInfo.setPassword(password);
+                RequestUserLoginInfo requestUserLoginInfo=new RequestUserLoginInfo(id, password);
 
-                Call<UserInfo> call = retrofitService.Post(requestUserLoginInfo);
-                call.enqueue(new Callback<UserInfo>() {
+                Call<ResponseSigninInfo> call = retrofitService.Post(requestUserLoginInfo);
+                call.enqueue(new Callback<ResponseSigninInfo>() {
                     @Override
-                    public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                    public void onResponse(Call<ResponseSigninInfo> call, Response<ResponseSigninInfo> response) {
                         Log.e(TAG+"1",call.toString());
                         Log.e(TAG+"2",response.toString());
                         String responseMessage="";
                         if(response.code()==200) {
-                            UserInfo userInfo = response.body();
+                            ResponseSigninInfo userInfo = response.body();
                             Log.e(TAG, userInfo.toString());
 
-                            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                            startActivity(intent);
+                            if(userInfo.getUser().getIs_active()){
+                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                                startActivity(intent);
+                            }else{
+                                errormessage_textview.setText("Email is NotActive");
+                            }
+
                         }else if(response.code()==401){
                             try {
                                 responseMessage=response.errorBody().string();
@@ -100,10 +105,11 @@ public class SignInActivity extends AppCompatActivity {
                                 e.printStackTrace();
                             }
                         }
+
                     }
 
                     @Override
-                    public void onFailure(Call<UserInfo> call, Throwable t) {
+                    public void onFailure(Call<ResponseSigninInfo> call, Throwable t) {
                         Log.e(TAG, "error "+call.toString());
                         finish();
                     }
@@ -140,7 +146,6 @@ public class SignInActivity extends AppCompatActivity {
     }
 
 
-
     public void onClick_MiggingPassword(View view){ 
         Intent intent=new Intent(this,MissingPasswordActivity.class);
         startActivityForResult(intent, COMPLETE_MISSING_PASSWORD);
@@ -157,6 +162,13 @@ public class SignInActivity extends AppCompatActivity {
                         finish();
                     }
                 })
+                .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                    @Override
+                    public void onCancel(DialogInterface dialogInterface) {
+                        // 액티비티 종료
+                        finish();
+                    }
+                })
                 .setNegativeButton("No", null)
                 .show();
     }
@@ -165,8 +177,9 @@ public class SignInActivity extends AppCompatActivity {
 interface ISendUserLoginInfo {
     @Headers("Content-Type: application/json")
     @POST("/auth/login/")
-    public Call<UserInfo> Post(@Body RequestUserLoginInfo requestUserLoginInfo);
+    public Call<ResponseSigninInfo> Post(@Body RequestUserLoginInfo requestUserLoginInfo);
 }
+
 class ResponseUserLoginInfo{
     private String message;
     private String detail;
@@ -187,9 +200,15 @@ class ResponseUserLoginInfo{
         this.detail = detail;
     }
 }
+
 class RequestUserLoginInfo{
     private String id;
     private String password;
+
+    public RequestUserLoginInfo(String id, String password) {
+        this.id = id;
+        this.password = password;
+    }
 
     public String getId() {
         return id;
@@ -206,4 +225,118 @@ class RequestUserLoginInfo{
     public void setPassword(String password) {
         this.password = password;
     }
+
+    @Override
+    public String toString() {
+        return "RequestUserLoginInfo{" +
+                "id='" + id + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
+
+class ResponseSigninInfo
+{
+    private String token;
+
+    private User user;
+
+    public String getToken ()
+    {
+        return token;
+    }
+
+    public void setToken (String token)
+    {
+        this.token = token;
+    }
+
+    public User getUser ()
+    {
+        return user;
+    }
+
+    public void setUser (User user)
+    {
+        this.user = user;
+    }
+
+    @Override
+    public String toString() {
+        return "ResponseSigninInfo{" +
+                "token='" + token + '\'' +
+                ", user=" + user +
+                '}';
+    }
+}
+
+class User
+{
+    private int pk;
+    private String user_type;
+    private String email;
+    private String nickname;
+    private Boolean is_active;
+    private String date_joined;
+
+    public int getPk() {
+        return pk;
+    }
+
+    public void setPk(int pk) {
+        this.pk = pk;
+    }
+
+    public String getUser_type() {
+        return user_type;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public Boolean getIs_active() {
+        return is_active;
+    }
+
+    public void setIs_active(Boolean is_active) {
+        this.is_active = is_active;
+    }
+
+    public String getDate_joined() {
+        return date_joined;
+    }
+
+    public void setDate_joined(String date_joined) {
+        this.date_joined = date_joined;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "pk=" + pk +
+                ", user_type='" + user_type + '\'' +
+                ", email='" + email + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", is_active=" + is_active +
+                ", date_joined=" + date_joined +
+                '}';
+    }
+}
+

@@ -19,7 +19,7 @@
         android:layout_width="250sp"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="25sp"
-        android:text="nyagum@gmail.com"
+        android:text="nyagumnyagum@gmail.com"
         android:inputType="textEmailAddress" />
 
     <EditText
@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_width="250sp"
         android:layout_gravity="center_horizontal"
-        android:text="nyagum"
+        android:text="12341234"
         android:inputType="textPassword" />
 
     <TextView
