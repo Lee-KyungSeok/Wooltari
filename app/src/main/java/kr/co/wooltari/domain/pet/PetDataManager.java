@@ -81,14 +81,14 @@ public class PetDataManager {
      */
     public static void savePet(Activity activity, Pet pet){
         IPet service = PetDataManager.create(IPet.class, true);
-        Call<Pet> remote = service.savePetData(UserDummy.data.pk,pet);
-        remote.enqueue(new Callback<Pet>() {
+        Call<PetOne> remote = service.savePetData(UserDummy.data.pk,pet);
+        remote.enqueue(new Callback<PetOne>() {
             @Override
-            public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
+            public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
 
                 if(201 == response.code()){
-                    Log.e("save data","===="+response.body().toString());
+                    Log.e("save data","===="+response.body().getPet().toString());
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_save_success), Toast.LENGTH_SHORT).show();
                     activity.setResult(Activity.RESULT_OK);
                     activity.finish();
@@ -130,7 +130,7 @@ public class PetDataManager {
                 }
             }
             @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
+            public void onFailure(Call<PetOne> call, Throwable t) {
                 Log.e("savePet Failure",t.getMessage());
                 Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }
@@ -142,13 +142,13 @@ public class PetDataManager {
      */
     public static void updatePet(Activity activity, int petPK, CallbackGetPet callback){
         IPet service = PetDataManager.create(IPet.class, true);
-        Call<Pet> remote = service.updatePetData(UserDummy.data.pk, petPK);
-        remote.enqueue(new Callback<Pet>() {
+        Call<PetOne> remote = service.updatePetData(UserDummy.data.pk, petPK);
+        remote.enqueue(new Callback<PetOne>() {
             @Override
-            public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
+            public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
                 if(200 == response.code()){
-                    callback.getPetData(response.body());
+                    callback.getPetData(response.body().getPet());
                 } else {
                     PetError error;
                     try {
@@ -179,7 +179,7 @@ public class PetDataManager {
             }
 
             @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
+            public void onFailure(Call<PetOne> call, Throwable t) {
                 Log.e("updatePet Failure",t.getMessage());
                 Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }
@@ -267,6 +267,10 @@ public class PetDataManager {
                         });
                     } else {
                         callback.getPetList(dataList);
+                        for(Pet pet : dataList) {
+                            MedicalInfoDummy.createMedicalDummy(pet.getPk());
+                            HealthStateDummy.createStateDummy(pet.getPk());
+                        }
                     }
                 } else {
                     PetError error;
@@ -353,13 +357,13 @@ public class PetDataManager {
      */
     public static void getPet(Activity activity, int petPk, CallbackGetPet callback){
         IPet service = PetDataManager.create(IPet.class, true);
-        Call<Pet> remote = service.getPetData(UserDummy.data.pk, petPk);
-        remote.enqueue(new Callback<Pet>() {
+        Call<PetOne> remote = service.getPetData(UserDummy.data.pk, petPk);
+        remote.enqueue(new Callback<PetOne>() {
             @Override
-            public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
+            public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
                 if(200 == response.code()){
-                    callback.getPetData(response.body());
+                    callback.getPetData(response.body().getPet());
                 } else {
                     PetError error;
                     try {
@@ -383,7 +387,7 @@ public class PetDataManager {
             }
 
             @Override
-            public void onFailure(Call<Pet> call, Throwable t) {
+            public void onFailure(Call<PetOne> call, Throwable t) {
                 Log.e("getPet Failure",t.getMessage());
                 Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }

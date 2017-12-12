@@ -22,7 +22,7 @@ import retrofit2.http.Query;
 
 public interface IPet {
     @POST("profile/{user_pk}/pets/")
-    Call<Pet> savePetData(
+    Call<PetOne> savePetData(
 //            @Header("Authorization") String token,
             @Path("user_pk") int userPK,
             @Body Pet petData
@@ -40,7 +40,7 @@ public interface IPet {
     );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")
-    Call<Pet> getPetData(
+    Call<PetOne> getPetData(
             @Path("user_pk") int userPK,
             @Path("pet_pk") int petPK
     );
@@ -58,7 +58,7 @@ public interface IPet {
     );
 
     @PATCH("profile/{user_pk}/pets/{pet_pk}/")
-    Call<Pet> updatePetData(
+    Call<PetOne> updatePetData(
             @Path("user_pk") int userPK,
             @Path("pet_pk") int petPK
     );

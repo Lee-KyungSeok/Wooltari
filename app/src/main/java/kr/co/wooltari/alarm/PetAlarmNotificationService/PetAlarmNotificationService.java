@@ -30,18 +30,18 @@ public class PetAlarmNotificationService extends NotificationListenerService {
 
     @Override
     public void onNotificationPosted(StatusBarNotification sbn) {
-        Log.e("NotificationListener", "onNotificationPosted() - " + sbn.toString());
-        Log.e("NotificationListener", "PackageName:" + sbn.getPackageName());
-        Log.e("NotificationListener", "PostTime:" + sbn.getPostTime());
-
-        Notification notification = sbn.getNotification();
-        Bundle extras = notification.extras;
-        Log.e("notification", "title:" + extras.getString(Notification.EXTRA_TITLE));
-        Log.e("notification", "text:" + extras.getString(Notification.EXTRA_TEXT));
+//        Log.e("NotificationListener", "onNotificationPosted() - " + sbn.toString());
+//        Log.e("NotificationListener", "PackageName:" + sbn.getPackageName());
+//        Log.e("NotificationListener", "PostTime:" + sbn.getPostTime());
+//
+//        Notification notification = sbn.getNotification();
+//        Bundle extras = notification.extras;
+//        Log.e("notification", "title:" + extras.getString(Notification.EXTRA_TITLE));
+//        Log.e("notification", "text:" + extras.getString(Notification.EXTRA_TEXT));
     }
 
     @Override
     public void onNotificationRemoved(StatusBarNotification sbn) {
-        Log.e("NotificationListener", "onNotificationRemoved() - " + sbn.toString());
+//        Log.e("NotificationListener", "onNotificationRemoved() - " + sbn.toString());
     }
 }

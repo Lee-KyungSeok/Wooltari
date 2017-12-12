@@ -93,11 +93,11 @@
         <item>cat</item>
     </string-array>
     <string-array name="pet_breeds_dog_item">
-        <item>shih tzu</item>
-        <item>golden retriever</item>
+        <item>Shih Tzu</item>
+        <item>Golden Retriever</item>
     </string-array>
     <string-array name="pet_breeds_cat_item">
-        <item>korean shorthair</item>
+        <item>Domestic Korean Short Hair</item>
         <item>persian</item>
     </string-array>
 
