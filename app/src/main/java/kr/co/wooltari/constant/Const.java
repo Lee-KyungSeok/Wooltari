@@ -31,4 +31,10 @@ public class Const {
     public static final int PET_MEDICAL= 704;
     public static final int PET_MEDICAL_ADD = 720;
     public static final int PET_MEDICAL_EDIT = 721;
+    public static final int PET_ALARM_NOTIFICATION = 730;
+
+    // alarm Code
+    public static final String ALARM_OFF = "alarm_off";
+    public static final String ALARM_ON = "alarm_on";
+    public static final int ALARM_NOTI_ID = 10;
 }

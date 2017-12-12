@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.request.RequestOptions;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.alarm.PetAlarmDialog;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
 import kr.co.wooltari.domain.MedicalInfoDummy;
@@ -39,7 +40,9 @@ public class PetMedicalInputActivity extends AppCompatActivity {
     private Button btnPMIDelete, btnPMISave;
     int petPK;
     int medicalPK;
+    String petName;
 
+    PetAlarmDialog petAlarmDialog;
     CameraGalleryPopup cameraGalleryPopup;
     boolean isImage = false;
 
@@ -51,6 +54,7 @@ public class PetMedicalInputActivity extends AppCompatActivity {
         initView();
 
         petPK = getIntent().getIntExtra(Const.PET_ID,-1);
+        petName = getIntent().getStringExtra(Const.PET_NAME);
         medicalPK = getIntent().getIntExtra(Const.PET_MEDICAL_ID,-1);
         if(petPK == -1) finish();
         if(medicalPK != -1) setDefaultValue();
@@ -81,6 +85,15 @@ public class PetMedicalInputActivity extends AppCompatActivity {
             cameraGalleryPopup.show();
             cameraGalleryPopup.setBtnList(isImage);
         });
+
+        petAlarmDialog = new PetAlarmDialog(this, petName, null, null, type -> {
+            if(Const.ALARM_ON.equals(type)) imagePMIAlarm.setImageResource(R.drawable.ic_alarm_on);
+            else imagePMIAlarm.setImageResource(R.drawable.ic_alarm_off);
+        });
+
+        imagePMIAlarm.setOnClickListener(v -> {
+            petAlarmDialog.show(petName, editPMIDateValue.getText().toString(), editPMIDescriptionValue.getText().toString());
+        });
     }
 
     private void setDefaultValue(){
@@ -104,7 +117,6 @@ public class PetMedicalInputActivity extends AppCompatActivity {
         editPMIDescriptionValue.setText(petMediInfo.description);
         editPMICommentValue.setText(petMediInfo.comment);
         btnPMISave.setText(getResources().getString(R.string.pet_btn_edit));
-        // 알람은 나중에...
     }
 
     public void save(){

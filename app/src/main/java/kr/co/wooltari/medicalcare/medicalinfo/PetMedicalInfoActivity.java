@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -65,6 +66,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         setColor(petIntColor);
 
         if(medicalInfo.petMediInfoList.size()!=0) setData(medicalInfo.petMediInfoList.get(medicalInfo.petMediInfoList.size()-1));
+        else btnEditPMM.setVisibility(View.GONE);
 
         setRecyclerMedicalBottom(petIntColor);
     }
@@ -97,6 +99,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         btnEditPMM.setOnClickListener(v -> {
             Intent intent = new Intent(this,PetMedicalInputActivity.class);
             intent.putExtra(Const.PET_ID,petPK);
+            intent.putExtra(Const.PET_NAME, petName);
             intent.putExtra(Const.PET_MEDICAL_ID,mediPK);
             startActivityForResult(intent,Const.PET_PROFILE);
         });
@@ -122,6 +125,7 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
         textPMMAlarmValue.setText("임시임시");
         textPMMDescriptionValue.setText(petMediInfo.description);
         textPMMCommentValue.setText(petMediInfo.comment);
+        btnEditPMM.setVisibility(View.VISIBLE);
     }
 
     private void setRecyclerMedicalBottom(int color){
@@ -148,7 +152,8 @@ public class PetMedicalInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == R.id.menu_add_medical) {
             Intent intent = new Intent(this,PetMedicalInputActivity.class);
-            intent.putExtra(Const.PET_ID,petPK);
+            intent.putExtra(Const.PET_ID, petPK);
+            intent.putExtra(Const.PET_NAME, petName);
             startActivityForResult(intent, Const.PET_MEDICAL_ADD);
             return true;
         } else {
