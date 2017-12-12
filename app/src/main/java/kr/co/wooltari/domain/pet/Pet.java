@@ -16,9 +16,9 @@ public class Pet {
     @Expose
     private boolean is_active;
     @Expose
-    private int species;
+    private String species;
     @Expose
-    private int breeds;
+    private String breeds;
     @Expose
     private String name;
     @Expose
@@ -54,11 +54,11 @@ public class Pet {
         this.birth_date = birth_date;
     }
 
-    public int getSpecies() {
+    public String getSpecies() {
         return species;
     }
 
-    public void setSpecies(int species) {
+    public void setSpecies(String species) {
         this.species = species;
     }
 
@@ -102,11 +102,11 @@ public class Pet {
         this.gender = gender;
     }
 
-    public int getBreeds() {
+    public String getBreeds() {
         return breeds;
     }
 
-    public void setBreeds(int breeds) {
+    public void setBreeds(String breeds) {
         this.breeds = breeds;
     }
 

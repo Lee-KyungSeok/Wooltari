@@ -37,7 +37,7 @@ public class PermissionUtil {
      * @param permissionGrant
      */
     @TargetApi(Build.VERSION_CODES.M)
-    public void request(Activity activity, IPermissionGrant permissionGrant){
+    private void request(Activity activity, IPermissionGrant permissionGrant){
         List<String> requirePermissions = new ArrayList<>();
         // 권한 승인 여부 확인
         for(String perm : permissions){

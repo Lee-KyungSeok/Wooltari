@@ -54,14 +54,21 @@
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInfoActivity" />
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInputActivity" />
 
-        <service android:name=".alarm.service.MyFirebaseInstanceIDService">
+        <service android:name=".alarm.PetAlarmfcm.MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".alarm.service.MyFirebaseMessagingService">
+        <service android:name=".alarm.PetAlarmfcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".alarm.PetAlarmNotificationService.PetAlarmNotificationService"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
 

@@ -12,18 +12,18 @@ public class PetList {
     @Expose
     private String count;
     @Expose
-    private List<Pet> results;
+    private List<Pet> pets;
     @Expose
     private String previous;
     @Expose
     private String next;
 
     public List<Pet> getResults() {
-        return results;
+        return pets;
     }
 
     public void setResults(List<Pet> results) {
-        this.results = results;
+        this.pets = results;
     }
 
     public String getPrevious() {
@@ -52,6 +52,6 @@ public class PetList {
 
     @Override
     public String toString() {
-        return "ClassPojo [results = " + results + ", previous = " + previous + ", count = " + count + ", next = " + next + "]";
+        return "ClassPojo [results = " + pets + ", previous = " + previous + ", count = " + count + ", next = " + next + "]";
     }
 }

@@ -192,7 +192,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                     editPetName.setText(petData.getName());
                     // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
                     setPetSpecies(petData);
-                    checkSpinnerDefaultValue(spinnerPetSpecies, PetDataFormatUtil.SpeciesNameById(PetProfileActivity.this, petData.getSpecies()));
+                    checkSpinnerDefaultValue(spinnerPetSpecies, petData.getSpecies());
                     // 생일 정의
                     editPetBirth.setText(petData.getBirth_date().replace("-",""));
                     // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
@@ -215,7 +215,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             // 이름 디폴트 값 정의
             editPetName.setText(PetDummy.data.get(petPk).getName());
             // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
-            checkSpinnerDefaultValue(spinnerPetSpecies, PetDataFormatUtil.SpeciesNameById(this, PetDummy.data.get(petPk).getSpecies()));
+            checkSpinnerDefaultValue(spinnerPetSpecies, PetDummy.data.get(petPk).getSpecies());
             // 생일 정의
             editPetBirth.setText(PetDummy.data.get(petPk).getBirth_date().replace("-", ""));
             // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
@@ -275,7 +275,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             default: data = new ArrayList<>(); break;
         }
         spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds,PetDataFormatUtil.BreedsNameById(this,PetDummy.data.get(petPk).getBreeds())); }
+        if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
     }
     private void setPetBreeds(int position, Pet pet){
         List<String> data;
@@ -285,7 +285,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
             default: data = new ArrayList<>(); break;
         }
         spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(petPk !=-1) {checkSpinnerDefaultValue(spinnerPetBreeds,PetDataFormatUtil.BreedsNameById(this,pet.getBreeds()));}
+        if(petPk !=-1) {checkSpinnerDefaultValue(spinnerPetBreeds, pet.getBreeds());}
     }
 
     /**
@@ -464,8 +464,8 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private void save(){
         Pet pet = new Pet();
         pet.setName(editPetName.getText().toString());
-        pet.setSpecies(PetDataFormatUtil.SpeciesIdByName(this,spinnerPetSpecies.getSelectedItem().toString()));
-        pet.setBreeds(PetDataFormatUtil.BreedsIdByName(this,spinnerPetBreeds.getSelectedItem().toString()));
+        pet.setSpecies(spinnerPetSpecies.getSelectedItem().toString());
+        pet.setBreeds(spinnerPetBreeds.getSelectedItem().toString());
         String birth = editPetBirth.getText().toString();
         pet.setBirth_date(birth.substring(0,4)+"-"+birth.substring(4,6)+"-"+birth.substring(6,8));
         pet.setGender(getPetSex());
