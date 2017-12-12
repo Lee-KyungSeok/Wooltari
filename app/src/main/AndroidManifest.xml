@@ -17,15 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
         <activity android:name=".main.MainActivity" />
         <activity
             android:name=".pet.detail.PetDetailActivity"
             android:theme="@style/DetailPetTheme" />
-=======
-        <activity android:name=".main.MainActivity"></activity>
-        <activity android:name=".pet.detail.PetDetailActivity" />
->>>>>>> a01418a2c5d117940843895e5cdf9cf70f23af32
         <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".main.EmergencyActivity" />
@@ -56,7 +51,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInfoActivity" />
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInputActivity" />
 
@@ -77,10 +71,7 @@
                 <action android:name="android.service.notification.NotificationListenerService"/>
             </intent-filter>
         </service>
-
-=======
         <activity android:name=".main.UserDetailActivity"></activity>
->>>>>>> a01418a2c5d117940843895e5cdf9cf70f23af32
     </application>
 
 </manifest>

@@ -12,10 +12,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-<<<<<<< HEAD
-import com.google.firebase.iid.FirebaseInstanceId;
-
-=======
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
@@ -24,7 +20,6 @@ import java.io.IOException;
 import java.util.Date;
 
 import kr.co.wooltari.domain.user.UserInfo;
->>>>>>> a01418a2c5d117940843895e5cdf9cf70f23af32
 import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.R;
 import retrofit2.Call;
@@ -52,18 +47,12 @@ public class SignInActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
-<<<<<<< HEAD
-
-        Log.e("refreshedToken", "Refreshed token: " + FirebaseInstanceId.getInstance().getToken());
-
-=======
         init();
     }
     private void init(){
         id_editText=findViewById(R.id.signin_id_edittext);
         password_editText=findViewById(R.id.signin_password_edittext);
         errormessage_textview=findViewById(R.id.signinactivity_errormessage_textview);
->>>>>>> a01418a2c5d117940843895e5cdf9cf70f23af32
     }
 
     public void onClick_Login(View view){
