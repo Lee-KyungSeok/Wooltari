@@ -36,7 +36,6 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
     public PetStateDetailPagerAdapter(Context context, List<HealthStateDummy.petWeight> petStateData){
         this.context = context;
         this.petStateData = petStateData;
-        Collections.reverse(this.petStateData);
         checkPageNum();
     }
 

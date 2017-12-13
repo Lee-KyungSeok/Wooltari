@@ -11,6 +11,7 @@ import java.util.List;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
+import kr.co.wooltari.util.LoadUtil;
 
 /**
  * Created by Kyung on 2017-12-04.
@@ -18,10 +19,10 @@ import kr.co.wooltari.domain.HealthStateDummy;
 
 public class PetStateDetailHolder extends RecyclerView.ViewHolder {
 
-    TextView textInputPSDGoal;
-    ViewPager viewPagerPSD;
-    PetStateDetailPagerAdapter adapter;
-    FrameLayout progressStagePSD;
+    private TextView textInputPSDGoal, textStateTitleDetail, textGoalTitle;
+    private ViewPager viewPagerPSD;
+    private PetStateDetailPagerAdapter adapter;
+    private FrameLayout progressStagePSD;
 
     public PetStateDetailHolder(View itemView) {
         super(itemView);
@@ -30,6 +31,8 @@ public class PetStateDetailHolder extends RecyclerView.ViewHolder {
     }
 
     private void initView(View itemView){
+        textStateTitleDetail = itemView.findViewById(R.id.textStateTitleDetail);
+        textGoalTitle = itemView.findViewById(R.id.textGoalTitle);
         textInputPSDGoal = itemView.findViewById(R.id.textInputPSDGoal);
         viewPagerPSD = itemView.findViewById(R.id.viewPagerPSD);
         progressStagePSD = itemView.findViewById(R.id.progressStagePSD);
@@ -37,6 +40,12 @@ public class PetStateDetailHolder extends RecyclerView.ViewHolder {
 
     public void setTextInputPSDGoal(String goal){
         textInputPSDGoal.setText(goal);
+    }
+
+    public void setTextColor(Context context, String color){
+        int petColor = LoadUtil.loadColor(context,color);
+        textStateTitleDetail.setTextColor(petColor);
+        textGoalTitle.setTextColor(petColor);
     }
 
     public void setViewPagerPSD(Context context, List<HealthStateDummy.petWeight> petWeightList){

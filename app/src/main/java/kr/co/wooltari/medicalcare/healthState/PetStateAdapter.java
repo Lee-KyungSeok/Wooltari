@@ -76,10 +76,12 @@ public class PetStateAdapter extends RecyclerView.Adapter {
         if(position==1){
             PetStateChartHolder holderChart = (PetStateChartHolder)holder;
             holderChart.setChart(petState.petWeightList, petState.petTargetWeight);
+            if(petState.petWeightList!=null && petState.petWeightList.size()>0) holderChart.setTextStateLastDate(petState.petWeightList.get(petState.petWeightList.size()-1).inputDate);
         } else if(position==2) {
             PetStateDetailHolder holderDetail = (PetStateDetailHolder)holder;
-            holderDetail.setTextInputPSDGoal(petState.petTargetWeight+"");
+            holderDetail.setTextInputPSDGoal(petState.petTargetWeight+" kg");
             holderDetail.setViewPagerPSD(context,petState.petWeightList);
+            holderDetail.setTextColor(context, petColor);
         } else {
             PetStateProfileHolder holderProfile = (PetStateProfileHolder)holder;
             holderProfile.setImagePetStateProfile(context, petProfileUrl);
@@ -95,6 +97,8 @@ public class PetStateAdapter extends RecyclerView.Adapter {
             holderProfile.setTextInputPSPHeight(petState.petHeight+" cm");
             holderProfile.setTextInputPSPNeckSize(petState.petNeckSize+" cm");
             holderProfile.setTextInputPSPChestSize(petState.petChestSize+" cm");
+            holderProfile.setTextInputPSPGoalWeight(petState.petTargetWeight+" kg");
+            holderProfile.setTextInputPSPGap(petState.petNowWeight, petState.petTargetWeight);
         }
     }
 

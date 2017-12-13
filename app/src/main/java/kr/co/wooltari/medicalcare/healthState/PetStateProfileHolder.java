@@ -13,6 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import kr.co.wooltari.R;
 import kr.co.wooltari.util.DialogUtil;
 import kr.co.wooltari.util.LoadUtil;
@@ -27,6 +29,7 @@ public class PetStateProfileHolder extends RecyclerView.ViewHolder {
     private ImageView imagePetStateProfile;
     private TextView textInputPSPName, textPSPWeight, textInputPSPWeight, textPSPHeight, textInputPSPHeight;
     private TextView textPSPNeckSize, textInputPSPNeckSize, textPSPChestSize, textInputPSPChestSize;
+    private TextView textPSPGoalWeight, textInputPSPGoalWeight, textPSPGap, textInputPSPGap;
     private Button btnPetStateEdit;
 
 
@@ -49,6 +52,10 @@ public class PetStateProfileHolder extends RecyclerView.ViewHolder {
         textInputPSPNeckSize = itemView.findViewById(R.id.textInputPSPNeckSize);
         textPSPChestSize = itemView.findViewById(R.id.textPSPChestSize);
         textInputPSPChestSize = itemView.findViewById(R.id.textInputPSPChestSize);
+        textPSPGoalWeight = itemView.findViewById(R.id.textPSPGoalWeight);
+        textInputPSPGoalWeight = itemView.findViewById(R.id.textInputPSPGoalWeight);
+        textPSPGap = itemView.findViewById(R.id.textPSPGap);
+        textInputPSPGap = itemView.findViewById(R.id.textInputPSPGap);
         btnPetStateEdit = itemView.findViewById(R.id.btnPetStateEdit);
     }
 
@@ -74,6 +81,8 @@ public class PetStateProfileHolder extends RecyclerView.ViewHolder {
         textPSPHeight.setTextColor(textColor);
         textPSPNeckSize.setTextColor(textColor);
         textPSPChestSize.setTextColor(textColor);
+        textPSPGoalWeight.setTextColor(textColor);
+        textPSPGap.setTextColor(textColor);
     }
 
     public void setBackground(Context context, String color){
@@ -98,6 +107,15 @@ public class PetStateProfileHolder extends RecyclerView.ViewHolder {
     }
     public void setTextInputPSPChestSize(String chestSize){
         textInputPSPChestSize.setText(chestSize);
+    }
+    public void setTextInputPSPGoalWeight(String goalWeight){
+        textInputPSPGoalWeight.setText(goalWeight);
+    }
+
+    public void setTextInputPSPGap(double weight, double goalWeight){
+        double gap = Math.floor(100*(goalWeight-weight))/100;
+        String gapString = gap+" kg";
+        textInputPSPGap.setText(gapString);
     }
 
     public interface IPetStateShowDialog{
