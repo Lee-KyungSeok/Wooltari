@@ -177,6 +177,5 @@ public class PetStateActivity extends AppCompatActivity implements PetStateProfi
     @Override
     protected void onPause() {
         super.onPause();
-        Collections.reverse(stateInfo.petWeightList);
     }
 }

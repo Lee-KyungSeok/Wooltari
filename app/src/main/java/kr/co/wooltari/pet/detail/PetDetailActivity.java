@@ -13,6 +13,10 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
@@ -64,6 +68,13 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         petDetailVaccination = new PetDetailVaccination(this);
 
         petDetailMedical = new PetDetailMedical(this ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
+
+//        ImageView imagePetDetailStage = findViewById(R.id.imagePetDetailStage);
+//        Glide.with(this)
+//                .asGif()
+//                .load("http://mblogthumb4.phinf.naver.net/20141011_139/dogtalk__1413002998615Uywuj_GIF/dog-1.gif?type=w2")
+//                .apply(RequestOptions.bitmapTransform(new BlurTransformation()))
+//                .into(imagePetDetailStage);
     }
 
     private void getData(){
@@ -221,8 +232,12 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         switch (requestCode){
             case Const.PET_PROFILE:
                 if(resultCode == RESULT_OK) {
-                    getData();
-                    petDetailProfile.setValue(petInfo);
+                    if(data.getIntExtra(Const.PET_INFO,-1) == Const.PET_PROFILE_DELETE){
+                        finish();
+                    } else {
+                        getData();
+                        petDetailProfile.setValue(petInfo);
+                    }
                 }
                 break;
 

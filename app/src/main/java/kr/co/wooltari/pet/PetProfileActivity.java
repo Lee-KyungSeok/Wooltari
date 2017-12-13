@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,8 +45,9 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
 import kr.co.wooltari.domain.PetDummy;
+import kr.co.wooltari.domain.pet.ActivePet;
+import kr.co.wooltari.domain.pet.Breed;
 import kr.co.wooltari.domain.pet.Pet;
-import kr.co.wooltari.domain.pet.PetDataFormatUtil;
 import kr.co.wooltari.domain.pet.PetDataManager;
 import kr.co.wooltari.util.DialogUtil;
 import kr.co.wooltari.util.LoadUtil;
@@ -73,7 +73,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     GradientDrawable gdImage;
     private boolean petActive = true;
     private boolean isImage = false;
-    AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog = null;
+    AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog, activeDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,24 +268,52 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         });
     }
     private void setPetBreeds(int position){
-        List<String> data;
-        switch (position){
-            case 1: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_dog_item))); break;
-            case 2: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_cat_item))); break;
-            default: data = new ArrayList<>(); break;
+        if(position!=0) {
+            Breed species = new Breed();
+            species.setSpecies(spinnerPetSpecies.getSelectedItem().toString());
+            PetDataManager.getBreedsList(this, species, new PetDataManager.CallbackGetBreeds() {
+                @Override
+                public void getBreeds(List<Breed> breedList) {
+                    List<String> data = new ArrayList<>();
+                    for (Breed breed : breedList) {
+                        data.add(breed.getBreeds_name());
+                    }
+                    spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
+                    if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
+                }
+            });
+        } else {
+            List<String> data = new ArrayList<>();
+            spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
+            if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
         }
-        spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
     }
     private void setPetBreeds(int position, Pet pet){
-        List<String> data;
-        switch (position){
-            case 1: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_dog_item))); break;
-            case 2: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_cat_item))); break;
-            default: data = new ArrayList<>(); break;
+//        List<String> data;
+//        switch (position){
+//            case 1: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_dog_item))); break;
+//            case 2: data = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.pet_breeds_cat_item))); break;
+//            default: data = new ArrayList<>(); break;
+//        }
+        if(position!=0) {
+            Breed species = new Breed();
+            species.setSpecies(spinnerPetSpecies.getSelectedItem().toString());
+            PetDataManager.getBreedsList(this, species, new PetDataManager.CallbackGetBreeds() {
+                @Override
+                public void getBreeds(List<Breed> breedList) {
+                    List<String> data = new ArrayList<>();
+                    for (Breed breed : breedList) {
+                        data.add(breed.getBreeds_name());
+                    }
+                    spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
+                    if(petPk !=-1) {checkSpinnerDefaultValue(spinnerPetBreeds, pet.getBreeds());}
+                }
+            });
+        } else {
+            List<String> data = new ArrayList<>();
+            spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
+            if(petPk !=-1) {checkSpinnerDefaultValue(spinnerPetBreeds, pet.getBreeds());}
         }
-        spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-        if(petPk !=-1) {checkSpinnerDefaultValue(spinnerPetBreeds, pet.getBreeds());}
     }
 
     /**
@@ -353,7 +381,21 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 getResources().getString(R.string.alert_pet_save_msg), this::save);
         saveDialog.cancel();
 
-        Log.e("show"," deleteDialog : "+deleteDialog.isShowing()+" cancelDialog : "+cancelDialog.isShowing()+" saveDialog : "+saveDialog.isShowing());
+        activeDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_active_title),
+                getResources().getString(R.string.alert_pet_active_msg), () -> {
+                    if(petPk<=8) {
+                        changeState(PetDummy.data.get(petPk).getIs_active());
+                    }
+                    else {
+                        ActivePet activePet = new ActivePet();
+                        if(petActive) activePet.setIs_active("False");
+                        else activePet.setIs_active("True");
+                        PetDataManager.updatePetActive(this, petPk, activePet, petData -> {
+                            changeState(petActive);
+                        });
+                    }
+                });
+        activeDialog.cancel();
     }
 
     /**
@@ -458,10 +500,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         startActivity(intent);
     }
 
-    /**
-     * 팻 정보를 저장
-     */
-    private void save(){
+    private Pet getInputData(){
         Pet pet = new Pet();
         pet.setName(editPetName.getText().toString());
         pet.setSpecies(spinnerPetSpecies.getSelectedItem().toString());
@@ -472,17 +511,41 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         pet.setIs_neutering(getPetNeuterSpay());
         pet.setIdentified_number(editTextPetNumber.getText().toString());
         pet.setBody_color(getPetColor(activeRadioColor.getId()));
-        if(petPk==-1) PetDataManager.savePet(this,pet);
+        pet.setIs_active(petActive);
+        return pet;
+    }
+
+    /**
+     * 팻 정보를 저장
+     */
+    private void save(){
+        if(petPk==-1) {
+            PetDataManager.savePet(this, getInputData(), petData -> {
+                Intent intent = new Intent();
+                intent.putExtra(Const.PET_INFO,Const.PET_PROFILE_UPDATE);
+                setResult(RESULT_OK,intent);
+                finish();
+            });
+        } else {
+            PetDataManager.updatePet(this, petPk, getInputData(), petData -> {
+                Intent intent = new Intent();
+                intent.putExtra(Const.PET_INFO,Const.PET_PROFILE_UPDATE);
+                setResult(RESULT_OK,intent);
+                finish();
+            });
+        }
     }
 
     /**
      * 펫 정보를 삭제 수행
      */
     private void delete(){
-        // ========================
-        // 삭제 로직 실행
-        //=========================
-        PetProfileActivity.this.finish();
+        PetDataManager.deletePet(this, petPk, () -> {
+            Intent intent = new Intent();
+            intent.putExtra(Const.PET_INFO,Const.PET_PROFILE_DELETE);
+            setResult(RESULT_OK,intent);
+            finish();
+        });
     }
 
     /**
@@ -548,10 +611,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                 case R.id.btnPetAddEdit: saveDialog.show(); break;
                 case R.id.btnPetCancel: cancelDialog.show(); break;
                 case R.id.btnPetDelete: deleteDialog.show(); break;
-                case R.id.btnPetState:
-                    if(petPk<=8) changeState(PetDummy.data.get(petPk).getIs_active());
-                    else changeState(petActive);
-                    break;
+                case R.id.btnPetState: activeDialog.show(); break;
                 case R.id.btnNumberSearch: searchNumber(); break;
                 case R.id.btnPetInfoEdit: break; // 임시용
             }

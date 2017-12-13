@@ -170,6 +170,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
             case R.id.nav_pet_state : goActivity(PetStateActivity.class); break;
             case R.id.nav_vaccination : goActivity(PetStateActivity.class); break;
             case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
+            case R.id.nav_temp_detail: goActivity(PetDetailActivity.class); break;
         }
         drawerLayout.closeDrawer(GravityCompat.START);
         return false;

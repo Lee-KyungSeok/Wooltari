@@ -43,14 +43,14 @@ public class PetDummy {
             is_neutering = false;
             is_active = true;
             species = "dog";
-            if (pk % 4 == 0) breeds = "golden retriever";
-            else breeds = "shih tzu";
+            if (pk % 4 == 0) breeds = "Golden Retriever";
+            else breeds = "Shih Tzu";
         } else {
             gender = "female";
             is_neutering = true;
             is_active = false;
             species = "cat";
-            breeds = "korean shorthair";
+            breeds = "Korean Short Hair";
         }
 
         switch (pk) {
