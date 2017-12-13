@@ -48,8 +48,8 @@ public class PetStateDetailHolder extends RecyclerView.ViewHolder {
         textGoalTitle.setTextColor(petColor);
     }
 
-    public void setViewPagerPSD(Context context, List<HealthStateDummy.petWeight> petWeightList){
-        adapter = new PetStateDetailPagerAdapter(context, petWeightList);
+    public void setViewPagerPSD(Context context, List<HealthStateDummy.petWeight> petWeightList, String color, boolean active){
+        adapter = new PetStateDetailPagerAdapter(context, petWeightList, color, active);
         adapter.setView(viewPagerPSD, progressStagePSD);
     }
 }

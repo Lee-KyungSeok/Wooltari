@@ -130,7 +130,8 @@
     <string name="pet_state_detail_weight_goal">Goal :  </string>
     <string name="pet_state_detail_date">Date</string>
     <string name="pet_state_detail_weight">Weight</string>
-    <string name="pet_state_detail_delete">Delete</string>
+    <string name="pet_state_detail_change">Change</string>
+    <string name="pet_state_detail_edit">Edit</string>
     <string name="pet_state_detail_more">More Data</string>
     <string name="pet_state_detail_left">\u003c</string>
     <string name="pet_state_detail_right">\u003e</string>

@@ -1,6 +1,7 @@
 package kr.co.wooltari.medicalcare.healthState;
 
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -30,12 +31,16 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
     Context context;
     List<HealthStateDummy.petWeight> petStateData;
     FrameLayout progressStagePSD;
+    private boolean active;
+    private int petColor;
     public int pageNum=0;
     private int count =1;
 
-    public PetStateDetailPagerAdapter(Context context, List<HealthStateDummy.petWeight> petStateData){
+    public PetStateDetailPagerAdapter(Context context, List<HealthStateDummy.petWeight> petStateData, String color, boolean active){
         this.context = context;
         this.petStateData = petStateData;
+        petColor = LoadUtil.loadColor(context,color);
+        this.active = active;
         checkPageNum();
     }
 
@@ -66,12 +71,31 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
         }
     }
 
+    private void setButtonGrad(View view){
+        GradientDrawable gd = new GradientDrawable();
+        gd.setColor(petColor);
+        gd.setCornerRadius(10f);
+        view.setBackground(gd);
+    }
+
+    // 로직 업데이트....
     private View getTableData(HealthStateDummy.petWeight data){
+        return getTableData(data,-1);
+    }
+
+    private View getTableData(HealthStateDummy.petWeight data, double prevWeight){
         View view = LayoutInflater.from(context).inflate(R.layout.item_pet_state_detail_value,null);
         ((TextView)view.findViewById(R.id.textPSDValueDate)).setText(data.inputDate);
-        ((TextView)view.findViewById(R.id.textPSDValueWeight)).setText(data.petWeight+"");
+        ((TextView)view.findViewById(R.id.textPSDValueWeight)).setText(data.petWeight+" kg");
+        if(prevWeight!=-1) {
+            double changeWeight = Math.floor(100 * (data.petWeight - prevWeight)) / 100;
+            ((TextView) view.findViewById(R.id.textPSDValueChange)).setText(changeWeight + " kg");
+        }
         TextView textPSDValueDelete = view.findViewById(R.id.textPSDValueDelete);
-        textPSDValueDelete.setOnClickListener(v ->{ /*삭제 로직*/ });
+        if(active) {
+            setButtonGrad(textPSDValueDelete);
+            textPSDValueDelete.setOnClickListener(v -> { /*삭제 로직*/ });
+        }
         return view;
     }
 
@@ -119,12 +143,14 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
                 int compareCount =20*count;
                 if(compareCount>=petStateData.size()){
                     for(int i=position*5 ; i<petStateData.size() ; i++){
-                        View valueView = getTableData(petStateData.get(i));
+                        View valueView;
+                        if(i==petStateData.size()-1) valueView= getTableData(petStateData.get(i));
+                        else valueView = getTableData(petStateData.get(i), petStateData.get(i+1).petWeight);
                         petStateDetailTable.addView(valueView);
                     }
                 } else {
                     for(int i=0 ; i<5 ; i++) {
-                        View valueView = getTableData(petStateData.get(position*5+i));
+                        View valueView = getTableData(petStateData.get(position*5+i), petStateData.get(position*5+i+1).petWeight);
                         petStateDetailTable.addView(valueView);
                     }
                 }
@@ -132,7 +158,7 @@ public class PetStateDetailPagerAdapter extends PagerAdapter {
             } else {
                 btnWeightMore.setVisibility(View.GONE);
                 for(int i=0 ; i<5 ; i++) {
-                    View valueView = getTableData(petStateData.get(position*5+i));
+                    View valueView = getTableData(petStateData.get(position*5+i), petStateData.get(position*5+i+1).petWeight);
                     petStateDetailTable.addView(valueView);
                 }
             }

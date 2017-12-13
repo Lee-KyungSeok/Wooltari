@@ -80,7 +80,7 @@ public class PetStateAdapter extends RecyclerView.Adapter {
         } else if(position==2) {
             PetStateDetailHolder holderDetail = (PetStateDetailHolder)holder;
             holderDetail.setTextInputPSDGoal(petState.petTargetWeight+" kg");
-            holderDetail.setViewPagerPSD(context,petState.petWeightList);
+            holderDetail.setViewPagerPSD(context,petState.petWeightList, petColor, petActive);
             holderDetail.setTextColor(context, petColor);
         } else {
             PetStateProfileHolder holderProfile = (PetStateProfileHolder)holder;
