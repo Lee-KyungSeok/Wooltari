@@ -7,29 +7,38 @@
     android:fitsSystemWindows="true"
     tools:context="kr.co.wooltari.pet.detail.PetDetailActivity">
 
+    <ImageView
+        android:id="@+id/imagePetDetailStage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/brown"
+        android:fitsSystemWindows="true"
+        android:scaleType="fitXY" />
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/pet_detail_toolbar_image_size"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:background="#00FFFFFF"
+        android:theme="@style/AppTheme.AppBarOverlay"
+        app:elevation="10dp">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/petDetailTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             app:collapsedTitleGravity="left"
             app:expandedTitleGravity="bottom|center"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <ImageView
-                android:id="@+id/petDetailToolbarImage"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-                android:fitsSystemWindows="true"
-                app:srcCompat="@mipmap/ic_launcher"
-                app:layout_collapseMode="parallax"/>
+            <!--<ImageView-->
+            <!--android:id="@+id/petDetailToolbarImage"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:background="#00FFFFFF"-->
+            <!--android:fitsSystemWindows="true"-->
+            <!--android:scaleType="centerCrop"-->
+            <!--app:layout_collapseMode="parallax" />-->
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/petDetailToolbar"
@@ -41,11 +50,11 @@
             <FrameLayout
                 android:id="@+id/framelayout_title"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="@dimen/pet_detail_frame_layout_height"
                 android:layout_gravity="bottom|center_horizontal"
                 android:orientation="vertical"
                 app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.3"/>
+                app:layout_collapseParallaxMultiplier="0.3" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -54,8 +63,7 @@
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        app:layout_anchor="@id/framelayout_title">
-    </android.support.v7.widget.Toolbar>
+        app:layout_anchor="@id/framelayout_title"/>
 
     <FrameLayout
         android:id="@+id/imagePetDetailProfileStage"
@@ -64,8 +72,9 @@
         android:layout_gravity="center"
         android:background="@color/colorBlackE"
         android:elevation="10dp"
-        android:padding="@dimen/pet_state_profile_background_padding"
+        android:padding="@dimen/pet_detail_profile_background_padding"
         app:layout_behavior="kr.co.wooltari.pet.detail.ImageBehavior">
+
 
         <ImageView
             android:id="@+id/imagePetDetailProfile"
@@ -73,22 +82,8 @@
             android:layout_height="match_parent"
             app:srcCompat="@drawable/pet_profile" />
 
+
     </FrameLayout>
-
-    <!--<ImageView-->
-        <!--android:layout_width="@dimen/pet_profile_size"-->
-        <!--android:layout_height="@dimen/pet_profile_size"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:elevation="10dp"-->
-        <!--android:src="@color/black"-->
-        <!--app:layout_behavior="kr.co.wooltari.pet.detail.ImageBehavior" />-->
-
-    <ImageView
-        android:id="@+id/imagePetDetailStage"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="fitXY"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

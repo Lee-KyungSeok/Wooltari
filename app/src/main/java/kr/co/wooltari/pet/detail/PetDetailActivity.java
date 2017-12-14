@@ -39,7 +39,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private CollapsingToolbarLayout petDetailTitle;
-    private ImageView petDetailToolbarImage;
     private PetNavigationView navigationView;
     // 각각의 item을 관리하는 class 세팅
     PetDetailProfile petDetailProfile;
@@ -71,7 +70,7 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         petDetailMedical = new PetDetailMedical(this ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
 
         ImageView imagePetDetailStage = findViewById(R.id.imagePetDetailStage);
-        LoadUtil.blurImageLoad(this,"https://www.tooli.co.kr/files/attach/images/571601/808/575/4.jpg",imagePetDetailStage);
+        LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.detail_background_,this),imagePetDetailStage);
     }
 
     private void getData(){
@@ -147,11 +146,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
             petDetailProfile.setValue(petInfo);
             petDetailProfile.setAge(null);
 
-            if(petInfo.getProfileUrl()==null)
-                LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.pet_detail_default,this),petDetailToolbarImage);
-            else
-                LoadUtil.blurImageLoad(this, petInfo.getProfileUrl(),petDetailToolbarImage);
-
         } else {
             PetDataManager.getPet(this, petChangePK, new PetDataManager.CallbackGetPet() {
                 @Override
@@ -165,11 +159,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
                         petDetailTitle.setContentScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailProfile.setValue(petInfo);
-
-                        if(petInfo.getProfileUrl()==null)
-                            LoadUtil.blurImageLoad(PetDetailActivity.this,LoadUtil.getResourceImageUri(R.drawable.pet_detail_default,PetDetailActivity.this),petDetailToolbarImage);
-                        else
-                            LoadUtil.blurImageLoad(PetDetailActivity.this, petInfo.getProfileUrl(),petDetailToolbarImage);
 
                     }
                 }
@@ -204,11 +193,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
                 getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_with_nav)
                         + getResources().getDimensionPixelSize(R.dimen.pet_detail_toolbar_profile_small_width)
         );
-        petDetailToolbarImage = findViewById(R.id.petDetailToolbarImage);
-        if(petInfo.getProfileUrl()==null)
-            LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.pet_detail_default,this),petDetailToolbarImage);
-        else
-            LoadUtil.blurImageLoad(this, petInfo.getProfileUrl(),petDetailToolbarImage);
         ToolbarUtil.setCommonToolbar(this, toolbar, petInfo.getName());
         // 네비게이션 토글 연결
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

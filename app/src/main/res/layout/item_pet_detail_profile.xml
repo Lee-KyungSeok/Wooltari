@@ -9,11 +9,13 @@
         android:id="@+id/textPDPTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pet_profile"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:paddingLeft="@dimen/pet_detail_average_margin"
         android:paddingTop="@dimen/pet_detail_average_margin"
-        android:paddingLeft="@dimen/pet_detail_average_margin"/>
+        android:text="@string/pet_profile"
+        android:textSize="@dimen/pet_detail_title_text_size"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/btnPetStateEdit"
@@ -22,14 +24,6 @@
         android:background="@drawable/edit_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <!--<TextView-->
-        <!--android:id="@+id/PDPMore"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/pet_detail_more"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent" />-->
 
     <View
         android:id="@+id/viewPDPLine"
@@ -46,12 +40,12 @@
         android:id="@+id/linearPDPProfile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:orientation="vertical"
         android:overScrollMode="always"
-        android:paddingRight="@dimen/pet_detail_average_margin"
-        android:paddingLeft="@dimen/pet_detail_average_margin"
         android:paddingBottom="@dimen/pet_detail_average_margin"
-        android:layout_marginTop="@dimen/pet_detail_average_margin"
+        android:paddingLeft="@dimen/pet_detail_average_margin"
+        android:paddingRight="@dimen/pet_detail_average_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,14 +63,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_species" />
+                android:text="@string/pet_profile_species"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPSpeciesValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
             <TextView
                 android:id="@+id/textPDPBreeds"
@@ -84,14 +81,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_breeds" />
+                android:text="@string/pet_profile_breeds"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPBreedsValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
         </LinearLayout>
 
         <LinearLayout
@@ -107,14 +107,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_birth" />
+                android:text="@string/pet_profile_birth"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPBirthValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
         </LinearLayout>
 
@@ -131,14 +134,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_age" />
+                android:text="@string/pet_profile_age"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPAgeValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
             <TextView
                 android:id="@+id/textPDPHumanAge"
@@ -146,14 +152,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_human_age" />
+                android:text="@string/pet_profile_human_age"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPHumanAgeValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
         </LinearLayout>
 
@@ -170,14 +179,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_sex" />
+                android:text="@string/pet_profile_sex"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPSexValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
             <TextView
                 android:id="@+id/textPDPNeuter"
@@ -185,13 +197,16 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_neuter" />
+                android:text="@string/pet_profile_neuter"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPNeuterValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
+                android:textSize="@dimen/pet_detail_value_text_size"
                 android:gravity="center_vertical" />
 
         </LinearLayout>
@@ -210,14 +225,17 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center_vertical"
-                android:text="@string/pet_profile_number" />
+                android:text="@string/pet_profile_number"
+                android:textSize="@dimen/pet_detail_value_text_size"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textPDPNumValue"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="3"
-                android:gravity="center_vertical" />
+                android:gravity="center_vertical"
+                android:textSize="@dimen/pet_detail_value_text_size" />
 
         </LinearLayout>
     </LinearLayout>

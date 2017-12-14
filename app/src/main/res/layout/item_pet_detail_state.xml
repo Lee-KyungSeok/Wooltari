@@ -13,6 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pet_state_title"
+        android:textSize="@dimen/pet_detail_title_text_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,6 +23,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pet_detail_more"
+        android:textSize="@dimen/pet_detail_value_text_size"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,7 +70,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="@string/pet_state_weight" />
+                    android:text="@string/pet_state_weight"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/pet_detail_value_text_size" />
 
                 <TextView
                     android:id="@+id/textInputPDSWeight"
@@ -74,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="0 kg" />
+                    android:text="0 kg"
+                    android:textSize="@dimen/pet_detail_value_text_size" />
             </LinearLayout>
 
             <View
@@ -94,7 +101,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="@string/pet_state_height" />
+                    android:text="@string/pet_state_height"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/pet_detail_value_text_size"/>
 
                 <TextView
                     android:id="@+id/textInputPDSHeight"
@@ -102,7 +111,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="0 cm" />
+                    android:text="0 cm"
+                    android:textSize="@dimen/pet_detail_value_text_size"/>
             </LinearLayout>
 
             <View
@@ -122,7 +132,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="@string/pet_state_neck_size" />
+                    android:text="@string/pet_state_neck_size"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/pet_detail_value_text_size"/>
 
                 <TextView
                     android:id="@+id/textInputPDSNeckSize"
@@ -130,7 +142,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="0 cm" />
+                    android:text="0 cm"
+                    android:textSize="@dimen/pet_detail_value_text_size"/>
             </LinearLayout>
 
             <View
@@ -150,7 +163,9 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="@string/pet_state_chest_size" />
+                    android:text="@string/pet_state_chest_size"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/pet_detail_value_text_size" />
 
                 <TextView
                     android:id="@+id/textInputPDSChestSize"
@@ -158,7 +173,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_weight="1"
-                    android:text="0 cm" />
+                    android:text="0 cm"
+                    android:textSize="@dimen/pet_detail_value_text_size"/>
             </LinearLayout>
         </LinearLayout>
 
