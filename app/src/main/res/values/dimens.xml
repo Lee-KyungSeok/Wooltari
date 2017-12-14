@@ -35,14 +35,17 @@
 
     <!-- Pet Detail -->
     <dimen name="pet_detail_toolbar_image_size">200dp</dimen>
+    <dimen name="pet_detail_toolbar_profile_horizontal_margin">16dp</dimen>
+    <!--<dimen name="activity_vertical_margin">16dp</dimen>-->
+    <dimen name="pet_detail_toolbar_profile_small_width">32dp</dimen>
     <dimen name="pet_detail_background_padding_left_right">15dp</dimen>
     <dimen name="pet_detail_background_padding_top">10dp</dimen>
     <dimen name="pet_detail_line_depth">2dp</dimen>
     <dimen name="pet_detail_line_dash_width">10px</dimen>
     <dimen name="pet_detail_line_dash_gap">5px</dimen>
     <dimen name="pet_detail_profile_text_margin">5dp</dimen>
-    <dimen name="pet_detail_item_interval">30dp</dimen>
-    <dimen name="pet_detail_state_average_margin">8dp</dimen>
+    <dimen name="pet_detail_item_interval">15dp</dimen>
+    <dimen name="pet_detail_average_margin">8dp</dimen>
     <dimen name="pet_detail_state_chart_height">200dp</dimen>
     <dimen name="pet_detail_calendar_alarm_size">30dp</dimen>
     <dimen name="pet_detail_vaccine_medical_height">120dp</dimen>

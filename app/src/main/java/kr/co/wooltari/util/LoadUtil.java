@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.co.wooltari.R;
 
 /**
@@ -43,6 +44,20 @@ public class LoadUtil {
         Glide.with(context)
                 .load(uri)
                 .apply(RequestOptions.bitmapTransform(new CenterCrop()))
+                .into(imageView);
+    }
+
+    public static void blurImageLoad(Context context, String url, ImageView imageView){
+        Glide.with(context)
+                .load(url)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation()))
+                .into(imageView);
+    }
+
+    public static void blurImageLoad(Context context, Uri uri, ImageView imageView){
+        Glide.with(context)
+                .load(uri)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation()))
                 .into(imageView);
     }
 

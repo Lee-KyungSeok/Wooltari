@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBlackD"
-    android:padding="@dimen/pet_detail_state_average_margin">
+    android:padding="@dimen/pet_detail_average_margin">
 
     <TextView
         android:id="@+id/textPDCTitle"
@@ -19,7 +19,7 @@
         android:id="@+id/viewPDCLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pet_detail_line_depth"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:background="@color/colorBlackE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

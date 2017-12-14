@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
-        android:layout_marginBottom="@dimen/pet_detail_state_average_margin">
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
+        android:layout_marginBottom="@dimen/pet_detail_average_margin">
 
         <TextView
             android:id="@+id/textPDCDate"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBlackD"
-    android:padding="@dimen/pet_detail_state_average_margin">
+    android:padding="@dimen/pet_detail_average_margin">
 
     <TextView
         android:id="@+id/textPDVTitle"
@@ -27,7 +27,7 @@
         android:id="@+id/viewPDVLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pet_detail_line_depth"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:background="@color/colorBlackE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:id="@+id/linearLayoutPDVStage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +49,7 @@
             android:layout_height="@dimen/pet_detail_vaccine_medical_height"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/pet_detail_state_average_margin"
+            android:layout_marginEnd="@dimen/pet_detail_average_margin"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -66,7 +66,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/pet_detail_state_average_margin"
+            android:layout_marginEnd="@dimen/pet_detail_average_margin"
             android:layout_weight="2.5"
             android:orientation="vertical">
 

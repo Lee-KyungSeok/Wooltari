@@ -18,11 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:collapsedTitleGravity="left"
-            app:expandedTitleGravity="bottom|left"
+            app:expandedTitleGravity="bottom|center"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            android:fitsSystemWindows="true"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp">
+            android:fitsSystemWindows="true">
 
             <ImageView
                 android:id="@+id/petDetailToolbarImage"
@@ -37,18 +35,60 @@
                 android:id="@+id/petDetailToolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="100dp"
                 app:layout_collapseMode="pin" />
+
+            <FrameLayout
+                android:id="@+id/framelayout_title"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:orientation="vertical"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.3"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
 
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:layout_anchor="@id/framelayout_title">
+    </android.support.v7.widget.Toolbar>
+
+    <FrameLayout
+        android:id="@+id/imagePetDetailProfileStage"
+        android:layout_width="@dimen/pet_profile_size"
+        android:layout_height="@dimen/pet_profile_size"
+        android:layout_gravity="center"
+        android:background="@color/colorBlackE"
+        android:elevation="10dp"
+        android:padding="@dimen/pet_state_profile_background_padding"
+        app:layout_behavior="kr.co.wooltari.pet.detail.ImageBehavior">
+
+        <ImageView
+            android:id="@+id/imagePetDetailProfile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/pet_profile" />
+
+    </FrameLayout>
+
+    <!--<ImageView-->
+        <!--android:layout_width="@dimen/pet_profile_size"-->
+        <!--android:layout_height="@dimen/pet_profile_size"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:elevation="10dp"-->
+        <!--android:src="@color/black"-->
+        <!--app:layout_behavior="kr.co.wooltari.pet.detail.ImageBehavior" />-->
+
     <ImageView
         android:id="@+id/imagePetDetailStage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-    </ImageView>
+        android:scaleType="fitXY"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
     <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"

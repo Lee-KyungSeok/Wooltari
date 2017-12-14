@@ -12,6 +12,7 @@
     <include layout="@layout/item_pet_detail_profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/pet_detail_item_interval"
         android:layout_marginBottom="@dimen/pet_detail_item_interval"/>
 
     <include layout="@layout/item_pet_detail_state"
