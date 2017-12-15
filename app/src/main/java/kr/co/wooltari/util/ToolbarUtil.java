@@ -13,7 +13,6 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInfoActivity;
 import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInputActivity;
 import kr.co.wooltari.pet.PetProfileActivity;
-import kr.co.wooltari.pet.detail.PetDetailActivity;
 
 
 /**
@@ -44,8 +43,7 @@ public class ToolbarUtil {
                 activity.finish();
                 return true;
             case R.id.menu_temp_pet_register:
-                intent = new Intent(activity, PetDetailActivity.class);
-                intent.putExtra(Const.PET_ID,2);
+                intent = new Intent(activity, PetProfileActivity.class);
                 activity.startActivity(intent);
                 return true;
         }

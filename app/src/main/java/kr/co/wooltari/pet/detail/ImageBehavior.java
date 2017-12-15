@@ -63,9 +63,6 @@ public class ImageBehavior extends CoordinatorLayout.Behavior {
 
         final int maxScrollDistance = (int) (startToolbarPosition);
         float expandedPercentageFactor = dependency.getY() / maxScrollDistance;
-        Log.e("dependency.getY()","============="+dependency.getY());
-        Log.e("maxScrollDistance","============="+maxScrollDistance);
-        Log.e("expandedPercent","=============="+expandedPercentageFactor);
 
         float distanceYToSubtract = ((startYPosition - finalYPosition)
                 * (1f - expandedPercentageFactor)) + (child.getHeight()/2);
