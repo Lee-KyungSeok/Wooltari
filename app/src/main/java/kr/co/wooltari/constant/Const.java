@@ -8,7 +8,11 @@ public class Const {
     // Permission Key
     public static final int PERMISSION_REQ_CAMERA = 800;
     public static final int PERMISSION_REQ_GALLERY = 801;
-    public static final int PERMISSION_REQ_NOTIFICATION = 801;
+    public static final int PERMISSION_REQ_NOTIFICATION = 820;
+
+    // Camera & Gallery Request Code
+    public static final int POPUP_CAMERA = 810;
+    public static final int POPUP_GALLERY = 811;
 
     // User Key
     public static final String USER_TOKEN = "token";

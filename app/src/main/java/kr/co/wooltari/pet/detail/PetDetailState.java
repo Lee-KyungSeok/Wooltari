@@ -63,7 +63,7 @@ public class PetDetailState {
         setChart(stateInfo.petWeightList,stateInfo.petTargetWeight);
     }
 
-    public void setChart(List<HealthStateDummy.petWeight> dataList, double goalWeight){
+    private void setChart(List<HealthStateDummy.petWeight> dataList, double goalWeight){
         int start=0;
         if(dataList.size()>10) start = dataList.size()-10;
         List<Entry> entryList = new ArrayList<>();
