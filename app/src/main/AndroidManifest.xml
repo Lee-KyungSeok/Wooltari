@@ -64,14 +64,16 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <service android:name=".alarm.PetAlarmNotificationService.PetAlarmNotificationService"
+        <service
+            android:name=".alarm.PetAlarmNotificationService.PetAlarmNotificationService"
             android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
             <intent-filter>
-                <action android:name="android.service.notification.NotificationListenerService"/>
+                <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <activity android:name=".main.UserDetailActivity"></activity>
+
+        <activity android:name=".main.UserDetailActivity" />
+        <activity android:name=".custom.ChangeImageActivity"></activity>
     </application>
 
 </manifest>
