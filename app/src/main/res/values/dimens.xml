@@ -92,6 +92,10 @@
     <dimen name="pet_medical_bottom_item__height">80dp</dimen>
     <dimen name="pet_medical_bottom_item_interval">10dp</dimen>
 
+    <!-- ImageChange -->
+    <dimen name="image_bottom_button_realSize">40dp</dimen>
+    <dimen name="image_bottom_button_size">50dp</dimen>
+
     <!-- User Profile -->
     <dimen name="user_image_height">120sp</dimen>
     <dimen name="user_image_width">120sp</dimen>
