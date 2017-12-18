@@ -71,6 +71,10 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+        <activity android:name=".main.UserDetailActivity"></activity>
+
+        <activity android:name=".vaccine.PetVaccinActivity">
+        </activity>
 
         <activity android:name=".main.UserDetailActivity" />
         <activity android:name=".custom.ChangeImageActivity"></activity>

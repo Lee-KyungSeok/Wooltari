@@ -19,6 +19,7 @@ import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.util.Date;
 
+import kr.co.wooltari.BuildConfig;
 import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.R;
@@ -35,9 +36,6 @@ public class SignInActivity extends AppCompatActivity {
     private EditText id_editText;
     private EditText password_editText;
     private TextView errormessage_textview;
-
-    private Gson gson;
-    private String URL="http://wooltari-test-server-dev.ap-northeast-2.elasticbeanstalk.com:80/";
 
     public static int COMPLETE_SIGNUP=8;
     public static int COMPLETE_MISSING_PASSWORD=9;
@@ -61,67 +59,72 @@ public class SignInActivity extends AppCompatActivity {
         String password=password_editText.getText().toString();
 
         // TODO : 임시로 액티비티 연결함
-        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-        startActivity(intent);
+//        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+//        startActivity(intent);
 
         // TODO: 로그인 과정 다시 할 것
-//        AsyncTask.execute(new Runnable() {
-//            @Override
-//            public void run() {
-//                Retrofit retrofit = new Retrofit.Builder()
-//                        .baseUrl(URL)
-//                        .addConverterFactory(GsonConverterFactory.create())
-//                        .build();
-//                ISendUserLoginInfo retrofitService = retrofit.create(ISendUserLoginInfo.class);
-//
-//                RequestUserLoginInfo requestUserLoginInfo=new RequestUserLoginInfo(id, password);
-//
-//                Call<ResponseSigninInfo> call = retrofitService.Post(requestUserLoginInfo);
-//                call.enqueue(new Callback<ResponseSigninInfo>() {
-//                    @Override
-//                    public void onResponse(Call<ResponseSigninInfo> call, Response<ResponseSigninInfo> response) {
-//                        Log.e(TAG+"1",call.toString());
-//                        Log.e(TAG+"2",response.toString());
-//                        String responseMessage="";
-//                        if(response.code()==200) {
-//                            ResponseSigninInfo userInfo = response.body();
-//                            Log.e(TAG, userInfo.toString());
-//
-//                            if(userInfo.getUser().getIs_active()){
-//                                Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-//                                startActivity(intent);
-//                            }else{
-//                                errormessage_textview.setText("Email is NotActive");
-//                            }
-//
-//                        }else if(response.code()==401){
-//                            try {
-//                                responseMessage=response.errorBody().string();
-//                                Log.e(TAG, responseMessage);
-//                                Gson gson = new Gson();
-//                                ResponseUserLoginInfo error = gson.fromJson(responseMessage, ResponseUserLoginInfo.class);
-//
-//                                if(responseMessage.contains("message")){
-//                                    errormessage_textview.setText(error.getMessage());
-//                                }else{
-//                                    errormessage_textview.setText(error.getDetail());
-//                                }
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<ResponseSigninInfo> call, Throwable t) {
-//                        Log.e(TAG, "error "+call.toString());
-//                        finish();
-//                    }
-//                });
-//
-//            }
-//        });
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BuildConfig.SERVER_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        ISendUserLoginInfo retrofitService = retrofit.create(ISendUserLoginInfo.class);
+
+        RequestUserLoginInfo requestUserLoginInfo=new RequestUserLoginInfo(id, password);
+
+        Call<ResponseSigninInfo> call = retrofitService.Post(requestUserLoginInfo);
+        call.enqueue(new Callback<ResponseSigninInfo>() {
+
+            @Override
+            public void onResponse(Call<ResponseSigninInfo> call, Response<ResponseSigninInfo> response) {
+                Log.e(TAG+"1",call.toString());
+                Log.e(TAG+"2",response.toString());
+                String responseMessage="";
+//                        ResponseSigninInfo userInf = response.body();
+//                        Log.e(TAG, userInf.toString());
+                if(response.code()==200) {
+                    ResponseSigninInfo userInfo = response.body();
+                    Log.e(TAG, userInfo.toString());
+
+                    if(userInfo.getUser().getIs_active()){
+                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }else{
+                        errormessage_textview.setText("Email is NotActive");
+                    }
+
+                }else if(response.code()==401){
+                    try {
+
+
+                        responseMessage=response.errorBody().string();
+                        Log.e(TAG, responseMessage);
+                        Gson gson = new Gson();
+                        ResponseUserLoginInfo error = gson.fromJson(responseMessage, ResponseUserLoginInfo.class);
+
+                        if(responseMessage.contains("message")){
+                            errormessage_textview.setText(error.getMessage());
+                        }else{
+                            errormessage_textview.setText(error.getDetail());
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else{
+                    try {
+                        Log.e(TAG+"3", response.code()+" "+response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseSigninInfo> call, Throwable t) {
+                Log.e(TAG, "error "+call.toString());
+                finish();
+            }
+        });
     }
 
     public void onClick_Signup(View view){
