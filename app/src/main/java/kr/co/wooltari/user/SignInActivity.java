@@ -2,32 +2,17 @@ package kr.co.wooltari.user;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
-
-import java.io.IOException;
-import java.util.Date;
-
-import kr.co.wooltari.BuildConfig;
-import kr.co.wooltari.domain.user.UserInfo;
 import kr.co.wooltari.main.MainActivity;
 import kr.co.wooltari.R;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
@@ -59,72 +44,8 @@ public class SignInActivity extends AppCompatActivity {
         String password=password_editText.getText().toString();
 
         // TODO : 임시로 액티비티 연결함
-//        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-//        startActivity(intent);
-
-        // TODO: 로그인 과정 다시 할 것
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.SERVER_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        ISendUserLoginInfo retrofitService = retrofit.create(ISendUserLoginInfo.class);
-
-        RequestUserLoginInfo requestUserLoginInfo=new RequestUserLoginInfo(id, password);
-
-        Call<ResponseSigninInfo> call = retrofitService.Post(requestUserLoginInfo);
-        call.enqueue(new Callback<ResponseSigninInfo>() {
-
-            @Override
-            public void onResponse(Call<ResponseSigninInfo> call, Response<ResponseSigninInfo> response) {
-                Log.e(TAG+"1",call.toString());
-                Log.e(TAG+"2",response.toString());
-                String responseMessage="";
-//                        ResponseSigninInfo userInf = response.body();
-//                        Log.e(TAG, userInf.toString());
-                if(response.code()==200) {
-                    ResponseSigninInfo userInfo = response.body();
-                    Log.e(TAG, userInfo.toString());
-
-                    if(userInfo.getUser().getIs_active()){
-                        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    }else{
-                        errormessage_textview.setText("Email is NotActive");
-                    }
-
-                }else if(response.code()==401){
-                    try {
-
-
-                        responseMessage=response.errorBody().string();
-                        Log.e(TAG, responseMessage);
-                        Gson gson = new Gson();
-                        ResponseUserLoginInfo error = gson.fromJson(responseMessage, ResponseUserLoginInfo.class);
-
-                        if(responseMessage.contains("message")){
-                            errormessage_textview.setText(error.getMessage());
-                        }else{
-                            errormessage_textview.setText(error.getDetail());
-                        }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }else{
-                    try {
-                        Log.e(TAG+"3", response.code()+" "+response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseSigninInfo> call, Throwable t) {
-                Log.e(TAG, "error "+call.toString());
-                finish();
-            }
-        });
+        Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void onClick_Signup(View view){

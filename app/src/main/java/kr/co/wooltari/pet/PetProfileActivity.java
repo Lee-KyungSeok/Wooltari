@@ -512,6 +512,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         pet.setIdentified_number(editTextPetNumber.getText().toString());
         pet.setBody_color(getPetColor(activeRadioColor.getId()));
         pet.setIs_active(petActive);
+        pet.setTest("test");
         return pet;
     }
 

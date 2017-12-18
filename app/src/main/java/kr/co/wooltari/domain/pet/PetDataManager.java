@@ -1,32 +1,23 @@
 package kr.co.wooltari.domain.pet;
 
 import android.app.Activity;
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import kr.co.wooltari.BuildConfig;
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.MedicalInfoDummy;
+import kr.co.wooltari.domain.RetrofitManager;
 import kr.co.wooltari.domain.UserDummy;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import okhttp3.logging.HttpLoggingInterceptor;
+import kr.co.wooltari.domain.retrofit.IPet;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Kyung on 2017-12-08.
@@ -35,60 +26,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PetDataManager {
 
     /**
-     * Retrofit을 생성
-     */
-    public static <I> I create(Class<I> IRetrofitClass, boolean isNull){
-        // gson 데이터를 null 값 여부에 따라 세팅
-        Gson gson;
-        if(isNull){
-            gson = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation() // expose를 적용
-                    .serializeNulls() // null 을 보냄
-                    .create();
-        } else {
-            gson = new GsonBuilder()
-                    .excludeFieldsWithoutExposeAnnotation()
-                    .create();
-        }
-
-        //로그 추적하는 okHttpClient 생성
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
-        OkHttpClient okHttpClient = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .addNetworkInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(Chain chain) throws IOException {
-                        Request.Builder requestBuilder = chain.request().newBuilder();
-                        requestBuilder.header("Content-Type", "application/json");
-                        requestBuilder.header("Authorization", "Token "+UserDummy.data.token);
-                        return chain.proceed(requestBuilder.build());
-                    }
-                })
-                .build();
-
-        // 레트로핏을 생성
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(BuildConfig.SERVER_URL)
-                .addConverterFactory(GsonConverterFactory.create(gson))
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .client(okHttpClient)
-                .build();
-        return retrofit.create(IRetrofitClass);
-    }
-
-    /**
      * 펫 정보를 저장
      */
     public static void savePet(Activity activity, Pet pet, CallbackGetPet callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = service.savePetData(UserDummy.data.pk,pet);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
                 Log.e("message","====="+response.message());
-                callback.getPetData(response.body().getPet());
                 if(201 == response.code()){
                     Log.e("save data","===="+response.body().getPet().toString());
+                    callback.getPetData(response.body().getPet());
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_save_success), Toast.LENGTH_SHORT).show();
                 } else {
                     PetError error;
@@ -143,7 +92,7 @@ public class PetDataManager {
      *  - boolean 이 사용 안되어 String 형태로 넘겨줌.
      */
     public static void updatePetActive(Activity activity, int petPK, ActivePet active, CallbackGetPet callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = service.updatePetActive(UserDummy.data.pk, petPK, active);
         remote.enqueue(new Callback<PetOne>() {
             @Override
@@ -197,7 +146,7 @@ public class PetDataManager {
      * 펫 정보를 업데이트
      */
     public static void updatePet(Activity activity, int petPK, Pet pet, CallbackGetPet callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = service.updatePetData(UserDummy.data.pk, petPK, pet);
         remote.enqueue(new Callback<PetOne>() {
             @Override
@@ -251,7 +200,7 @@ public class PetDataManager {
      * 펫 정보를 삭제
      */
     public static void deletePet(Activity activity, int petPK, CallbackDeletePetData callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<Pet> remote = service.deletePetData(UserDummy.data.pk, petPK);
         remote.enqueue(new Callback<Pet>() {
             @Override
@@ -311,7 +260,7 @@ public class PetDataManager {
      * 펫 리스트를 가져옴
      */
     public static void getPetList(Activity activity, CallbackGetPetList callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetList> remote = service.getPetList(UserDummy.data.pk);
         List<Pet> dataList = new ArrayList<>();
         remote.enqueue(new Callback<PetList>() {
@@ -375,7 +324,7 @@ public class PetDataManager {
      *  - (API 에서 삭제된 기능)
      */
     public static void getPetListNext(Activity activity, int pageNumber, CallbackGetPetList callback) {
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetList> remote = service.getPetListNext(UserDummy.data.pk,pageNumber);
         List<Pet> dataList = new ArrayList<>();
         remote.enqueue(new Callback<PetList>() {
@@ -428,7 +377,7 @@ public class PetDataManager {
      * 특정 펫 정보를 가져옴
      */
     public static void getPet(Activity activity, int petPk, CallbackGetPet callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = service.getPetData(UserDummy.data.pk, petPk);
         remote.enqueue(new Callback<PetOne>() {
             @Override
@@ -473,7 +422,7 @@ public class PetDataManager {
      * 펫의 나이를 가져옴
      */
     public static void getPetAge(Activity activity, int petPK, CallbackGetPetAge callback){
-        IPet service = PetDataManager.create(IPet.class,true);
+        IPet service = RetrofitManager.create(IPet.class,true, true);
         Call<Age> remote = service.getAge(UserDummy.data.pk,petPK);
         remote.enqueue(new Callback<Age>() {
             @Override
@@ -515,7 +464,7 @@ public class PetDataManager {
     }
 
     public static void getBreedsList(Activity activity, Breed speciesFormatBreed, CallbackGetBreeds callback){
-        IPet service = PetDataManager.create(IPet.class, true);
+        IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<List<Breed>> remote = service.getBreedsList(speciesFormatBreed);
         remote.enqueue(new Callback<List<Breed>>() {
             @Override

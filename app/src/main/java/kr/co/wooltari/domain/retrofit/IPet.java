@@ -1,9 +1,15 @@
-package kr.co.wooltari.domain.pet;
+package kr.co.wooltari.domain.retrofit;
 
 
 import java.util.List;
 
 import io.reactivex.Observable;
+import kr.co.wooltari.domain.pet.ActivePet;
+import kr.co.wooltari.domain.pet.Age;
+import kr.co.wooltari.domain.pet.Breed;
+import kr.co.wooltari.domain.pet.Pet;
+import kr.co.wooltari.domain.pet.PetList;
+import kr.co.wooltari.domain.pet.PetOne;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
