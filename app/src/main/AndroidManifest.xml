@@ -72,6 +72,9 @@
             </intent-filter>
         </service>
         <activity android:name=".main.UserDetailActivity"></activity>
+
+        <activity android:name=".vaccine.PetVaccinActivity">
+        </activity>
     </application>
 
 </manifest>
