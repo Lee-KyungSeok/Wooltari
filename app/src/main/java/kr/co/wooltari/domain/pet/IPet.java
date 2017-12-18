@@ -47,12 +47,6 @@ public interface IPet {
             @Path("pet_pk") int petPK
     );
 
-//    // 반응형으로 가져오기 위해 observable 로 생성
-//    @GET("profile/{user_pk}/pets/{pet_pk}/age/")
-//    Observable<Age> getAge(
-//            @Path("user_pk") int userPK,
-//            @Path("pet_pk") int petPK
-//    );
     @GET("profile/{user_pk}/pets/{pet_pk}/age/")
     Call<Age> getAge(
             @Path("user_pk") int userPK,

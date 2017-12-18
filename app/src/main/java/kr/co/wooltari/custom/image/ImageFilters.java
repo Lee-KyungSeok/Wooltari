@@ -1,4 +1,4 @@
-package kr.co.wooltari.custom;
+package kr.co.wooltari.custom.image;
 
 import android.graphics.Bitmap;
 import android.graphics.BlurMaskFilter;

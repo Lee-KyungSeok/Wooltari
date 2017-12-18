@@ -95,6 +95,11 @@
     <!-- ImageChange -->
     <dimen name="image_bottom_button_realSize">40dp</dimen>
     <dimen name="image_bottom_button_size">50dp</dimen>
+    <dimen name="image_crop_bottom_button_padding">10dp</dimen>
+    <dimen name="image_crop_bottom_button_size">30dp</dimen>
+    <dimen name="image_crop_image_minimum_padding">30dp</dimen>
+    <dimen name="image_crop_circle_button_radius">20dp</dimen>
+    <dimen name="image_crop_background_stroke">2dp</dimen>
 
     <!-- User Profile -->
     <dimen name="user_image_height">120sp</dimen>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kr.co.wooltari.custom.ChangeImageActivity">
+    tools:context="kr.co.wooltari.custom.image.ChangeImageActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -16,7 +16,7 @@
             android:id="@+id/toolbarImage"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/black"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -35,7 +35,7 @@
             android:id="@+id/ImageViewSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/detail_background_" />
+            app:srcCompat="@drawable/detail_background" />
     </android.support.constraint.ConstraintLayout>
 
     <LinearLayout

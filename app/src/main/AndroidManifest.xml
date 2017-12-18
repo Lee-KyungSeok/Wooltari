@@ -73,7 +73,7 @@
         </service>
 
         <activity android:name=".main.UserDetailActivity" />
-        <activity android:name=".custom.ChangeImageActivity"></activity>
+        <activity android:name=".custom.image.ChangeImageActivity"></activity>
     </application>
 
 </manifest>
