@@ -1,6 +1,8 @@
 package kr.co.wooltari.domain.pet;
 
 
+import java.util.List;
+
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -60,12 +62,25 @@ public interface IPet {
     @PATCH("profile/{user_pk}/pets/{pet_pk}/")
     Call<PetOne> updatePetData(
             @Path("user_pk") int userPK,
-            @Path("pet_pk") int petPK
+            @Path("pet_pk") int petPK,
+            @Body Pet petData
+    );
+
+    @PATCH("profile/{user_pk}/pets/{pet_pk}/")
+    Call<PetOne> updatePetActive(
+            @Path("user_pk") int userPK,
+            @Path("pet_pk") int petPK,
+            @Body ActivePet active
     );
 
     @DELETE("profile/{user_pk}/pets/{pet_pk}/")
     Call<Pet> deletePetData(
             @Path("user_pk") int userPK,
             @Path("pet_pk") int petPK
+    );
+
+    @POST("profile/pet-breed-list/")
+    Call<List<Breed>> getBreedsList(
+            @Body Breed species
     );
 }

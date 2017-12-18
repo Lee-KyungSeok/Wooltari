@@ -3,7 +3,6 @@ package kr.co.wooltari.custom;
 import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -13,13 +12,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
-import android.util.DisplayMetrics;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -30,6 +26,7 @@ import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.util.DialogUtil;
 import kr.co.wooltari.util.LoadUtil;
+import kr.co.wooltari.util.RealPathUtil;
 import kr.co.wooltari.util.PermissionUtil;
 
 /**
@@ -52,6 +49,9 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
     private PermissionUtil pUtil = null;
     // 저장된 파일의 경로를 가지는 컨텐츠 uri
     private Uri fileUri = null;
+    private String filePath = null;
+    // 카메라 선택 시 파일 저장을 위한 빈 객체
+    File photoFile = null;
 
     public CameraGalleryPopup(@NonNull Context context, PopupType type, IDelete iDelete) {
         this.context = context;
@@ -169,7 +169,6 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
         // 2. 호환성 처리 버전체크
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             // 3. 실제 파일이 저장되는 파일 객체 (빈 파일을 생성)
-            File photoFile = null;
             // 3.1 실제 파일이 저장되는 곳에 권한이 부여(file provider) > manifest
             // 3.2 임시파일 생성 후 인텐트로 넘김
             try {
@@ -193,7 +192,7 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
         // 임시파일명 생성
         String tempFileName = "Temp_" + System.currentTimeMillis();
         // 임시파일 저장용 디렉토리 설정
-        File tempDir = new File(Environment.getExternalStorageDirectory() + File.separator + "tempPicture" + File.separator);
+        File tempDir = new File(Environment.getExternalStorageDirectory() + File.separator + "Pictures/tempPicture" + File.separator);
         // 생성 체크
         if(!tempDir.exists()) tempDir.mkdirs();
         // 실제 임시파일을 생성
@@ -205,6 +204,7 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
      * @param file
      */
     private void refreshMedia(File file){
+        // 미디어 스캐닝을 통해야 파일이 물리적으로 있다고 인식됨
         MediaScannerConnection.scanFile(context, new String[]{file.getAbsolutePath()}, null, (path, uri) -> {});
     }
 
@@ -245,16 +245,35 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
             case Const.PERMISSION_REQ_CAMERA:
                 if(-1 == resultCode){
                     // 롤리팝부터 버전 체크
-                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) imageUri = fileUri;
-                    else imageUri = data.getData();
+                    if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP) {
+                        imageUri = fileUri;
+                        filePath = photoFile.getAbsolutePath();
+                    } else {
+                        imageUri = data.getData();
+                        filePath = RealPathUtil.getRealPath(context,imageUri);
+                    }
+                } else {
+                    imageUri = null;
+                    photoFile.delete();
+                    filePath = null;
                 }
                 break;
             case Const.PERMISSION_REQ_GALLERY:
                 // 갤러리 액티비티 종료시 호출 - 정상종료 된 경우만 이미지 설정 (-1은 Result_OK 값)
-                if( -1 == resultCode) imageUri = data.getData();
+                if( -1 == resultCode) {
+                    imageUri = data.getData();
+                    filePath = RealPathUtil.getRealPath(context,imageUri);
+                } else {
+                    imageUri = null;
+                    filePath = null;
+                }
                 break;
         }
         return imageUri;
+    }
+
+    public String getFilePath(){
+        return filePath;
     }
 
     /**

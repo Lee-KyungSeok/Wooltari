@@ -1,7 +1,6 @@
 package kr.co.wooltari.pet.detail;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.drawable.GradientDrawable;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -9,12 +8,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import kr.co.wooltari.R;
-import kr.co.wooltari.constant.Const;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.pet.Age;
 import kr.co.wooltari.domain.pet.Pet;
-import kr.co.wooltari.domain.pet.PetDataFormatUtil;
-import kr.co.wooltari.pet.PetProfileActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 /**

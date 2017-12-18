@@ -5,13 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/colorBlackD"
-    android:padding="@dimen/pet_detail_state_average_margin">
+    android:padding="@dimen/pet_detail_average_margin">
 
     <TextView
         android:id="@+id/textPDVTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pet_detail_vaccine_title"
+        android:textSize="@dimen/pet_detail_title_text_size"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,6 +22,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/pet_detail_more"
+        android:textSize="@dimen/pet_detail_value_text_size"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -27,7 +31,7 @@
         android:id="@+id/viewPDVLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pet_detail_line_depth"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:background="@color/colorBlackE"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +41,7 @@
         android:id="@+id/linearLayoutPDVStage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -49,7 +53,7 @@
             android:layout_height="@dimen/pet_detail_vaccine_medical_height"
             android:layout_gravity="center_vertical"
             android:gravity="center"
-            android:layout_marginEnd="@dimen/pet_detail_state_average_margin"
+            android:layout_marginEnd="@dimen/pet_detail_average_margin"
             android:layout_weight="1"
             android:orientation="vertical">
 
@@ -66,7 +70,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/pet_detail_state_average_margin"
+            android:layout_marginEnd="@dimen/pet_detail_average_margin"
             android:layout_weight="2.5"
             android:orientation="vertical">
 
@@ -82,6 +86,8 @@
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
+                    android:textStyle="bold"
                     android:text="@string/pet_detail_vaccine_name" />
 
                 <TextView
@@ -89,7 +95,8 @@
                     android:layout_width="0dp"
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical" />
+                    android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size" />
 
             </LinearLayout>
 
@@ -105,6 +112,8 @@
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
+                    android:textStyle="bold"
                     android:text="@string/pet_detail_vaccine_expected_date" />
 
                 <TextView
@@ -113,6 +122,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
                     android:text="0000-00-00" />
 
             </LinearLayout>
@@ -129,6 +139,8 @@
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
+                    android:textStyle="bold"
                     android:text="@string/pet_detail_vaccine_past_date" />
 
                 <TextView
@@ -137,6 +149,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
                     android:text="0000-00-00" />
 
             </LinearLayout>
@@ -153,6 +166,8 @@
                     android:layout_weight="1.5"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
+                    android:textStyle="bold"
                     android:text="@string/pet_detail_vaccine_cycle" />
 
                 <TextView
@@ -161,6 +176,7 @@
                     android:layout_weight="2"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
+                    android:textSize="@dimen/pet_detail_value_text_size"
                     android:text="0" />
 
             </LinearLayout>

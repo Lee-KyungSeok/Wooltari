@@ -6,12 +6,21 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/textStateTitleChart"
+        android:id="@+id/textStateDateChart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorBlackD"
-        android:text="@string/pet_state_chart_title"
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="@string/pet_state_chart_date"
+        android:layout_marginEnd="@dimen/pet_state_chart_date_interval"
+        app:layout_constraintEnd_toStartOf="@+id/textStateLastDate"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textStateLastDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/pet_state_chart_date_interval"
+        android:text="0000-00-00"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
@@ -23,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textStateTitleChart">
+        app:layout_constraintTop_toBottomOf="@+id/textStateDateChart">
 
         <com.github.mikephil.charting.charts.LineChart
             android:id="@+id/chartPetState"

@@ -4,14 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorBlackD">
+    android:layout_margin="@dimen/pet_state_profile_layout_padding">
 
     <LinearLayout
+        android:id="@+id/PSPStage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:padding="@dimen/pet_state_profile_layout_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -21,8 +20,8 @@
             android:layout_width="@dimen/pet_state_profile_size"
             android:layout_height="@dimen/pet_state_profile_size"
             android:layout_gravity="center"
-            android:padding="@dimen/pet_state_profile_background_padding"
-            android:background="@color/colorBlackE">
+            android:background="@color/colorBlackE"
+            android:padding="@dimen/pet_state_profile_background_padding">
 
             <ImageView
                 android:id="@+id/imagePetStateProfile"
@@ -91,7 +90,7 @@
                     android:id="@+id/textInputPSPHeight"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -111,7 +110,7 @@
                     android:id="@+id/textInputPSPNeckSize"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -131,7 +130,7 @@
                     android:id="@+id/textInputPSPChestSize"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
@@ -143,5 +142,97 @@
         android:background="@drawable/edit_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/viewPSPLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pet_state_line_depth"
+        android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+        android:background="@color/colorBlackE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/PSPStage" />
+
+    <LinearLayout
+        android:id="@+id/PSPGoalView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewPSPLine">
+
+        <TextView
+            android:id="@+id/textPSPGoalWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:text="@string/pet_state_weight_goal" />
+
+        <View
+            android:layout_width="@dimen/pet_state_line_depth"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginEnd="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginStart="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:background="@color/colorBlackE" />
+
+        <TextView
+            android:id="@+id/textInputPSPGoalWeight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:maxWidth="@dimen/pet_state_profile_goal_max_width"
+            android:minWidth="@dimen/pet_state_profile_goal_min_width" />
+
+        <View
+            android:layout_width="@dimen/pet_state_line_depth"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="@dimen/pet_state_profile_divide_margin"
+            android:layout_marginStart="@dimen/pet_state_profile_divide_margin"
+            android:background="@color/colorBlackE" />
+
+        <TextView
+            android:id="@+id/textPSPGap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:text="@string/pet_state_gap" />
+
+        <View
+            android:layout_width="@dimen/pet_state_line_depth"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginEnd="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginStart="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:background="@color/colorBlackE" />
+
+        <TextView
+            android:id="@+id/textInputPSPGap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/pet_state_profile_bottom_margin"
+            android:layout_marginTop="@dimen/pet_state_profile_bottom_margin"
+            android:maxWidth="@dimen/pet_state_profile_goal_max_width"
+            android:minWidth="@dimen/pet_state_profile_goal_min_width" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/viewPSPLine2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/pet_state_line_depth"
+        android:background="@color/colorBlackE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/PSPGoalView" />
 
 </android.support.constraint.ConstraintLayout>

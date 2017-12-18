@@ -13,6 +13,11 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.request.RequestOptions;
+
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
@@ -34,7 +39,6 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
     private DrawerLayout drawer;
     private Toolbar toolbar;
     private CollapsingToolbarLayout petDetailTitle;
-    private ImageView petDetailToolbarImage;
     private PetNavigationView navigationView;
     // 각각의 item을 관리하는 class 세팅
     PetDetailProfile petDetailProfile;
@@ -64,6 +68,9 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         petDetailVaccination = new PetDetailVaccination(this);
 
         petDetailMedical = new PetDetailMedical(this ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
+
+        ImageView imagePetDetailStage = findViewById(R.id.imagePetDetailStage);
+        LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.detail_background_,this),imagePetDetailStage);
     }
 
     private void getData(){
@@ -138,6 +145,7 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
             petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
             petDetailProfile.setValue(petInfo);
             petDetailProfile.setAge(null);
+
         } else {
             PetDataManager.getPet(this, petChangePK, new PetDataManager.CallbackGetPet() {
                 @Override
@@ -151,6 +159,7 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
                         petDetailTitle.setContentScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
                         petDetailProfile.setValue(petInfo);
+
                     }
                 }
             });
@@ -180,9 +189,10 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         navigationView = new PetNavigationView(this,drawer, findViewById(R.id.navPetView));
         petDetailTitle = findViewById(R.id.petDetailTitle);
         toolbar = findViewById(R.id.petDetailToolbar);
-        petDetailToolbarImage = findViewById(R.id.petDetailToolbarImage);
-
-        LoadUtil.recCropImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.pet_detail_default,this),petDetailToolbarImage);
+        toolbar.setContentInsetStartWithNavigation(
+                getResources().getDimensionPixelOffset(R.dimen.abc_action_bar_content_inset_with_nav)
+                        + getResources().getDimensionPixelSize(R.dimen.pet_detail_toolbar_profile_small_width)
+        );
         ToolbarUtil.setCommonToolbar(this, toolbar, petInfo.getName());
         // 네비게이션 토글 연결
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -221,8 +231,12 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         switch (requestCode){
             case Const.PET_PROFILE:
                 if(resultCode == RESULT_OK) {
-                    getData();
-                    petDetailProfile.setValue(petInfo);
+                    if(data.getIntExtra(Const.PET_INFO,-1) == Const.PET_PROFILE_DELETE){
+                        finish();
+                    } else {
+                        getData();
+                        petDetailProfile.setValue(petInfo);
+                    }
                 }
                 break;
 

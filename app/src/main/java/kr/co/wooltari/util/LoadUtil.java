@@ -11,6 +11,7 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 
+import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.co.wooltari.R;
 
 /**
@@ -46,6 +47,22 @@ public class LoadUtil {
                 .into(imageView);
     }
 
+    public static void blurImageLoad(Context context, String url, ImageView imageView){
+        Glide.with(context)
+                .load(url)
+                .thumbnail(0.1f)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation()))
+                .into(imageView);
+    }
+
+    public static void blurImageLoad(Context context, Uri uri, ImageView imageView){
+        Glide.with(context)
+                .load(uri)
+                .thumbnail(0.1f)
+                .apply(RequestOptions.bitmapTransform(new BlurTransformation()))
+                .into(imageView);
+    }
+
     public static Uri getResourceImageUri(int resId, Context context){
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
                 "://" + context.getResources().getResourcePackageName(resId)
@@ -68,6 +85,7 @@ public class LoadUtil {
             case "colorOrangeMuffler": return ContextCompat.getColor(context, R.color.colorOrangeMuffler);
             case "colorLittleBlack": return ContextCompat.getColor(context, R.color.colorLittleBlack);
             case "colorPetDefault": return ContextCompat.getColor(context, R.color.colorBlackE);
+            case "colorBlackD": return ContextCompat.getColor(context, R.color.colorBlackD);
             case "black": return ContextCompat.getColor(context, R.color.black);
             case "gold": return ContextCompat.getColor(context, R.color.gold);
             case "white": return ContextCompat.getColor(context,R.color.white);

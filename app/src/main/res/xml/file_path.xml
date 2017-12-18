@@ -2,5 +2,6 @@
 <paths>
     <!-- name(논리 구조)      : uri 주소체계의 prefix content://Camera.lkjdfj -->
     <!-- path(물리 디스크 경로) : /외부저장소의 루트/CameraN/ 디렉토리를 사용 -->
-    <external-path name="Camera" path="tempPicture"></external-path>
+    <!--  file directory에 없다는 오류를 해결하기 위해 Pictures/ 디렉토리를 이용-->
+    <external-path name="Camera" path="Pictures/tempPicture"></external-path>
 </paths>

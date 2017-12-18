@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -61,20 +63,35 @@ public class PetDetailState {
         setChart(stateInfo.petWeightList,stateInfo.petTargetWeight);
     }
 
-    public void setChart(List<HealthStateDummy.petWeight> dataList, double goalWeight){
+    private void setChart(List<HealthStateDummy.petWeight> dataList, double goalWeight){
         int start=0;
-        if(dataList.size()>5) start = dataList.size()-5;
+        if(dataList.size()>10) start = dataList.size()-10;
         List<Entry> entryList = new ArrayList<>();
         List<Entry> goals = new ArrayList<>();
         for(int i=start ; i<dataList.size() ; i++){
-            entryList.add(new Entry(Float.parseFloat(dataList.get(i).inputDate.replace("-","")), (float)dataList.get(i).petWeight));
-            goals.add(new Entry(Float.parseFloat(dataList.get(i).inputDate.replace("-","")), (float)goalWeight));
+            entryList.add(new Entry(i, (float)dataList.get(i).petWeight));
+            goals.add(new Entry(i, (float)goalWeight));
         }
 
         LineDataSet weightDataSet = new LineDataSet(entryList, "Weight");
         weightDataSet.setColor(Color.BLUE);
         LineDataSet goalDataSet = new LineDataSet(goals, "Goal");
         goalDataSet.setColor(Color.RED);
+        goalDataSet.setValueTextSize(0);
+        goalDataSet.setDrawCircles(false);
+
+        XAxis xAxis = chartPDSState.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawLabels(false);
+        xAxis.setDrawGridLines(false);
+        xAxis.setValueFormatter((value, axis) -> {
+            String x = dataList.get((int)value).inputDate;
+            return x;
+        });
+
+        Description description = new Description();
+        description.setText("");
+        chartPDSState.setDescription(description);
 
         LineData lineData = new LineData(weightDataSet, goalDataSet);
         chartPDSState.setData(lineData);

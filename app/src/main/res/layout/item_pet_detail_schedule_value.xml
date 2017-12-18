@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="@dimen/pet_detail_state_average_margin"
-        android:layout_marginBottom="@dimen/pet_detail_state_average_margin">
+        android:layout_marginTop="@dimen/pet_detail_average_margin"
+        android:layout_marginBottom="@dimen/pet_detail_average_margin">
 
         <TextView
             android:id="@+id/textPDCDate"
@@ -19,6 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:textSize="@dimen/pet_detail_value_text_size"
             android:text="0000-00-00" />
 
         <TextView
@@ -27,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1.5"
+            android:textSize="@dimen/pet_detail_value_text_size"
             android:text="Information" />
 
         <LinearLayout
@@ -47,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:textSize="@dimen/pet_detail_value_text_size"
                 android:text="00:00 am" />
         </LinearLayout>
     </LinearLayout>
