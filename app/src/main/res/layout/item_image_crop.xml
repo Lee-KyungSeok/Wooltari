@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black3"
+        android:padding="@dimen/image_crop_bottom_button_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageButton
+            android:id="@+id/imBtnCropClear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:background="@color/black3"
+            android:src="@drawable/ic_image_clear" />
+
+        <ImageButton
+            android:id="@+id/imBtnCropDone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:background="@color/black3"
+            android:src="@drawable/ic_image_done" />
+    </FrameLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="@dimen/image_crop_image_minimum_padding"
+        android:layout_marginEnd="@dimen/image_crop_image_minimum_padding"
+        android:layout_marginStart="@dimen/image_crop_image_minimum_padding"
+        android:layout_marginTop="@dimen/image_crop_image_minimum_padding"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@drawable/detail_background" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/consImageCropStage"
+        android:background="#aaFFFFFF"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView">
+
+
+        <ImageView
+            android:id="@+id/imageViewCircle"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/image_crop_circle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/detail_background" />
+
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="@dimen/image_crop_circle_button_radius"
+            android:layout_height="@dimen/image_crop_circle_button_radius"
+            android:layout_marginTop="-20dp"
+            android:background="@drawable/image_crop_circle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.constraint.ConstraintLayout>

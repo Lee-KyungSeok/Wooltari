@@ -13,11 +13,6 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CenterCrop;
-import com.bumptech.glide.request.RequestOptions;
-
-import jp.wasabeef.glide.transformations.BlurTransformation;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
@@ -70,7 +65,7 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
         petDetailMedical = new PetDetailMedical(this ,() -> goActivity(PetMedicalInfoActivity.class, Const.PET_MEDICAL));
 
         ImageView imagePetDetailStage = findViewById(R.id.imagePetDetailStage);
-        LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.detail_background_,this),imagePetDetailStage);
+        LoadUtil.blurImageLoad(this,LoadUtil.getResourceImageUri(R.drawable.detail_background,this),imagePetDetailStage);
     }
 
     private void getData(){

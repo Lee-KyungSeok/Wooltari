@@ -7,6 +7,8 @@
     <color name="white">#ffffff</color>
     <color name="gold">#cc8f1c</color>
     <color name="brown">#603a17</color>
+
+    <color name="black3">#333333</color>
     
     <!-- Pet Color -->
     <color name="colorBlackE">#EEEEEE</color>
@@ -26,6 +28,6 @@
     <color name="colorLittleBlack">#999999</color>
     
     <!-- Camera&Gallery Popup -->
-    <color name="translucentGray">#88FFFFFF</color>
+    <color name="translucent">#77FFFFFF</color>
 
 </resources>

@@ -4,6 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kr.co.wooltari.custom.ChangeImageActivity">
+    tools:context="kr.co.wooltari.custom.image.ChangeImageActivity">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbarImage"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/black"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/stageImageFile"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/stageIBButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appBarLayout">
+
+        <ImageView
+            android:id="@+id/ImageViewSelected"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/detail_background" />
+    </android.support.constraint.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/stageIBButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button">
+
+            <ImageButton
+                android:id="@+id/btnImageFilter"
+                android:layout_width="@dimen/image_bottom_button_size"
+                android:layout_height="@dimen/image_bottom_button_size"
+                android:layout_gravity="center"
+                android:background="@color/black"
+                app:srcCompat="@drawable/ic_image_filter" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" >
+
+            <ImageButton
+                android:id="@+id/btnImageCrop"
+                android:layout_width="@dimen/image_bottom_button_size"
+                android:layout_height="@dimen/image_bottom_button_size"
+                android:background="@color/black"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_image_crop" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" >
+
+            <ImageButton
+                android:id="@+id/btnImageRotate"
+                android:layout_width="@dimen/image_bottom_button_size"
+                android:layout_height="@dimen/image_bottom_button_size"
+                android:background="@color/black"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_image_rotate" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Button" >
+
+            <ImageButton
+                android:id="@+id/btnImageDraw"
+                android:layout_width="@dimen/image_bottom_button_size"
+                android:layout_height="@dimen/image_bottom_button_size"
+                android:background="@color/black"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_image_draw"  />
+        </FrameLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>

@@ -1,4 +1,4 @@
-package kr.co.wooltari.custom;
+package kr.co.wooltari.custom.image;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
