@@ -114,6 +114,14 @@ public class User {
         return password;
     }
 
+    public void setDevice_token(String device_token){
+        this.device_token = device_token;
+    }
+
+    public String getDevice_token(){
+        return device_token;
+    }
+
     @Override
     public String toString() {
         return "ClassPojo [date_joined = " + date_joined + ", is_active = " + is_active + ", nickname = " + nickname + ", email = " + email + ", user_type = " + user_type + ", pk = " + pk + "]";

@@ -11,16 +11,30 @@
         android:id="@+id/imageSigninBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#88FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/app_name"
+        android:textColor="@color/wooltariColor"
         android:textSize="@dimen/user_sign_in_title_size"
         app:layout_constraintBottom_toTopOf="@+id/btnFacebook"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,6 +45,7 @@
         android:id="@+id/textViewSubTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/wooltariColor"
         android:text="@string/user_sign_in_subtitle"
         android:textSize="@dimen/user_sign_in_subtitle_size"
         android:layout_marginTop="@dimen/user_title_margin"
@@ -63,7 +78,7 @@
         android:layout_marginEnd="@dimen/user_sign_in_button_left_right_margin"
         android:layout_marginStart="@dimen/user_sign_in_button_left_right_margin"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/btnSigninEmail"
+        app:layout_constraintBottom_toTopOf="@+id/editSigninEmail"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
@@ -72,7 +87,7 @@
             android:layout_height="1dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/wooltariColor" />
 
         <TextView
             android:layout_width="0dp"
@@ -80,19 +95,19 @@
             android:layout_weight="0.5"
             android:gravity="center"
             android:text="OR"
-            android:textColor="@color/black3" />
+            android:textColor="@color/wooltariColor" />
 
         <View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@android:color/darker_gray" />
+            android:background="@color/wooltariColor" />
 
     </LinearLayout>
 
     <EditText
-        android:id="@+id/btnSigninEmail"
+        android:id="@+id/editSigninEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/user_sign_in_mail_pass_margin"
@@ -104,15 +119,15 @@
         android:inputType="textEmailAddress"
         android:paddingTop="@dimen/user_sign_in_mail_pass_padding"
         android:paddingBottom="@dimen/user_sign_in_mail_pass_padding"
-        android:paddingLeft="@dimen/user_sign_in_edit_text_padding"
+        android:paddingStart="@dimen/user_sign_in_edit_text_padding"
         android:textColor="@color/black"
         android:textSize="@dimen/user_sign_in_edit_text_size"
-        app:layout_constraintBottom_toTopOf="@+id/btnSigninPassword"
+        app:layout_constraintBottom_toTopOf="@+id/editSigninPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
-        android:id="@+id/btnSigninPassword"
+        android:id="@+id/editSigninPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/user_sign_in_mail_pass_margin"
@@ -123,7 +138,7 @@
         android:hint="@string/user_password"
         android:paddingTop="@dimen/user_sign_in_mail_pass_padding"
         android:paddingBottom="@dimen/user_sign_in_mail_pass_padding"
-        android:paddingLeft="@dimen/user_sign_in_edit_text_padding"
+        android:paddingStart="@dimen/user_sign_in_edit_text_padding"
         android:inputType="textPassword"
         android:textColor="@color/black"
         android:textSize="@dimen/user_sign_in_edit_text_size"
@@ -139,7 +154,7 @@
         android:layout_marginEnd="@dimen/user_sign_in_button_left_right_margin"
         android:layout_marginStart="@dimen/user_sign_in_button_left_right_margin"
         android:background="@drawable/signin_edittext"
-        android:drawableTint="@android:color/transparent"
+        android:backgroundTint="@color/translucent"
         android:enabled="true"
         android:foregroundTint="@android:color/transparent"
         android:text="@string/user_sign_in"
@@ -157,7 +172,7 @@
         android:backgroundTint="@android:color/transparent"
         android:text="@string/user_forgot_password"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorRed"
         android:textSize="@dimen/user_sign_in_button_forgot_text_size"
         app:layout_constraintBottom_toTopOf="@+id/btnSignup"
         app:layout_constraintEnd_toEndOf="parent"
@@ -173,7 +188,7 @@
         android:backgroundTint="@android:color/transparent"
         android:text="@string/user_sign_up_text"
         android:textAllCaps="false"
-        android:textColor="@android:color/black"
+        android:textColor="@color/colorBlueOfSea"
         android:textSize="@dimen/user_sign_in_button_sign_up_text_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

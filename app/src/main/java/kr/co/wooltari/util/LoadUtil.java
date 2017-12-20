@@ -73,6 +73,8 @@ public class LoadUtil {
 
     public static int loadColor(Context context, String color){
         switch (color){
+            case "wooltari": return ContextCompat.getColor(context, R.color.wooltariColor);
+            case "translucent": return ContextCompat.getColor(context, R.color.translucent);
             case "colorRed": return ContextCompat.getColor(context, R.color.colorRed);
             case "colorBurgundy": return ContextCompat.getColor(context, R.color.colorBurgundy);
             case "colorPink": return ContextCompat.getColor(context, R.color.colorPink);
@@ -89,7 +91,7 @@ public class LoadUtil {
             case "black": return ContextCompat.getColor(context, R.color.black);
             case "gold": return ContextCompat.getColor(context, R.color.gold);
             case "white": return ContextCompat.getColor(context,R.color.white);
-            case "brown":return ContextCompat.getColor(context, R.color.brown);
+            case "brown": return ContextCompat.getColor(context, R.color.brown);
             default: return ContextCompat.getColor(context,R.color.colorBlackE);
         }
     }

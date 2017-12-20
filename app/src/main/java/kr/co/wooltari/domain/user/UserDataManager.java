@@ -132,7 +132,7 @@ public class UserDataManager {
     /**
      * 이메일을 통한 로그인
      */
-    public void signin(Activity activity, User user, boolean isAutoSignin){
+    public static void signin(Activity activity, User user, boolean isAutoSignin , CallbackSignin callback){
         IUser service = RetrofitManager.create(IUser.class,true,false);
         Call<UserInfo> remote = service.signin(user);
         remote.enqueue(new Callback<UserInfo>() {
@@ -145,43 +145,51 @@ public class UserDataManager {
                     WooltariApp.userEmail = userInfo.getUser().getEmail();
                     WooltariApp.userName = userInfo.getUser().getNickname();
                     WooltariApp.userImage = userInfo.getUser().getImage();
-                    if(isAutoSignin){
-                        PreferenceUtil.setValue(activity, Const.USER_EMAIL, user.getEmail());
-                        PreferenceUtil.setValue(activity, Const.USER_PASSWORD, user.getPassword());
-                        PreferenceUtil.setValue(activity, Const.USER_AUTO_SIGNIN, isAutoSignin);
-                    }
-                    activity.startActivity(new Intent(activity,MainActivity.class));
-                    activity.finish();
+                    PreferenceUtil.setValue(activity, Const.USER_EMAIL, user.getEmail());
+                    PreferenceUtil.setValue(activity, Const.USER_PASSWORD, user.getPassword());
+                    PreferenceUtil.setValue(activity, Const.USER_AUTO_SIGNIN, true);
+                    callback.success();
                 } else {
-                    UserError error;
-                    try {
-                        String errorString = response.errorBody().string();
-                        Gson gson = new Gson();
-                        error = gson.fromJson(errorString,UserError.class);
-                        switch (response.code()){
-                            case 401:
-                                if(error.getMessage()!=null){
-                                    Toast.makeText(activity, activity.getResources().getString(R.string.user_signin_fail), Toast.LENGTH_SHORT).show();
-                                } else {
+                    if(isAutoSignin){
+                        Toast.makeText(activity,activity.getResources().getString(R.string.user_sign_again),Toast.LENGTH_SHORT).show();
+                        callback.fail();
+                    } else {
+                        UserError error;
+                        try {
+                            String errorString = response.errorBody().string();
+                            Gson gson = new Gson();
+                            error = gson.fromJson(errorString, UserError.class);
+                            switch (response.code()) {
+                                case 401:
+                                    if (error.getMessage() != null) {
+                                        Toast.makeText(activity, activity.getResources().getString(R.string.user_signin_fail), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                default:
+                                    Log.e("error", response.errorBody().toString());
                                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
-                                }
-                                break;
-                            default:
-                                Log.e("error",response.errorBody().toString());
-                                Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
-                                break;
+                                    break;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<UserInfo> call, Throwable t) {
-                Log.e("signin Failure",t.getMessage());
-                Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                if(isAutoSignin) {
+                    Log.e("signin Failure", t.getMessage());
+                    Toast.makeText(activity, activity.getResources().getString(R.string.user_sign_again), Toast.LENGTH_SHORT).show();
+                    callback.fail();
+                } else {
+                    Log.e("signin Failure", t.getMessage());
+                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -189,13 +197,13 @@ public class UserDataManager {
     /**
      * 페이스북을 통한 로그인
      */
-    public void signinFacebook(Activity activity){
+    public static void signinFacebook(Activity activity){
     }
 
     /**
      * 로그 아웃 실행
      */
-    public void signout(Activity activity){
+    public static void signout(Activity activity){
         IUser service = RetrofitManager.create(IUser.class,false,true);
         Call<UserInfo> remote = service.signout();
         remote.enqueue(new Callback<UserInfo>() {
@@ -245,7 +253,7 @@ public class UserDataManager {
     /**
      * 비밀번호 찾기 메소드
      */
-    public void getNewPassword(Activity activity, String email){
+    public static void getNewPassword(Activity activity, String email){
         PasswordForgot passwordForgot = new PasswordForgot();
         passwordForgot.setEmail(email);
         IUser service = RetrofitManager.create(IUser.class, true, false);
@@ -303,7 +311,7 @@ public class UserDataManager {
     /**
      * 유저정보 조회 메소드
      */
-    public void getUser(Activity activity, CallbackGetUser callback){
+    public static void getUser(Activity activity, CallbackGetUser callback){
         IUser service = RetrofitManager.create(IUser.class, true, true);
         Call<User> remote = service.getUser(WooltariApp.userPK);
         remote.enqueue(new Callback<User>() {
@@ -346,7 +354,10 @@ public class UserDataManager {
         });
     }
 
-    public void updateUser(Activity activity, User user, File profileImage, CallbackGetUser callback){
+    /**
+     * 유저정보 업데이트
+     */
+    public static void updateUser(Activity activity, User user, File profileImage, CallbackGetUser callback){
         IUser service = RetrofitManager.create(IUser.class, false, true);
         Call<User> remote = null;
         RequestBody nickname = RequestBody.create(MediaType.parse("text/plain"), user.getNickname());
@@ -417,7 +428,10 @@ public class UserDataManager {
         });
     }
 
-    public void deleteUser(Activity activity, CallbackDelete callback){
+    /**
+     * 유저정보 삭제
+     */
+    public static void deleteUser(Activity activity, CallbackDelete callback){
         IUser service = RetrofitManager.create(IUser.class,true,true);
         Call<User> remote = service.deleteUser(WooltariApp.userPK);
         remote.enqueue(new Callback<User>() {
@@ -475,6 +489,11 @@ public class UserDataManager {
                 Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public interface CallbackSignin{
+        void success();
+        void fail();
     }
 
     public interface CallbackGetUser{
