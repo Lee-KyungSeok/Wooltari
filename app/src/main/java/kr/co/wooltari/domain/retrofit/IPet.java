@@ -37,14 +37,14 @@ public interface IPet {
     // 이미지 전송을 위해 multipart 지정
     @POST("profile/{user_pk}/pets/")
     Call<PetOne> savePetData(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Body Pet petData
     );
 
     @Multipart
     @POST("profile/{user_pk}/pets/")
     Call<PetOne> savePetData(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Part("name") RequestBody name,
             @Part("birth_date") RequestBody birth_date,
             @Part("gender") RequestBody gender,
@@ -58,44 +58,44 @@ public interface IPet {
 
     @GET("profile/{user_pk}/pets/")
     Call<PetList> getPetList(
-            @Path("user_pk") int userPK
+            @Path("user_pk") long userPK
     );
 
     @GET("profile/{user_pk}/pets/")
     Call<PetList> getPetListNext(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Query("page") int pageNumber
     );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/")
     Call<PetOne> getPetData(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Path("pet_pk") int petPK
     );
 
     @GET("profile/{user_pk}/pets/{pet_pk}/age/")
     Call<Age> getAge(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Path("pet_pk") int petPK
     );
 
     @PATCH("profile/{user_pk}/pets/{pet_pk}/")
     Call<PetOne> updatePetData(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Path("pet_pk") int petPK,
             @Body Pet petData
     );
 
     @PATCH("profile/{user_pk}/pets/{pet_pk}/")
     Call<PetOne> updatePetActive(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Path("pet_pk") int petPK,
             @Body ActivePet active
     );
 
     @DELETE("profile/{user_pk}/pets/{pet_pk}/")
     Call<Pet> deletePetData(
-            @Path("user_pk") int userPK,
+            @Path("user_pk") long userPK,
             @Path("pet_pk") int petPK
     );
 

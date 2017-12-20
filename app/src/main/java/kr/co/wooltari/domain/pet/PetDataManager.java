@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.application.WooltariApp;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.MedicalInfoDummy;
-import kr.co.wooltari.domain.RetrofitManager;
+import kr.co.wooltari.domain.retrofit.RetrofitManager;
 import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.domain.retrofit.IPet;
 import okhttp3.MediaType;
@@ -36,7 +37,7 @@ public class PetDataManager {
         IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = null;
         if(file == null){
-            remote = service.savePetData(UserDummy.data.pk,pet);
+            remote = service.savePetData(WooltariApp.userPK,pet);
         } else {
             // form을 multipart/formdata로 하지 말것...!!
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), pet.getName());
@@ -51,7 +52,7 @@ public class PetDataManager {
             else is_neutering = RequestBody.create(MediaType.parse("text/plain"),"False");
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
-            remote = service.savePetData(UserDummy.data.pk ,name,birth_date,gender,body_color,species,breeds,identified_number,is_neutering,image);
+            remote = service.savePetData(WooltariApp.userPK ,name,birth_date,gender,body_color,species,breeds,identified_number,is_neutering,image);
         }
         remote.enqueue(new Callback<PetOne>() {
             @Override
@@ -115,7 +116,7 @@ public class PetDataManager {
      */
     public static void updatePetActive(Activity activity, int petPK, ActivePet active, CallbackGetPet callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetOne> remote = service.updatePetActive(UserDummy.data.pk, petPK, active);
+        Call<PetOne> remote = service.updatePetActive(WooltariApp.userPK, petPK, active);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
@@ -169,7 +170,7 @@ public class PetDataManager {
      */
     public static void updatePet(Activity activity, int petPK, Pet pet, CallbackGetPet callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetOne> remote = service.updatePetData(UserDummy.data.pk, petPK, pet);
+        Call<PetOne> remote = service.updatePetData(WooltariApp.userPK, petPK, pet);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
@@ -223,7 +224,7 @@ public class PetDataManager {
      */
     public static void deletePet(Activity activity, int petPK, CallbackDeletePetData callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<Pet> remote = service.deletePetData(UserDummy.data.pk, petPK);
+        Call<Pet> remote = service.deletePetData(WooltariApp.userPK, petPK);
         remote.enqueue(new Callback<Pet>() {
             @Override
             public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
@@ -283,7 +284,7 @@ public class PetDataManager {
      */
     public static void getPetList(Activity activity, CallbackGetPetList callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetList> remote = service.getPetList(UserDummy.data.pk);
+        Call<PetList> remote = service.getPetList(WooltariApp.userPK);
         List<Pet> dataList = new ArrayList<>();
         remote.enqueue(new Callback<PetList>() {
             @Override
@@ -347,7 +348,7 @@ public class PetDataManager {
      */
     public static void getPetListNext(Activity activity, int pageNumber, CallbackGetPetList callback) {
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetList> remote = service.getPetListNext(UserDummy.data.pk,pageNumber);
+        Call<PetList> remote = service.getPetListNext(WooltariApp.userPK,pageNumber);
         List<Pet> dataList = new ArrayList<>();
         remote.enqueue(new Callback<PetList>() {
             @Override
@@ -400,7 +401,7 @@ public class PetDataManager {
      */
     public static void getPet(Activity activity, int petPk, CallbackGetPet callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetOne> remote = service.getPetData(UserDummy.data.pk, petPk);
+        Call<PetOne> remote = service.getPetData(WooltariApp.userPK, petPk);
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
@@ -445,7 +446,7 @@ public class PetDataManager {
      */
     public static void getPetAge(Activity activity, int petPK, CallbackGetPetAge callback){
         IPet service = RetrofitManager.create(IPet.class,true, true);
-        Call<Age> remote = service.getAge(UserDummy.data.pk,petPK);
+        Call<Age> remote = service.getAge(WooltariApp.userPK,petPK);
         remote.enqueue(new Callback<Age>() {
             @Override
             public void onResponse(Call<Age> call, retrofit2.Response<Age> response) {

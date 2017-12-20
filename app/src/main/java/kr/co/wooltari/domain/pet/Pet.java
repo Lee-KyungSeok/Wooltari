@@ -42,9 +42,6 @@ public class Pet {
     @Expose(serialize = false, deserialize = true)
     private String profileUrl;
 
-//    @Expose(serialize = true, deserialize = false)
-//    private File image;
-
     public String getBody_color() {
         return body_color;
     }
@@ -148,14 +145,6 @@ public class Pet {
     public void setAges(String ages) {
         this.ages = ages;
     }
-
-//    public File getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(File image) {
-//        this.image = image;
-//    }
 
     @Override
     public String toString() {
