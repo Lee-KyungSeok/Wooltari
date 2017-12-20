@@ -45,7 +45,6 @@ public class RetrofitManager {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder requestBuilder = chain.request().newBuilder();
-                        requestBuilder.header("Content-Type", "application/json");
                         if(isToken) requestBuilder.header("Authorization", "Token "+UserDummy.data.token);
                         return chain.proceed(requestBuilder.build());
                     }

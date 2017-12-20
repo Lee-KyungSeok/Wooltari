@@ -32,7 +32,7 @@ public interface IUser {
     );
 
     @POST("auth/facebook-login/")
-    Call<UserInfo> siginFacebook(
+    Call<UserInfo> signinFacebook(
             @Body UserSignupFacebook signupFacebookData
     );
 

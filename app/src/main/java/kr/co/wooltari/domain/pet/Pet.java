@@ -1,6 +1,9 @@
 package kr.co.wooltari.domain.pet;
 
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
+import java.io.File;
 
 /**
  * Created by Kyung on 2017-12-08.
@@ -35,8 +38,12 @@ public class Pet {
     private String ages;
 
     // 나중에 프로필을 보여줄 때
+    @SerializedName("image")
     @Expose(serialize = false, deserialize = true)
     private String profileUrl;
+
+//    @Expose(serialize = true, deserialize = false)
+//    private File image;
 
     public String getBody_color() {
         return body_color;
@@ -141,6 +148,14 @@ public class Pet {
     public void setAges(String ages) {
         this.ages = ages;
     }
+
+//    public File getImage() {
+//        return image;
+//    }
+//
+//    public void setImage(File image) {
+//        this.image = image;
+//    }
 
     @Override
     public String toString() {

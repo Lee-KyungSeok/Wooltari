@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,9 @@ import kr.co.wooltari.domain.MedicalInfoDummy;
 import kr.co.wooltari.domain.RetrofitManager;
 import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.domain.retrofit.IPet;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -28,13 +32,31 @@ public class PetDataManager {
     /**
      * 펫 정보를 저장
      */
-    public static void savePet(Activity activity, Pet pet, CallbackGetPet callback){
+    public static void savePet(Activity activity, Pet pet, File file , CallbackGetPet callback){
         IPet service = RetrofitManager.create(IPet.class, true, true);
-        Call<PetOne> remote = service.savePetData(UserDummy.data.pk,pet);
+        Call<PetOne> remote = null;
+        if(file == null){
+            remote = service.savePetData(UserDummy.data.pk,pet);
+        } else {
+            // form을 multipart/formdata로 하지 말것...!!
+            RequestBody name = RequestBody.create(MediaType.parse("text/plain"), pet.getName());
+            RequestBody birth_date = RequestBody.create(MediaType.parse("text/plain"), pet.getBirth_date());
+            RequestBody gender = RequestBody.create(MediaType.parse("text/plain"), pet.getGender());
+            RequestBody body_color = RequestBody.create(MediaType.parse("text/plain"), pet.getBody_color());
+            RequestBody species = RequestBody.create(MediaType.parse("text/plain"), pet.getSpecies());
+            RequestBody breeds = RequestBody.create(MediaType.parse("text/plain"), pet.getBreeds());
+            RequestBody identified_number = RequestBody.create(MediaType.parse("text/plain"), pet.getIdentified_number());
+            RequestBody is_neutering = null;
+            if(pet.getIs_neutering()) is_neutering = RequestBody.create(MediaType.parse("text/plain"),"True");
+            else is_neutering = RequestBody.create(MediaType.parse("text/plain"),"False");
+            RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
+            MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
+            remote = service.savePetData(UserDummy.data.pk ,name,birth_date,gender,body_color,species,breeds,identified_number,is_neutering,image);
+        }
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(201 == response.code()){
                     Log.e("save data","===="+response.body().getPet().toString());
                     callback.getPetData(response.body().getPet());
@@ -97,7 +119,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     Log.e("update active data","===="+response.body().getPet().toString());
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_change_active_success), Toast.LENGTH_SHORT).show();
@@ -151,7 +173,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_update_success), Toast.LENGTH_SHORT).show();
                     Log.e("update data","===="+response.body().getPet().toString());
@@ -205,7 +227,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<Pet>() {
             @Override
             public void onResponse(Call<Pet> call, retrofit2.Response<Pet> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(204 == response.code()){
                     Toast.makeText(activity, activity.getResources().getString(R.string.pet_profile_delete_success), Toast.LENGTH_SHORT).show();
                     callback.deletePetData();
@@ -266,7 +288,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<PetList>() {
             @Override
             public void onResponse(Call<PetList> call, retrofit2.Response<PetList> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     if(response.body().getResults()!=null) dataList.addAll(response.body().getResults());
                     if(response.body().getNext()!=null) {
@@ -330,7 +352,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<PetList>() {
             @Override
             public void onResponse(Call<PetList> call, retrofit2.Response<PetList> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     if(response.body().getResults()!=null) dataList.addAll(response.body().getResults());
                     else callback.getPetList(dataList);
@@ -382,7 +404,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<PetOne>() {
             @Override
             public void onResponse(Call<PetOne> call, retrofit2.Response<PetOne> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     callback.getPetData(response.body().getPet());
                 } else {
@@ -427,7 +449,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<Age>() {
             @Override
             public void onResponse(Call<Age> call, retrofit2.Response<Age> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     callback.getPetAge(response.body());
                 } else {
@@ -469,7 +491,7 @@ public class PetDataManager {
         remote.enqueue(new Callback<List<Breed>>() {
             @Override
             public void onResponse(Call<List<Breed>> call, retrofit2.Response<List<Breed>> response) {
-                Log.e("message","====="+response.message());
+                Log.e("isSuccessful","====="+response.isSuccessful());
                 if(200 == response.code()){
                     callback.getBreeds(response.body());
                 } else {
