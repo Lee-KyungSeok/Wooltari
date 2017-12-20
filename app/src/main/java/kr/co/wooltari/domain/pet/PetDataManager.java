@@ -16,7 +16,6 @@ import kr.co.wooltari.application.WooltariApp;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.MedicalInfoDummy;
 import kr.co.wooltari.domain.retrofit.RetrofitManager;
-import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.domain.retrofit.IPet;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;

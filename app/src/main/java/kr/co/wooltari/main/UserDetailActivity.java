@@ -14,9 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.application.WooltariApp;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.util.LoadUtil;
 
 public class UserDetailActivity extends AppCompatActivity{
@@ -42,7 +42,7 @@ public class UserDetailActivity extends AppCompatActivity{
         EmailTextView=findViewById(R.id.userdetail_email_textview);
         NickNameEdittext =findViewById(R.id.userdetail_nickname_edittext);
 
-        LoadUtil.circleImageLoad(this, PetDummy.data.get(1).getProfileUrl(), UserimageImageview);
+        LoadUtil.circleImageLoad(this, WooltariApp.userImage, UserimageImageview);
         gradientDrawable = new GradientDrawable();
         gradientDrawable.setShape(GradientDrawable.OVAL);
         UserimageImageview.setBackground(gradientDrawable);

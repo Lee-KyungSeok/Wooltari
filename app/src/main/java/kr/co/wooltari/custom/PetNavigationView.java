@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.application.WooltariApp;
 import kr.co.wooltari.constant.Const;
-import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataManager;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
@@ -62,15 +61,12 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
      */
     private void setHeaderView(){
         View navHeaderView = navigationView.inflateHeaderView(R.layout.common_nav_header);
-        LoadUtil.circleImageLoad(context, UserDummy.data.image, navHeaderView.findViewById(R.id.imageNavUserProfile));
-        TextView UserName=((TextView)navHeaderView.findViewById(R.id.textNavUserName));
-        UserName.setText(UserDummy.data.nickname);
-        UserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
-                view.getContext().startActivity(intent);
-            }
+        LoadUtil.circleImageLoad(context, WooltariApp.userImage, navHeaderView.findViewById(R.id.imageNavUserProfile));
+        TextView UserName=navHeaderView.findViewById(R.id.textNavUserName);
+        UserName.setText(WooltariApp.userName);
+        UserName.setOnClickListener(view -> {
+            Intent intent = new Intent(context, UserDetailActivity.class);
+            context.startActivity(intent);
         });
 
     }
@@ -92,7 +88,6 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         spinnerPetName = petHeaderView.findViewById(R.id.spinnerPetName);
 
         List<Pet> petData = new ArrayList<>();
-        petData.addAll(PetDummy.data);
         PetDataManager.getPetList((Activity)context, petDataList -> {
             petData.addAll(petDataList);
             // 펫정보에 디폴트값으로 첫번째 반려동물 이미지 세팅

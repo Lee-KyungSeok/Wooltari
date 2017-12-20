@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.domain.HealthStateDummy;
-import kr.co.wooltari.domain.PetDummy;
 
 
 /**

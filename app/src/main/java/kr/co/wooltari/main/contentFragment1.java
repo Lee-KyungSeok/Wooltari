@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.wooltari.R;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataManager;
 
@@ -42,7 +41,6 @@ public class contentFragment1 extends Fragment {
 
         List<Pet> data=new ArrayList<>();
         data.clear();
-        data.addAll(PetDummy.data);
 
         PetListRecyclerAdapter petListAdapter=new PetListRecyclerAdapter(data, this.getContext());
         LinearLayoutManager layoutManager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.HORIZONTAL, false);
