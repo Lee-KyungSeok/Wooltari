@@ -3,7 +3,6 @@ package kr.co.wooltari.domain.retrofit;
 import kr.co.wooltari.domain.user.PasswordForgot;
 import kr.co.wooltari.domain.user.User;
 import kr.co.wooltari.domain.user.UserInfo;
-import kr.co.wooltari.domain.user.UserSigninData;
 import kr.co.wooltari.domain.user.UserSignupFacebook;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
