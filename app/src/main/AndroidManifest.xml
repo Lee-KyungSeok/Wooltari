@@ -45,13 +45,7 @@
 
         <activity android:name=".pet.PetProfileActivity" />
         <activity android:name=".user.SignUpActivity" />
-        <activity android:name=".user.SignInActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".user.SignInActivity"></activity>
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInfoActivity" />
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInputActivity" />
 
@@ -72,13 +66,18 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <activity android:name=".main.UserDetailActivity"></activity>
-
-        <activity android:name=".vaccine.PetVaccinActivity">
-        </activity>
 
         <activity android:name=".main.UserDetailActivity" />
-        <activity android:name=".custom.image.ChangeImageActivity"></activity>
+        <activity android:name=".vaccine.PetVaccinActivity"></activity>
+        <activity android:name=".custom.image.ChangeImageActivity" />
+        <activity android:name=".splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
