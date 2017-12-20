@@ -276,6 +276,11 @@ public class CameraGalleryPopup implements View.OnClickListener, PermissionUtil.
         return filePath;
     }
 
+    public File getProfileFile(){
+        File file = new File(filePath);
+        return file;
+    }
+
     /**
      * 퍼미션 승낙 혹은 거절시 수행되는 메소드
      * @param requestCode

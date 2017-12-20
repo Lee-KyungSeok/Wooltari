@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.jakewharton.rxbinding2.widget.RxAdapterView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -71,6 +73,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private int petPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
     GradientDrawable gdImage;
+    File profileFile = null;
     private boolean petActive = true;
     private boolean isImage = false;
     AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog, activeDialog = null;
@@ -133,8 +136,9 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         cameraGalleryPopup = new CameraGalleryPopup(this, CameraGalleryPopup.PopupType.PET_PROFILE, new CameraGalleryPopup.IDelete() {
             @Override
             public void setBasicImage(Uri basicProfileUri) {
+                profileFile = cameraGalleryPopup.getProfileFile();
+//                Log.e("file",profileFile.toString());
                 LoadUtil.circleImageLoad(PetProfileActivity.this, basicProfileUri, imagePetProfile);
-                isImage = false;
             }
         });
         imagePetProfile.setOnClickListener(v -> {
@@ -512,7 +516,6 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         pet.setIdentified_number(editTextPetNumber.getText().toString());
         pet.setBody_color(getPetColor(activeRadioColor.getId()));
         pet.setIs_active(petActive);
-        pet.setTest("test");
         return pet;
     }
 
@@ -521,7 +524,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      */
     private void save(){
         if(petPk==-1) {
-            PetDataManager.savePet(this, getInputData(), petData -> {
+            PetDataManager.savePet(this, getInputData(), profileFile, petData -> {
                 Intent intent = new Intent();
                 intent.putExtra(Const.PET_INFO,Const.PET_PROFILE_UPDATE);
                 setResult(RESULT_OK,intent);
@@ -646,6 +649,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         Uri imageUri = cameraGalleryPopup.getImage(requestCode,resultCode,data);
         if(imageUri!=null) {
+            profileFile = cameraGalleryPopup.getProfileFile();
             LoadUtil.circleImageLoad(this, imageUri, imagePetProfile);
             isImage = true;
         }

@@ -15,6 +15,8 @@ public class User {
     private String user_type;
     @Expose
     private String pk;
+    @Expose
+    private String image;
 
     public String getDate_joined() {
         return date_joined;
@@ -62,6 +64,14 @@ public class User {
 
     public void setPk(String pk) {
         this.pk = pk;
+    }
+
+    public void setImage(String image){
+        this.image = image;
+    }
+
+    public String getImage(){
+        return image;
     }
 
     @Override
