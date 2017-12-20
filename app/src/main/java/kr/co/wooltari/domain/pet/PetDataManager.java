@@ -36,10 +36,9 @@ public class PetDataManager {
         IPet service = RetrofitManager.create(IPet.class, true, true);
         Call<PetOne> remote = null;
         if(file == null){
-            Log.e("file.exist","==================not");
             remote = service.savePetData(UserDummy.data.pk,pet);
         } else {
-            Log.e("file.exist","==================ok");
+            // form을 multipart/formdata로 하지 말것...!!
             RequestBody name = RequestBody.create(MediaType.parse("text/plain"), pet.getName());
             RequestBody birth_date = RequestBody.create(MediaType.parse("text/plain"), pet.getBirth_date());
             RequestBody gender = RequestBody.create(MediaType.parse("text/plain"), pet.getGender());
@@ -52,7 +51,6 @@ public class PetDataManager {
             else is_neutering = RequestBody.create(MediaType.parse("text/plain"),"False");
             RequestBody reqFile = RequestBody.create(MediaType.parse("image/*"), file);
             MultipartBody.Part image = MultipartBody.Part.createFormData("image", file.getName(), reqFile);
-
             remote = service.savePetData(UserDummy.data.pk ,name,birth_date,gender,body_color,species,breeds,identified_number,is_neutering,image);
         }
         remote.enqueue(new Callback<PetOne>() {
