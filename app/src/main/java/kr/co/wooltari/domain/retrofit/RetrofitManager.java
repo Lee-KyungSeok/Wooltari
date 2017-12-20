@@ -6,6 +6,7 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 
 import kr.co.wooltari.BuildConfig;
+import kr.co.wooltari.application.WooltariApp;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -45,7 +46,7 @@ public class RetrofitManager {
                     @Override
                     public Response intercept(Chain chain) throws IOException {
                         Request.Builder requestBuilder = chain.request().newBuilder();
-                        if(isToken) requestBuilder.header("Authorization", "Token "+UserDummy.data.token);
+                        if(isToken) requestBuilder.header("Authorization", "Token "+ WooltariApp.userToken);
                         return chain.proceed(requestBuilder.build());
                     }
                 })
