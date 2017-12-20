@@ -19,6 +19,8 @@ public class UserError {
     private String[] non_field_errors;
     @Expose
     private String detail;
+    @Expose
+    private String message;
 
     public String[] getPassword1() {
         return password1;
@@ -66,6 +68,14 @@ public class UserError {
 
     public void setDetail(String detail) {
         this.detail = detail;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     @Override

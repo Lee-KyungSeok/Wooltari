@@ -2,12 +2,22 @@
     <string name="app_name">Wooltari</string>
     <string name="title_activity_pet_main">PetMainActivity</string>
 
+    <!-- Error Message -->
     <string name="unknown_error">Unknown error</string>
+    <string name="image_size_error">Image Size is to Large</string>
     <string name="invalid_token">You do not access this feature</string>
     <string name="pet_null">Can not find your Pet</string>
     <string name="pet_age_null">Can not find Pet Age</string>
     <string name="pet_breed_null">Can not find this Pet Breeds</string>
     <string name="pet_delete_success">Delete your Pet success</string>
+    <string name="user_email_unique">This email already exists</string>
+    <string name="user_nickname_unique">This nickname already exists</string>
+    <string name="user_email_valid">Enter a valid email address.</string>
+    <string name="user_signin_fail">Id or Password is not correct!!</string>
+    <string name="user_signout_fail">signout failed, please siginout again</string>
+    <string name="user_forgot_password_email_incorrect">Email does not exist.</string>
+    <string name="user_null">Can not find your information</string>
+    <string name="user_delete_success">withdrawal complete</string>
 
     <!-- navigation_bar-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

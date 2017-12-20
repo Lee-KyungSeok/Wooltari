@@ -17,8 +17,6 @@ public class UserSignupData {
     private String password1;
     @Expose
     private String password2;
-//    @Expose
-//    private File image;
 
     public void setEmail(String email){
         this.email = email;
@@ -31,12 +29,9 @@ public class UserSignupData {
     public void setPassword1(String password1){
         this.password1 = password1;
     }
+
     public void setPassword2(String password2){
         this.password2 = password2;
     }
-
-//    public void setImage(File image){
-//        this.image = image;
-//    }
 
 }

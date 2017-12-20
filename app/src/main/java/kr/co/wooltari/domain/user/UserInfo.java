@@ -7,6 +7,7 @@ public class UserInfo {
     private String token;
     @Expose
     private User user;
+    // 로그아웃은 메세지만 온다.
     @Expose
     private String message;
 

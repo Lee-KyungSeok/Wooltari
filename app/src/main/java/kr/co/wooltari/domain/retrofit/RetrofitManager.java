@@ -1,4 +1,4 @@
-package kr.co.wooltari.domain;
+package kr.co.wooltari.domain.retrofit;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

@@ -16,7 +16,10 @@ public class Const {
 
     // User Key
     public static final String USER_TOKEN = "token";
-    public static final String USER_PRIMARY_KEY = "pk";
+    public static final String USER_PRIMARY_KEY = "user_pk";
+    public static final String USER_EMAIL = "user_email";
+    public static final String USER_PASSWORD = "user_password";
+    public static final String USER_AUTO_SIGNIN = "user_auto_signin";
 
     // Pet Key
     public static final String PET_ID = "pet_id";
