@@ -18,7 +18,6 @@ import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.PetNavigationView;
 import kr.co.wooltari.domain.HealthStateDummy;
 import kr.co.wooltari.domain.MedicalInfoDummy;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.pet.Age;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataManager;
@@ -70,38 +69,30 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
 
     private void getData(){
         int petPK = getIntent().getIntExtra(Const.PET_ID,-1);
-        if(petPK<=8) {
-            petInfo = PetDummy.data.get(petPK);
-            initToolbar();
-            petDetailProfile.setValue(petInfo);
-            petDetailProfile.setAge(null);
-        } else {
-            PetDataManager.getPet(this, petPK, new PetDataManager.CallbackGetPet() {
-                @Override
-                public void getPetData(Pet petData) {
-                    if(petData==null) {
-                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
-                    } else {
-                        petInfo = petData;
-                        initToolbar();
-                        petDetailProfile.setValue(petInfo);
-                    }
+        PetDataManager.getPet(this, petPK, new PetDataManager.CallbackGetPet() {
+            @Override
+            public void getPetData(Pet petData) {
+                if(petData==null) {
+                    Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
+                } else {
+                    petInfo = petData;
+                    initToolbar();
+                    petDetailProfile.setValue(petInfo);
                 }
-            });
-            PetDataManager.getPetAge(this, petPK, new PetDataManager.CallbackGetPetAge() {
-                @Override
-                public void getPetAge(Age petAge) {
-                    if(petAge==null){
-                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Age age = petAge;
-                        petDetailProfile.setAge(age);
-                    }
+            }
+        });
+        PetDataManager.getPetAge(this, petPK, new PetDataManager.CallbackGetPetAge() {
+            @Override
+            public void getPetAge(Age petAge) {
+                if(petAge==null){
+                    Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
+                } else {
+                    Age age = petAge;
+                    petDetailProfile.setAge(age);
                 }
-            });
-
-            tempLoad(petPK);
-        }
+            }
+        });
+        tempLoad(petPK);
     }
 
     // 임시로 로드
@@ -131,46 +122,33 @@ public class PetDetailActivity extends AppCompatActivity implements PetNavigatio
      * @param petChangePK
      */
     public void changeView(int petChangePK){
-
-        if(petChangePK<=8) {
-            petInfo = PetDummy.data.get(petChangePK);
-            petDetailTitle.setTitle(petInfo.getName());
-            getSupportActionBar().setTitle(petInfo.getName());
-            petDetailTitle.setContentScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
-            petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(this,petInfo.getBody_color()));
-            petDetailProfile.setValue(petInfo);
-            petDetailProfile.setAge(null);
-
-        } else {
-            PetDataManager.getPet(this, petChangePK, new PetDataManager.CallbackGetPet() {
-                @Override
-                public void getPetData(Pet petData) {
-                    if(petData==null) {
-                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
-                    } else {
-                        petInfo = petData;
-                        petDetailTitle.setTitle(petInfo.getName());
-                        getSupportActionBar().setTitle(petInfo.getName());
-                        petDetailTitle.setContentScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
-                        petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
-                        petDetailProfile.setValue(petInfo);
-
-                    }
+        PetDataManager.getPet(this, petChangePK, new PetDataManager.CallbackGetPet() {
+            @Override
+            public void getPetData(Pet petData) {
+                if(petData==null) {
+                    Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
+                } else {
+                    petInfo = petData;
+                    petDetailTitle.setTitle(petInfo.getName());
+                    getSupportActionBar().setTitle(petInfo.getName());
+                    petDetailTitle.setContentScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
+                    petDetailTitle.setStatusBarScrimColor(LoadUtil.loadColor(PetDetailActivity.this,petInfo.getBody_color()));
+                    petDetailProfile.setValue(petInfo);
                 }
-            });
+            }
+        });
 
-            PetDataManager.getPetAge(this, petChangePK, new PetDataManager.CallbackGetPetAge() {
-                @Override
-                public void getPetAge(Age petAge) {
-                    if(petAge==null){
-                        Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Age age = petAge;
-                        petDetailProfile.setAge(age);
-                    }
+        PetDataManager.getPetAge(this, petChangePK, new PetDataManager.CallbackGetPetAge() {
+            @Override
+            public void getPetAge(Age petAge) {
+                if(petAge==null){
+                    Toast.makeText(PetDetailActivity.this, getResources().getString(R.string.pet_age_null), Toast.LENGTH_SHORT).show();
+                } else {
+                    Age age = petAge;
+                    petDetailProfile.setAge(age);
                 }
-            });
-        }
+            }
+        });
 
         tempLoad(petChangePK);
         petDetailState.setValue(stateInfo);

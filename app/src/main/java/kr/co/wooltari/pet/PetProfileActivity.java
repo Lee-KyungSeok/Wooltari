@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +35,7 @@ import com.jakewharton.rxbinding2.widget.RxAdapterView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -44,7 +46,6 @@ import io.reactivex.Observable;
 import kr.co.wooltari.R;
 import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.custom.CameraGalleryPopup;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.domain.pet.ActivePet;
 import kr.co.wooltari.domain.pet.Breed;
 import kr.co.wooltari.domain.pet.Pet;
@@ -71,6 +72,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     private int petPk = -1;
     CameraGalleryPopup cameraGalleryPopup = null;
     GradientDrawable gdImage;
+    File profileFile = null;
     private boolean petActive = true;
     private boolean isImage = false;
     AlertDialog backDialog, cancelDialog, deleteDialog, saveDialog, activeDialog = null;
@@ -133,8 +135,9 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         cameraGalleryPopup = new CameraGalleryPopup(this, CameraGalleryPopup.PopupType.PET_PROFILE, new CameraGalleryPopup.IDelete() {
             @Override
             public void setBasicImage(Uri basicProfileUri) {
+                profileFile = cameraGalleryPopup.getProfileFile();
+//                Log.e("file",profileFile.toString());
                 LoadUtil.circleImageLoad(PetProfileActivity.this, basicProfileUri, imagePetProfile);
-                isImage = false;
             }
         });
         imagePetProfile.setOnClickListener(v -> {
@@ -181,55 +184,31 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         ToolbarUtil.setCommonToolbar(this,findViewById(R.id.toolbarPetProfile),getResources().getString(R.string.pet_profile));
         // 버튼 상태 정의
         btnPetAddEdit.setText(getResources().getString(R.string.pet_btn_edit));
-
-        if(petPk>=8) {
-            PetDataManager.getPet(this, petPk, petData -> {
-                if(petData==null) {
-                    Toast.makeText(PetProfileActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
-                } else {
-                    if(petData.getProfileUrl()!=null) isImage = true;
-                    // 이름 디폴트 값 정의
-                    editPetName.setText(petData.getName());
-                    // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
-                    setPetSpecies(petData);
-                    checkSpinnerDefaultValue(spinnerPetSpecies, petData.getSpecies());
-                    // 생일 정의
-                    editPetBirth.setText(petData.getBirth_date().replace("-",""));
-                    // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
-                    checkRadioSexNeuterValue(radioGroupSex, "male".equals(petData.getGender()));
-                    checkRadioSexNeuterValue(radioGroupNeutral, petData.getIs_neutering());
-                    // pet Number 디폴트 값 정의
-                    editTextPetNumber.setText(petData.getIdentified_number());
-                    // pet 디폴트 색상 정의
-                    checkRadioColorValue(petData.getBody_color());
-                    changePetBackground(activeRadioColor.getCurrentTextColor());
-                    // pet State 체크
-                    changeState(!petData.getIs_active());
-                    petActive = petData.getIs_active();
-                }
-            });
-        } else { // PetDummy 임시
-            // 이미지 세팅
-            LoadUtil.circleImageLoad(this, PetDummy.data.get(petPk).getProfileUrl(), imagePetProfile);
-            if (PetDummy.data.get(petPk).getProfileUrl() != null) isImage = true;
-            // 이름 디폴트 값 정의
-            editPetName.setText(PetDummy.data.get(petPk).getName());
-            // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
-            checkSpinnerDefaultValue(spinnerPetSpecies, PetDummy.data.get(petPk).getSpecies());
-            // 생일 정의
-            editPetBirth.setText(PetDummy.data.get(petPk).getBirth_date().replace("-", ""));
-            // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
-            checkRadioSexNeuterValue(radioGroupNeutral, "male".equals(PetDummy.data.get(petPk).getGender()));
-            checkRadioSexNeuterValue(radioGroupSex,PetDummy.data.get(petPk).getIs_neutering());
-            // pet Number 디폴트 값 정의
-            editTextPetNumber.setText(PetDummy.data.get(petPk).getIdentified_number());
-            // pet 디폴트 색상 정의
-            checkRadioColorValue(PetDummy.data.get(petPk).getBody_color());
-            changePetBackground(activeRadioColor.getCurrentTextColor());
-            // pet State 체크
-            changeState(!PetDummy.data.get(petPk).getIs_active());
-            petActive = PetDummy.data.get(petPk).getIs_active();
-        }
+        PetDataManager.getPet(this, petPk, petData -> {
+            if(petData==null) {
+                Toast.makeText(PetProfileActivity.this, getResources().getString(R.string.pet_null), Toast.LENGTH_SHORT).show();
+            } else {
+                if(petData.getProfileUrl()!=null) isImage = true;
+                // 이름 디폴트 값 정의
+                editPetName.setText(petData.getName());
+                // 스피너 디폴트 값 정의 (데이터의 정의값 있으면 그것으로 설정)
+                setPetSpecies(petData);
+                checkSpinnerDefaultValue(spinnerPetSpecies, petData.getSpecies());
+                // 생일 정의
+                editPetBirth.setText(petData.getBirth_date().replace("-",""));
+                // 라디오 버튼(gender, is_neutering/spay) 디폴트 값 정의
+                checkRadioSexNeuterValue(radioGroupSex, "male".equals(petData.getGender()));
+                checkRadioSexNeuterValue(radioGroupNeutral, petData.getIs_neutering());
+                // pet Number 디폴트 값 정의
+                editTextPetNumber.setText(petData.getIdentified_number());
+                // pet 디폴트 색상 정의
+                checkRadioColorValue(petData.getBody_color());
+                changePetBackground(activeRadioColor.getCurrentTextColor());
+                // pet State 체크
+                changeState(!petData.getIs_active());
+                petActive = petData.getIs_active();
+            }
+        });
     }
 
     /**
@@ -279,13 +258,11 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
                         data.add(breed.getBreeds_name());
                     }
                     spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-                    if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
                 }
             });
         } else {
             List<String> data = new ArrayList<>();
             spinnerPetBreeds.setAdapter(createArrayAdapter(data, getResources().getString(R.string.pet_profile_breeds_hint)));
-            if(petPk !=-1 && petPk<=8) { checkSpinnerDefaultValue(spinnerPetBreeds, PetDummy.data.get(petPk).getBreeds()); }
         }
     }
     private void setPetBreeds(int position, Pet pet){
@@ -383,17 +360,12 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
 
         activeDialog = DialogUtil.showDialog(this, getResources().getString(R.string.alert_pet_active_title),
                 getResources().getString(R.string.alert_pet_active_msg), () -> {
-                    if(petPk<=8) {
-                        changeState(PetDummy.data.get(petPk).getIs_active());
-                    }
-                    else {
-                        ActivePet activePet = new ActivePet();
-                        if(petActive) activePet.setIs_active("False");
-                        else activePet.setIs_active("True");
-                        PetDataManager.updatePetActive(this, petPk, activePet, petData -> {
-                            changeState(petActive);
-                        });
-                    }
+                    ActivePet activePet = new ActivePet();
+                    if(petActive) activePet.setIs_active("False");
+                    else activePet.setIs_active("True");
+                    PetDataManager.updatePetActive(this, petPk, activePet, petData -> {
+                        changeState(petActive);
+                    });
                 });
         activeDialog.cancel();
     }
@@ -520,7 +492,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
      */
     private void save(){
         if(petPk==-1) {
-            PetDataManager.savePet(this, getInputData(), petData -> {
+            PetDataManager.savePet(this, getInputData(), profileFile, petData -> {
                 Intent intent = new Intent();
                 intent.putExtra(Const.PET_INFO,Const.PET_PROFILE_UPDATE);
                 setResult(RESULT_OK,intent);
@@ -556,8 +528,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         if(isActive){
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_active));
             // 펫 상태 변경
-            if(petPk<=8) PetDummy.data.get(petPk).setIs_active(false);
-            else petActive = false;
+            petActive = false;
             // 버튼 삭제
             btnPetAddEdit.setVisibility(View.GONE);
             btnPetCancel.setVisibility(View.GONE);
@@ -571,8 +542,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         } else {
             // 활성화로 바꿈
             btnPetState.setText(getResources().getString(R.string.pet_profile_btn_state_inactive));
-            if(petPk<=8) PetDummy.data.get(petPk).setIs_active(true);
-            else petActive = true;
+            petActive = true;
             btnPetAddEdit.setVisibility(View.VISIBLE);
             btnPetCancel.setVisibility(View.VISIBLE);
             btnNumberSearch.setVisibility(View.VISIBLE);
@@ -645,6 +615,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
         super.onActivityResult(requestCode, resultCode, data);
         Uri imageUri = cameraGalleryPopup.getImage(requestCode,resultCode,data);
         if(imageUri!=null) {
+            profileFile = cameraGalleryPopup.getProfileFile();
             LoadUtil.circleImageLoad(this, imageUri, imagePetProfile);
             isImage = true;
         }
@@ -656,8 +627,7 @@ public class PetProfileActivity extends AppCompatActivity implements View.OnClic
     @Override
     public void onBackPressed() {
         if(btnPetState.getVisibility() == View.VISIBLE){
-            if(petPk>8 && !petActive) finish();
-            else if(petPk<=8 && !PetDummy.data.get(petPk).getIs_active()) finish();
+            if(!petActive) finish();
             else backDialog.show();
         } else {
             backDialog.show();

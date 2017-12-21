@@ -14,14 +14,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import kr.co.wooltari.R;
+import kr.co.wooltari.application.WooltariApp;
 import kr.co.wooltari.constant.Const;
-import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.domain.UserDummy;
 import kr.co.wooltari.domain.pet.Pet;
 import kr.co.wooltari.domain.pet.PetDataManager;
 import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
@@ -40,7 +40,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     NavigationView navigationView;
     Context context;
     Spinner spinnerPetName;
-    int petPk = 0;
+    int petPk = -1;
     String petName = null;
     String petColor = null;
     String petProfile = null;
@@ -62,15 +62,12 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
      */
     private void setHeaderView(){
         View navHeaderView = navigationView.inflateHeaderView(R.layout.common_nav_header);
-        LoadUtil.circleImageLoad(context, UserDummy.data.image, navHeaderView.findViewById(R.id.imageNavUserProfile));
-        TextView UserName=((TextView)navHeaderView.findViewById(R.id.textNavUserName));
-        UserName.setText(UserDummy.data.nickname);
-        UserName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), UserDetailActivity.class);
-                view.getContext().startActivity(intent);
-            }
+        LoadUtil.circleImageLoad(context, WooltariApp.userImage, navHeaderView.findViewById(R.id.imageNavUserProfile));
+        TextView UserName=navHeaderView.findViewById(R.id.textNavUserName);
+        UserName.setText(WooltariApp.userName);
+        UserName.setOnClickListener(view -> {
+            Intent intent = new Intent(context, UserDetailActivity.class);
+            context.startActivity(intent);
         });
 
     }
@@ -92,11 +89,11 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         spinnerPetName = petHeaderView.findViewById(R.id.spinnerPetName);
 
         List<Pet> petData = new ArrayList<>();
-        petData.addAll(PetDummy.data);
         PetDataManager.getPetList((Activity)context, petDataList -> {
             petData.addAll(petDataList);
             // 펫정보에 디폴트값으로 첫번째 반려동물 이미지 세팅
-            LoadUtil.circleImageLoad(context, petData.get(0).getProfileUrl(), imageNavPetProfile);
+            if(petData.size()>0) LoadUtil.circleImageLoad(context, petData.get(0).getProfileUrl(), imageNavPetProfile);
+            else LoadUtil.circleImageLoad(context,LoadUtil.getResourceImageUri(R.drawable.pet_basic_profile,context),imageNavPetProfile);
             initPetHeaderData(petData,imageNavPetProfile);
             if(context instanceof PetDetailActivity) ((ISetSpinner)context).setSpinner();
         });
@@ -164,13 +161,18 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        switch (item.getItemId()){
-            case R.id.nav_pet_state : goActivity(PetStateActivity.class); break;
-            case R.id.nav_vaccination : goActivity(PetStateActivity.class); break;
-            case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
-            case R.id.nav_temp_detail: goActivity(PetDetailActivity.class); break;
+        if(petPk!=-1) {
+            switch (item.getItemId()) {
+                case R.id.nav_pet_state: goActivity(PetStateActivity.class); break;
+                case R.id.nav_vaccination: goActivity(PetStateActivity.class); break;
+                case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
+                case R.id.nav_temp_detail: goActivity(PetDetailActivity.class); break;
+            }
+        } else {
+            Toast.makeText(context, context.getResources().getString(R.string.navigation_pet_null), Toast.LENGTH_SHORT).show();
         }
         return false;
+
     }
 
     /**

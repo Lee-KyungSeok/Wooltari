@@ -1,13 +1,27 @@
 <resources>
     <string name="app_name">Wooltari</string>
     <string name="title_activity_pet_main">PetMainActivity</string>
+    <string name="facebook_app_id">1974634276151336</string>
+    <string name="fb_login_protocol_scheme">fb1974634276151336</string>
 
+
+    <!-- Error Message -->
     <string name="unknown_error">Unknown error</string>
+    <string name="image_size_error">Image Size is to Large</string>
     <string name="invalid_token">You do not access this feature</string>
     <string name="pet_null">Can not find your Pet</string>
     <string name="pet_age_null">Can not find Pet Age</string>
     <string name="pet_breed_null">Can not find this Pet Breeds</string>
     <string name="pet_delete_success">Delete your Pet success</string>
+    <string name="user_email_unique">This email already exists</string>
+    <string name="user_nickname_unique">This nickname already exists</string>
+    <string name="user_email_valid">Enter a valid email address.</string>
+    <string name="user_signin_fail">Id or Password is not correct!!</string>
+    <string name="user_signout_fail">signout failed, please siginout again</string>
+    <string name="user_forgot_password_email_incorrect">Email does not exist.</string>
+    <string name="user_null">Can not find your information</string>
+    <string name="user_delete_success">withdrawal complete</string>
+    <string name="user_sign_again">Please signin again</string>
 
     <!-- navigation_bar-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -15,6 +29,7 @@
     <string name="navigation_drawer_item_pet_state">Pet State</string>
     <string name="navigation_drawer_item_vaccination">Vaccination</string>
     <string name="navigation_drawer_item_medical_info">Medical Info</string>
+    <string name="navigation_pet_null">Pet Registration First</string>
 
     <!-- toolbar-->
     <string name="action_settings">24 hour hospital</string>
@@ -157,6 +172,18 @@
     <string name="pet_medical_information_edit">Edit info</string>
     <string name="pet_medical_information_add">Add info</string>
     <string name="pet_medical_past_info">Other Information</string>
+
+    <!-- UserInfo -->
+    <string name="user_email">Email</string>
+    <string name="user_password">Password</string>
+    <string name="user_password_confirm">Confirm Password</string>
+    <string name="user_sign_up">Sign up</string>
+    <string name="user_sign_up_text">No account yet? Create One</string>
+    <string name="user_sign_in">Sign in</string>
+    <string name="user_sign_in_facebook">facebook</string>
+    <string name="user_forgot_password">Dp you forget password?</string>
+    <string name="user_sign_in_subtitle">A good friend who keeps your animal</string>
+    <string name="user_sign_in_back_pressed">If you press back button again, wooltari is finished</string>
 
     <!-- SignUpActivity Button  Message-->
     <string name="signup_button_text_duplication_is_not_allowed">중복확인</string>

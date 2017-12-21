@@ -3,6 +3,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="wooltariColor">#35495e</color>
+    <color name="facebookColor">#3c5c95</color>
     <color name="black">#000000</color>
     <color name="white">#ffffff</color>
     <color name="gold">#cc8f1c</color>

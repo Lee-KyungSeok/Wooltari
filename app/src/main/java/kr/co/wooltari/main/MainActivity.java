@@ -20,7 +20,6 @@ import java.util.List;
 
 import kr.co.wooltari.R;
 import kr.co.wooltari.custom.PetNavigationView;
-import kr.co.wooltari.domain.PetDummy;
 import kr.co.wooltari.pet.detail.PetDetailActivity;
 import kr.co.wooltari.util.ToolbarUtil;
 

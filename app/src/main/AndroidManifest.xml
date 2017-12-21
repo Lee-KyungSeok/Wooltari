@@ -11,16 +11,23 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
+        android:name=".application.WooltariApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"
+            />
+
         <activity android:name=".main.MainActivity" />
         <activity
             android:name=".pet.detail.PetDetailActivity"
-            android:theme="@style/DetailPetTheme" />
+            android:theme="@style/DetailTheme" />
         <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".main.EmergencyActivity" />
@@ -44,13 +51,7 @@
 
         <activity android:name=".pet.PetProfileActivity" />
         <activity android:name=".user.SignUpActivity" />
-        <activity android:name=".user.SignInActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".user.SignInActivity"/>
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInfoActivity" />
         <activity android:name=".medicalcare.medicalinfo.PetMedicalInputActivity" />
 
@@ -71,13 +72,23 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
-        <activity android:name=".main.UserDetailActivity"></activity>
-
-        <activity android:name=".vaccine.PetVaccinActivity">
-        </activity>
 
         <activity android:name=".main.UserDetailActivity" />
-        <activity android:name=".custom.image.ChangeImageActivity"></activity>
+        <activity android:name=".vaccine.PetVaccinActivity"></activity>
+        <activity android:name=".custom.image.ChangeImageActivity" />
+        <activity android:name=".splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+        android:name="com.facebook.FacebookActivity"
+        android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+        android:label="@string/app_name" />
     </application>
 
 </manifest>

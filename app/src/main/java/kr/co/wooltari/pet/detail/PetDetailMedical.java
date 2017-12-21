@@ -9,11 +9,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 
 import kr.co.wooltari.R;
-import kr.co.wooltari.constant.Const;
 import kr.co.wooltari.domain.MedicalInfoDummy;
-import kr.co.wooltari.domain.PetDummy;
-import kr.co.wooltari.medicalcare.healthState.PetStateActivity;
-import kr.co.wooltari.medicalcare.medicalinfo.PetMedicalInfoActivity;
 import kr.co.wooltari.util.LoadUtil;
 
 /**

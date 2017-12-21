@@ -1,34 +1,42 @@
 package kr.co.wooltari.domain.user;
 
-public class UserInfo
-{
+import com.google.gson.annotations.Expose;
+
+public class UserInfo {
+    @Expose
     private String token;
-
+    @Expose
     private User user;
+    // 로그아웃은 메세지만 온다.
+    @Expose
+    private String message;
 
-    public String getToken ()
-    {
+    public String getToken() {
         return token;
     }
 
-    public void setToken (String token)
-    {
+    public void setToken(String token) {
         this.token = token;
     }
 
-    public User getUser ()
-    {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public User getUser() {
         return user;
     }
 
-    public void setUser (User user)
-    {
+    public void setUser(User user) {
         this.user = user;
     }
 
     @Override
-    public String toString()
-    {
-        return "ClassPojo [token = "+token+", user = "+user+"]";
+    public String toString() {
+        return "ClassPojo [token = " + token + ", user = " + user + ", message = " + message + "]";
     }
 }

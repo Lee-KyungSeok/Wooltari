@@ -20,6 +20,15 @@ public class PreferenceUtil {
         SharedPreferences.Editor editor = getPreference(context).edit();
         // 3. 키, 값 형태로 값을 저장
         editor.putString(key, value);
+        // commit : 동기로 작동, apply : 비동기로 작동
+        editor.apply();
+    }
+
+    public static void setValue(Context context, String key, Boolean value){
+        // 2. 쓰기를 위한 editor 생성
+        SharedPreferences.Editor editor = getPreference(context).edit();
+        // 3. 키, 값 형태로 값을 저장
+        editor.putBoolean(key, value);
         editor.commit();
     }
 
@@ -28,7 +37,7 @@ public class PreferenceUtil {
         return getPreference(context).getString(key,"");
     }
 
-    public static Long getLong(Context context, String key){
-        return getPreference(context).getLong(key,0);
+    public static boolean getBoolean(Context context, String key){
+        return getPreference(context).getBoolean(key,false);
     }
 }
