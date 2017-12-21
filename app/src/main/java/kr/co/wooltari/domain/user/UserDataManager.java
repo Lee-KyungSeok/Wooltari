@@ -152,7 +152,6 @@ public class UserDataManager {
                 } else {
                     if(isAutoSignin){
                         Toast.makeText(activity,activity.getResources().getString(R.string.user_sign_again),Toast.LENGTH_SHORT).show();
-                        callback.fail();
                     } else {
                         UserError error;
                         try {
@@ -177,6 +176,7 @@ public class UserDataManager {
                             Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                         }
                     }
+                    callback.fail();
                 }
             }
 
@@ -185,11 +185,11 @@ public class UserDataManager {
                 if(isAutoSignin) {
                     Log.e("signin Failure", t.getMessage());
                     Toast.makeText(activity, activity.getResources().getString(R.string.user_sign_again), Toast.LENGTH_SHORT).show();
-                    callback.fail();
                 } else {
                     Log.e("signin Failure", t.getMessage());
                     Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
                 }
+                callback.fail();
             }
         });
     }

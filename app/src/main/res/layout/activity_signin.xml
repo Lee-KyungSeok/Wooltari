@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     tools:context="kr.co.wooltari.user.SignInActivity">
 
     <ImageView
@@ -22,6 +23,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:background="#88FFFFFF"
+        android:fitsSystemWindows="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -193,5 +195,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <FrameLayout
+        android:id="@+id/signinProgressStage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="#88FFFFFF"
+        android:elevation="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyle"
+            android:indeterminateTint="@color/wooltariColor"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </android.support.constraint.ConstraintLayout>

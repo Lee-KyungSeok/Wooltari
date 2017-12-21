@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,7 @@ public class SignInActivity extends AppCompatActivity {
     private TextView textViewForgot;
     private Button btnSignup;
     private Toast backToast;
+    private FrameLayout signinProgressStage;
 
     private long backPressedTime = 0;
 
@@ -55,6 +58,8 @@ public class SignInActivity extends AppCompatActivity {
         btnSignin = findViewById(R.id.btnSignin);
         textViewForgot = findViewById(R.id.textViewForgot);
         btnSignup = findViewById(R.id.btnSignup);
+        signinProgressStage = findViewById(R.id.signinProgressStage);
+        signinProgressStage.setVisibility(View.GONE);
     }
 
     private void init() {
@@ -72,6 +77,7 @@ public class SignInActivity extends AppCompatActivity {
 
     private void setListener() {
         btnSignin.setOnClickListener(v -> {
+            signinProgressStage.setVisibility(View.VISIBLE);
             User user = new User();
             user.setEmail(editSigninEmail.getText().toString());
             user.setPassword(editSigninPassword.getText().toString());
@@ -80,10 +86,13 @@ public class SignInActivity extends AppCompatActivity {
                 @Override
                 public void success() {
                     startActivity(new Intent(SignInActivity.this, MainActivity.class));
+                    finish();
                 }
 
                 @Override
-                public void fail() { }
+                public void fail() {
+                    signinProgressStage.setVisibility(View.GONE);
+                }
             });
         });
 

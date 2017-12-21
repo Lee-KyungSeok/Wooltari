@@ -21,7 +21,7 @@
         <activity android:name=".main.MainActivity" />
         <activity
             android:name=".pet.detail.PetDetailActivity"
-            android:theme="@style/DetailPetTheme" />
+            android:theme="@style/DetailTheme" />
         <activity android:name=".medicalcare.healthState.PetStateActivity" />
         <activity android:name=".user.MissingPasswordActivity" />
         <activity android:name=".main.EmergencyActivity" />
