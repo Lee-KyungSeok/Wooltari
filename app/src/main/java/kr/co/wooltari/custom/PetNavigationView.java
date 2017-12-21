@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +40,7 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     NavigationView navigationView;
     Context context;
     Spinner spinnerPetName;
-    int petPk = 0;
+    int petPk = -1;
     String petName = null;
     String petColor = null;
     String petProfile = null;
@@ -91,7 +92,8 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
         PetDataManager.getPetList((Activity)context, petDataList -> {
             petData.addAll(petDataList);
             // 펫정보에 디폴트값으로 첫번째 반려동물 이미지 세팅
-            LoadUtil.circleImageLoad(context, petData.get(0).getProfileUrl(), imageNavPetProfile);
+            if(petData.size()>0) LoadUtil.circleImageLoad(context, petData.get(0).getProfileUrl(), imageNavPetProfile);
+            else LoadUtil.circleImageLoad(context,LoadUtil.getResourceImageUri(R.drawable.pet_basic_profile,context),imageNavPetProfile);
             initPetHeaderData(petData,imageNavPetProfile);
             if(context instanceof PetDetailActivity) ((ISetSpinner)context).setSpinner();
         });
@@ -159,13 +161,18 @@ public class PetNavigationView implements NavigationView.OnNavigationItemSelecte
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         drawerLayout.closeDrawer(GravityCompat.START);
-        switch (item.getItemId()){
-            case R.id.nav_pet_state : goActivity(PetStateActivity.class); break;
-            case R.id.nav_vaccination : goActivity(PetStateActivity.class); break;
-            case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
-            case R.id.nav_temp_detail: goActivity(PetDetailActivity.class); break;
+        if(petPk!=-1) {
+            switch (item.getItemId()) {
+                case R.id.nav_pet_state: goActivity(PetStateActivity.class); break;
+                case R.id.nav_vaccination: goActivity(PetStateActivity.class); break;
+                case R.id.nav_medical_info: goActivity(PetMedicalInfoActivity.class); break;
+                case R.id.nav_temp_detail: goActivity(PetDetailActivity.class); break;
+            }
+        } else {
+            Toast.makeText(context, context.getResources().getString(R.string.navigation_pet_null), Toast.LENGTH_SHORT).show();
         }
         return false;
+
     }
 
     /**

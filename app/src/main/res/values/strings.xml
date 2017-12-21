@@ -29,6 +29,7 @@
     <string name="navigation_drawer_item_pet_state">Pet State</string>
     <string name="navigation_drawer_item_vaccination">Vaccination</string>
     <string name="navigation_drawer_item_medical_info">Medical Info</string>
+    <string name="navigation_pet_null">Pet Registration First</string>
 
     <!-- toolbar-->
     <string name="action_settings">24 hour hospital</string>
