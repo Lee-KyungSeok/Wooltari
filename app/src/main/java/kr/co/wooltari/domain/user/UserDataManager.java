@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -197,7 +198,64 @@ public class UserDataManager {
     /**
      * 페이스북을 통한 로그인
      */
-    public static void signinFacebook(Activity activity){
+    public static void signinFacebook(Activity activity, UserSignupFacebook signupFacebookData , CallbackSignin callback){
+        IUser service = RetrofitManager.create(IUser.class, true, false);
+        Call<UserInfo> remote = service.signinFacebook(signupFacebookData);
+        remote.enqueue(new Callback<UserInfo>() {
+            @Override
+            public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
+                if(response.code()==200){
+                    UserInfo userInfo = response.body();
+                    WooltariApp.userToken = userInfo.getToken();
+                    WooltariApp.userPK = userInfo.getUser().getPk();
+                    WooltariApp.userEmail = userInfo.getUser().getEmail();
+                    WooltariApp.userName = userInfo.getUser().getNickname();
+                    WooltariApp.userImage = userInfo.getUser().getImage();
+                    callback.success();
+                } else {
+                    if(AccessToken.getCurrentAccessToken() != null){
+                        Toast.makeText(activity,activity.getResources().getString(R.string.user_sign_again),Toast.LENGTH_SHORT).show();
+                        Log.e("error", response.errorBody().toString());
+                    } else {
+                        UserError error;
+                        try {
+                            String errorString = response.errorBody().string();
+                            Gson gson = new Gson();
+                            error = gson.fromJson(errorString, UserError.class);
+                            switch (response.code()) {
+                                case 500:
+                                    if (error.getDetail() != null) {
+                                        Toast.makeText(activity, activity.getResources().getString(R.string.user_signin_fail), Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                    }
+                                    break;
+                                default:
+                                    Log.e("error", response.errorBody().toString());
+                                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    callback.fail();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UserInfo> call, Throwable t) {
+                if(AccessToken.getCurrentAccessToken() != null) {
+                    Log.e("facebookSignin Failure", t.getMessage());
+                    Toast.makeText(activity, activity.getResources().getString(R.string.user_sign_again), Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.e("facebookSignin Failure", t.getMessage());
+                    Toast.makeText(activity, activity.getResources().getString(R.string.unknown_error), Toast.LENGTH_SHORT).show();
+                }
+                callback.fail();
+            }
+        });
     }
 
     /**
@@ -213,6 +271,8 @@ public class UserDataManager {
                     PreferenceUtil.setValue(activity, Const.USER_AUTO_SIGNIN, false);
                     PreferenceUtil.setValue(activity, Const.USER_EMAIL, "");
                     PreferenceUtil.setValue(activity, Const.USER_PASSWORD, "");
+                    PreferenceUtil.setValue(activity, Const.USER_FACEBOOK_USER_ID, "");
+                    PreferenceUtil.setValue(activity, Const.USER_FACEBOOK_AUTO_SIGNIN, false);
                     activity.startActivity(new Intent(activity, SignInActivity.class));
                     activity.finish();
                 } else {

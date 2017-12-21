@@ -20,6 +20,8 @@ public class Const {
     public static final String USER_EMAIL = "user_email";
     public static final String USER_PASSWORD = "user_password";
     public static final String USER_AUTO_SIGNIN = "user_auto_signin";
+    public static final String USER_FACEBOOK_USER_ID = "facebook_id";
+    public static final String USER_FACEBOOK_AUTO_SIGNIN = "user_facebook_signin";
 
     // Pet Key
     public static final String PET_ID = "pet_id";

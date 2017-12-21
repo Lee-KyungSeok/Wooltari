@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">Wooltari</string>
     <string name="title_activity_pet_main">PetMainActivity</string>
+    <string name="facebook_app_id">1974634276151336</string>
+    <string name="fb_login_protocol_scheme">fb1974634276151336</string>
+
 
     <!-- Error Message -->
     <string name="unknown_error">Unknown error</string>
