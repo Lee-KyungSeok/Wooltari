@@ -144,6 +144,7 @@ public class SignInActivity extends AppCompatActivity {
         callbackManager = CallbackManager.Factory.create();
         btnFacebook.setReadPermissions("email");
         btnFacebook.setOnClickListener(v -> signinProgressStage.setVisibility(View.VISIBLE));
+        btnFacebook.setText(getResources().getString(R.string.user_sign_in_facebook));
         btnFacebook.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {

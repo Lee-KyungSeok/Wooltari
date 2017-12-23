@@ -60,11 +60,11 @@
         android:layout_marginBottom="@dimen/user_sign_in_or_bottom_margin"
         android:layout_marginEnd="@dimen/user_sign_in_button_left_right_margin"
         android:layout_marginStart="@dimen/user_sign_in_button_left_right_margin"
-        android:text="@string/user_sign_in_facebook"
         app:layout_constraintBottom_toTopOf="@+id/orId"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:com_facebook_login_text="@string/user_sign_in_facebook"/>
 
 
     <LinearLayout

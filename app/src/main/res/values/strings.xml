@@ -180,7 +180,7 @@
     <string name="user_sign_up">Sign up</string>
     <string name="user_sign_up_text">No account yet? Create One</string>
     <string name="user_sign_in">Sign in</string>
-    <string name="user_sign_in_facebook">facebook</string>
+    <string name="user_sign_in_facebook">Sign in with facebook</string>
     <string name="user_forgot_password">Dp you forget password?</string>
     <string name="user_sign_in_subtitle">A good friend who keeps your animal</string>
     <string name="user_sign_in_back_pressed">If you press back button again, wooltari is finished</string>
