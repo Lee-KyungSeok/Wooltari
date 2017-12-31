@@ -39,6 +39,9 @@
     <dimen name="user_sign_in_edit_text_size">18sp</dimen>
     <dimen name="user_sign_in_edit_text_padding">12sp</dimen>
 
+    <!-- Sign up -->
+
+
     <!-- Pet Profile -->
     <dimen name="pet_profile_size">80dp</dimen>
     <dimen name="pet_profile_top_margin">10dp</dimen>
