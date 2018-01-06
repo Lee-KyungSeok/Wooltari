@@ -7,16 +7,24 @@ import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
+import android.os.Build;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.lang.reflect.Field;
 
 import kr.co.wooltari.R;
 
@@ -71,6 +79,13 @@ public class DoubleCheckLayout extends ConstraintLayout {
         super.onWindowFocusChanged(hasWindowFocus);
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        editText.setEnabled(enabled);
+        btnDoubleCheck.setEnabled(enabled);
+        super.setEnabled(enabled);
+    }
+
     @SuppressLint("ResourceType")
     private void init(){
         constraintSet = new ConstraintSet();
@@ -119,13 +134,11 @@ public class DoubleCheckLayout extends ConstraintLayout {
         setBtnCheckingAnimation();
         setDoubleCheckingClick();
         btnDoubleCheck.setTextSize(10);
-
         isCreate = true;
-//        Log.e("initDoubleCheckButton",btnWidth+"================"+btnHeight+"=========="+btnDoubleCheck.getTextSize());
     }
 
     private void setDoubleCheckBackground(){
-        btnDoubleCheck.setBackgroundResource(R.drawable.button_double_check);
+        btnDoubleCheck.setBackgroundResource(R.drawable.edittext_double_check);
         btnGD = new GradientDrawable();
         btnGD.setColor(Color.GRAY);
         btnGD.setCornerRadius(10);
@@ -223,7 +236,51 @@ public class DoubleCheckLayout extends ConstraintLayout {
     }
 
     private void initEditText(){
+        editText.setSingleLine();
+        editText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS |InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        editText.setSingleLine();
+        // 커서색상을 변경
+        try {
+            Field fCursorDrawableRes = TextView.class.getDeclaredField("mCursorDrawableRes");
+            fCursorDrawableRes.setAccessible(true);
+            int mCursorDrawableRes = fCursorDrawableRes.getInt(editText);
+            Field fEditor = TextView.class.getDeclaredField("mEditor");
+            fEditor.setAccessible(true);
+            Object editor = fEditor.get(editText);
+            Class<?> clazz = editor.getClass();
+            Field fCursorDrawable = clazz.getDeclaredField("mCursorDrawable");
+            fCursorDrawable.setAccessible(true);
 
+            Drawable[] drawables = new Drawable[2];
+            Resources res = editText.getContext().getResources();
+            drawables[0] = res.getDrawable(mCursorDrawableRes);
+            drawables[1] = res.getDrawable(mCursorDrawableRes);
+            drawables[0].setColorFilter(ContextCompat.getColor(getContext(),R.color.wooltariColor), PorterDuff.Mode.SRC_IN);
+            drawables[1].setColorFilter(ContextCompat.getColor(getContext(),R.color.wooltariColor), PorterDuff.Mode.SRC_IN);
+            fCursorDrawable.set(editor, drawables);
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        GradientDrawable gd = new GradientDrawable();
+        editText.setBackground(gd);
+//        Drawable drawable = editText.getBackground();
+//        // 팀트색상을 변경(투명하게), PorterDuff.Mode.SRC_ATOP : Discards the source pixels that do not cover destination pixels.
+//        drawable.setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_ATOP);
+//        editText.setBackground(drawable);
+    }
+
+    public String getTextEdit(){
+        return editText.getText().toString();
+    }
+
+    public EditText getCheckEditText(){
+        return editText;
+    }
+
+    public Button getCheckButton(){
+        return btnDoubleCheck;
     }
 
     public interface ButtonClickListener{
